@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/media/carousel.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/post/post_content.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/post/post_footer.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/post/post_header.dart';

@@ -26,7 +26,7 @@ class LMTextInput extends StatefulWidget {
   final String? hintText;
   final TextStyle? inputStyle;
   final TextStyle? hintStyle;
-  final LMIconButton? sendButton;
+  final Widget? sendButton;
 
   final Color? backgroundColor;
   final Color? fieldColor;

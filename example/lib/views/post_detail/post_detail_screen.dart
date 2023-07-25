@@ -369,11 +369,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
                         child: LMTextInput(
-                          profilePicture: LMProfilePicture(
-                            fallbackText: currentUser.name,
-                            imageUrl: currentUser.imageUrl,
-                            size: 42,
-                          ),
+                          // profilePicture: LMProfilePicture(
+                          //   fallbackText: currentUser.name,
+                          //   imageUrl: currentUser.imageUrl,
+                          //   size: 42,
+                          // ),
                           sendButton: LMIconButton(
                             icon: LMIcon(
                               icon: Icons.send,

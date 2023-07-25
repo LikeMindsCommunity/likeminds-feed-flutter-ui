@@ -44,12 +44,9 @@ class LMImage extends StatefulWidget {
 class _LMImageState extends State<LMImage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: widget.height ?? MediaQuery.of(context).size.width,
       width: widget.width ?? MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
-      ),
       child: widget.imageUrl != null
           ? ClipRRect(
               borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
@@ -90,11 +87,14 @@ class _LMImageState extends State<LMImage> {
               ),
             )
           : widget.imageFile != null
-              ? Image.file(
-                  widget.imageFile!,
-                  height: widget.height,
-                  width: widget.width,
-                  fit: widget.boxFit ?? BoxFit.cover,
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+                  child: Image.file(
+                    widget.imageFile!,
+                    height: widget.height,
+                    width: widget.width,
+                    fit: widget.boxFit ?? BoxFit.cover,
+                  ),
                 )
               : SizedBox(),
     );

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/text/text_view.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/media/carousel.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/media/document.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post.dart';
+import 'package:likeminds_feed_ui_fl/src/widgets/media/link.dart';
 
 class LMPostMedia extends StatefulWidget {
   const LMPostMedia({super.key, required this.attachments});
@@ -33,8 +32,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
     if (attachments.first.attachmentType == 3) {
       /// If the attachment is a document, we need to call the method 'getDocumentList'
       return getPostDocuments();
-      // } else if (attachments.first.attachmentType == 4) {
-      // return LMLinkPreview(attachment: attachments[0]);
+    } else if (attachments.first.attachmentType == 4) {
+      return LMLinkPreview(attachment: attachments[0]);
     } else {
       return LMCarousel(
         attachments: attachments,

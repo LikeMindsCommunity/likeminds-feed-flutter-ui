@@ -43,17 +43,6 @@ class LMPostMenu extends StatelessWidget {
                 ),
               )
               .toList(),
-          // menuItems
-          //       (index, element) => PopupMenuItem(
-          //         padding: const EdgeInsets.symmetric(
-          //           horizontal: 12,
-          //           vertical: 8,
-          //         ),
-          //         height: 42,
-          //         value: element.id,
-          //         child: Text(element.title),
-          //       ),
-          //     .toList(),
           color: kWhiteColor,
           child: menuIcon ??
               const SizedBox(

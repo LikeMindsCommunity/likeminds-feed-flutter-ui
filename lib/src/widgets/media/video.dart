@@ -64,7 +64,7 @@ class LMVideo extends StatefulWidget {
 }
 
 class _LMVideoState extends State<LMVideo> {
-  late final VideoPlayerController videoPlayerController;
+  late VideoPlayerController videoPlayerController;
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   late ChewieController chewieController;
   bool _onTouch = true;
