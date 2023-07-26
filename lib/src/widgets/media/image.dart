@@ -67,6 +67,7 @@ class _LMImageState extends State<LMImage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             LMIcon(
+                              type: LMIconType.icon,
                               icon: Icons.error_outline,
                               size: 24,
                               color: kGrey3Color,
@@ -96,7 +97,7 @@ class _LMImageState extends State<LMImage> {
                     fit: widget.boxFit ?? BoxFit.cover,
                   ),
                 )
-              : SizedBox(),
+              : const SizedBox(),
     );
   }
 }

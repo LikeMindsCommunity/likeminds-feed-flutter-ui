@@ -90,6 +90,7 @@ class _FeedScreenState extends State<FeedScreen> {
                     const SizedBox(height: 8),
                     LMPostWidget(
                       post: item,
+                      isFeed: true,
                       user: feedResponse.users[item.userId]!,
                       onTap: () {
                         Navigator.push(
@@ -127,10 +128,11 @@ class _FeedScreenState extends State<FeedScreen> {
           ),
         ),
         icon: LMIcon(
+          type: LMIconType.icon,
           icon: Icons.add,
           color: Theme.of(context).colorScheme.onPrimary,
         ),
-        onTap: (active) {
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -152,10 +154,12 @@ class MyPostWidget extends LMPostWidget {
     required Post post,
     required User user,
     required Function() onTap,
+    required bool isFeed,
   }) : super(
           post: post,
           user: user,
           onTap: onTap,
+          isFeed: isFeed,
         );
 
   Widget build(BuildContext context) {
@@ -164,6 +168,7 @@ class MyPostWidget extends LMPostWidget {
         const SizedBox(height: 8),
         LMPostWidget(
           post: post,
+          isFeed: true,
           user: user,
           onTap: onTap,
           // refresh: refresh(),

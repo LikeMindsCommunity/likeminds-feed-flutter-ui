@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/text_button.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/profile_picture.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/text/text_view.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/post/post_menu.dart';
 
-class LMCommentTile extends StatefulWidget {
-  const LMCommentTile({
+class LMReplyTile extends StatefulWidget {
+  const LMReplyTile({
     super.key,
     required this.user,
     required this.comment,
@@ -23,7 +22,7 @@ class LMCommentTile extends StatefulWidget {
   });
 
   final User user;
-  final Reply comment;
+  final CommentReply comment;
 
   final LMProfilePicture? profilePicture;
   final LMTextView? titleText;
@@ -33,10 +32,10 @@ class LMCommentTile extends StatefulWidget {
   final Function(int) onMenuTap;
 
   @override
-  State<LMCommentTile> createState() => _LMCommentTileState();
+  State<LMReplyTile> createState() => _LMReplyTileState();
 }
 
-class _LMCommentTileState extends State<LMCommentTile> {
+class _LMReplyTileState extends State<LMReplyTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,74 +90,27 @@ class _LMCommentTileState extends State<LMCommentTile> {
           // kVerticalPaddingMedium,
           Padding(
             padding: widget.actionsPadding ?? EdgeInsets.zero,
-            child: Row(
-              children: widget.commentActions ??
-                  [
-                    LMTextButton(
-                      onTap: () {},
-                      text: const LMTextView(
-                        text: 'Like',
-                        textStyle: TextStyle(
-                          fontSize: 14,
-                          color: kGrey2Color,
-                        ),
-                      ),
-                      icon: const LMIcon(
-                        type: LMIconType.icon,
-                        icon: Icons.favorite_outline,
-                        color: kGrey2Color,
-                        size: 16,
-                      ),
-                      activeIcon: const LMIcon(
-                        icon: Icons.favorite,
-                        type: LMIconType.icon,
-                        size: 16,
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                    kHorizontalPaddingMedium,
-                    const Text(
-                      '|',
-                      style: TextStyle(
-                        fontSize: kFontSmallMed,
-                        color: kGrey3Color,
-                      ),
-                    ),
-                    kHorizontalPaddingMedium,
-                    LMTextButton(
-                      onTap: () {},
-                      text: const LMTextView(
-                        text: 'Reply',
-                        textStyle: TextStyle(
-                          fontSize: 14,
-                          color: kGrey2Color,
-                        ),
-                      ),
-                    ),
-                    kHorizontalPaddingMedium,
-                    widget.comment.repliesCount > 0
-                        ? GestureDetector(
-                            onTap: () {},
-                            child: LMTextView(
-                              text: widget.comment.repliesCount > 1
-                                  ? "${widget.comment.repliesCount}  replies"
-                                  : "${widget.comment.repliesCount}  reply",
-                              textStyle: const TextStyle(
-                                color: kGrey2Color,
-                                fontSize: 12,
-                              ),
-                            ),
-                          )
-                        : Container(),
-                    const Spacer(),
-                    LMTextView(
-                      text: widget.comment.createdAt.timeAgo(),
-                      textStyle: const TextStyle(
-                        fontSize: kFontSmallMed,
-                        color: kGrey3Color,
-                      ),
-                    ),
-                  ],
+            child: LMTextButton(
+              onTap: () {},
+              text: const LMTextView(
+                text: 'Like',
+                textStyle: TextStyle(
+                  fontSize: 14,
+                  color: kGrey2Color,
+                ),
+              ),
+              icon: const LMIcon(
+                type: LMIconType.icon,
+                icon: Icons.favorite_outline,
+                color: kGrey2Color,
+                size: 16,
+              ),
+              activeIcon: const LMIcon(
+                icon: Icons.favorite,
+                type: LMIconType.icon,
+                size: 16,
+                color: kPrimaryColor,
+              ),
             ),
           ),
         ],

@@ -2,11 +2,8 @@ import 'dart:io';
 
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/document_shimmer.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/text/text_view.dart';
 
 class LMDocument extends StatefulWidget {
   const LMDocument({
@@ -24,6 +21,7 @@ class LMDocument extends StatefulWidget {
     this.title,
     this.subtitle,
     this.documentIcon,
+    this.onRemove,
   }) : assert(documentFile != null || documentUrl != null);
 
   final Function()? onTap;
@@ -42,6 +40,7 @@ class LMDocument extends StatefulWidget {
   final LMTextView? title;
   final LMTextView? subtitle;
   final LMIcon? documentIcon;
+  final Function? onRemove;
 
   @override
   State<LMDocument> createState() => _LMDocumentState();
@@ -98,13 +97,20 @@ class _LMDocumentState extends State<LMDocument> {
                 ),
                 padding: const EdgeInsets.all(kPaddingLarge),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    widget.documentIcon ??
-                        const LMIcon(
-                          icon: Icons.picture_as_pdf,
-                          size: 42,
-                          color: Colors.red,
-                        ),
+                    Container(
+                      clipBehavior: Clip.none,
+                      color: Colors.black,
+                      alignment: Alignment.center,
+                      child: widget.documentIcon ??
+                          const LMIcon(
+                            type: LMIconType.icon,
+                            icon: Icons.picture_as_pdf,
+                            size: 30,
+                            color: Colors.red,
+                          ),
+                    ),
                     kHorizontalPaddingLarge,
                     Expanded(
                       child: Column(
@@ -148,14 +154,14 @@ class _LMDocumentState extends State<LMDocument> {
                     ),
                     const SizedBox(width: 32),
                     widget.documentFile != null
-                        ? GestureDetector(
-                            onTap: () {
-                              // widget.removeAttachment!(widget.index!);
+                        ? LMIconButton(
+                            icon: const LMIcon(
+                                type: LMIconType.icon, icon: Icons.close),
+                            onTap: (actice) {
+                              if (widget.onRemove != null) {
+                                widget.onRemove!();
+                              }
                             },
-                            child: LMIconButton(
-                              icon: const LMIcon(icon: Icons.close),
-                              onTap: (active) {},
-                            ),
                           )
                         : const SizedBox.shrink()
                   ],

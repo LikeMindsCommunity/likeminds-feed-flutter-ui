@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -11,7 +10,6 @@ import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:lm_feed_ui_example/utils/constants/ui_constants.dart';
 import 'package:lm_feed_ui_example/utils/local_preference/user_local_preference.dart';
-import 'package:lm_feed_ui_example/models/media_model.dart';
 import 'package:lm_feed_ui_example/views/new_post/new_post/new_post_bloc.dart';
 
 // /* key is mediatype, contains all asset button data
@@ -46,7 +44,7 @@ class NewPostScreen extends StatefulWidget {
 }
 
 class _NewPostScreenState extends State<NewPostScreen> {
-  TextEditingController? _controller = TextEditingController();
+  final TextEditingController? _controller = TextEditingController();
   NewPostBloc? newPostBloc;
   // final ImagePicker _picker = ImagePicker();
   // final FilePicker _filePicker = FilePicker.platform;
@@ -305,6 +303,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       children: [
                         LMIconButton(
                           icon: LMIcon(
+                            type: LMIconType.icon,
                             icon: Icons.chevron_left,
                             color: Theme.of(context).primaryColor,
                             size: 42,
@@ -314,13 +313,13 @@ class _NewPostScreenState extends State<NewPostScreen> {
                             Navigator.pop(context);
                           },
                         ),
-                        Spacer(),
+                        const Spacer(),
                         const LMTextView(
                           text: 'Create a Post',
                           textStyle:
                               TextStyle(fontSize: 18, color: kGrey1Color),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         TextButton(
                           onPressed: () async {
                             // if (_controller != null &&
@@ -477,7 +476,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                           decoration: const BoxDecoration(
                             color: kWhiteColor,
                           ),
-                          child: LMTextInput(
+                          child: const LMTextInput(
                             // fieldColor: kGrey3Color.withOpacity(0.3),
                             borderRadius: 12,
                             backgroundColor: Colors.white,

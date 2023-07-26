@@ -151,13 +151,6 @@ class _LMVideoState extends State<LMVideo> {
               onTap: () {
                 _onTouch = !_onTouch;
                 rebuildOverlay.value = !rebuildOverlay.value;
-                // locator<NavigationService>().navigateTo(
-                //   MediaPreviewScreen.routeName,
-                //   arguments: MediaPreviewArguments(
-                //     mediaUrl: widget.url,
-                //     mediaFile: widget.videoFile,
-                //   ),
-                // );
               },
               child: VisibilityDetector(
                 key: Key('post_video_${widget.videoUrl ?? widget.videoFile}'),

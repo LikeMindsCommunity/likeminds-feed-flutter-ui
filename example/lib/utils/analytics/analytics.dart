@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed/src/di/di_service.dart';
 
@@ -13,12 +14,12 @@ class LMAnalytics {
     sdkCallback = DIService.getIt.get<LMSDKCallback>(
       instanceName: "LMCallback",
     );
-    print("Analytics initialized");
+    debugPrint("Analytics initialized");
   }
 
   void logEvent(String eventKey, Map<String, dynamic> propertiesMap) {
-    print('Event: $eventKey');
-    print('Params: $propertiesMap');
+    debugPrint('Event: $eventKey');
+    debugPrint('Params: $propertiesMap');
   }
 
   void track(String eventKey, Map<String, dynamic> propertiesMap) {

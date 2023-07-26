@@ -20,7 +20,7 @@ class LMTextButton extends StatefulWidget {
   final bool isActive;
   final LMIcon? icon;
   final LMTextView text;
-  final Function(bool activeStatus) onTap;
+  final Function() onTap;
   final LMIcon? activeIcon;
   final LMTextView? activeText;
 
@@ -34,22 +34,11 @@ class LMTextButton extends StatefulWidget {
 }
 
 class _LMTextButtonState extends State<LMTextButton> {
-  late bool _isActive;
-
-  @override
-  void initState() {
-    super.initState();
-    _isActive = widget.isActive;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _isActive = !_isActive;
-        });
-        widget.onTap(_isActive);
+        widget.onTap();
       },
       child: Container(
         height: widget.height ?? 32,
@@ -63,12 +52,12 @@ class _LMTextButtonState extends State<LMTextButton> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               widget.icon != null
-                  ? _isActive
+                  ? widget.isActive
                       ? widget.activeIcon ?? widget.icon!
                       : widget.icon!
                   : const SizedBox(),
               widget.icon != null ? const SizedBox(width: 8) : const SizedBox(),
-              _isActive ? widget.activeText ?? widget.text : widget.text,
+              widget.isActive ? widget.activeText ?? widget.text : widget.text,
               SizedBox(width: widget.icon != null ? 6 : 0)
             ],
           ),

@@ -40,18 +40,14 @@ class LMPostFooter extends StatelessWidget {
           [
             LMTextButton(
               text: const LMTextView(text: "Like"),
-              onTap: (active) {
-                if (active) {
-                  print("Liked");
-                } else {
-                  print("Unliked");
-                }
-              },
+              onTap: () {},
               icon: const LMIcon(
+                type: LMIconType.icon,
                 icon: Icons.favorite_outline,
                 size: 28,
               ),
               activeIcon: const LMIcon(
+                type: LMIconType.icon,
                 icon: Icons.favorite,
                 size: 28,
                 color: Colors.red,
@@ -61,10 +57,9 @@ class LMPostFooter extends StatelessWidget {
             const SizedBox(width: 16),
             LMTextButton(
               text: const LMTextView(text: "Comment"),
-              onTap: (active) {
-                print("Comment");
-              },
+              onTap: () {},
               icon: const LMIcon(
+                type: LMIconType.icon,
                 icon: Icons.message_outlined,
                 size: 28,
               ),
@@ -72,6 +67,7 @@ class LMPostFooter extends StatelessWidget {
             const Spacer(),
             LMIconButton(
               icon: const LMIcon(
+                type: LMIconType.icon,
                 icon: Icons.bookmark_border_outlined,
                 size: 28,
               ),
@@ -80,6 +76,7 @@ class LMPostFooter extends StatelessWidget {
             const SizedBox(width: 12),
             LMIconButton(
               icon: const LMIcon(
+                type: LMIconType.icon,
                 icon: Icons.share_outlined,
                 size: 28,
               ),

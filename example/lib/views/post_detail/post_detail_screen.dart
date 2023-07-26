@@ -131,7 +131,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
 
   selectCommentToReply(String commentId, String username) {
     selectedCommentId = commentId;
-    print(commentId);
+    debugPrint(commentId);
     selectedUsername = username;
     isReplying = true;
     isEditing = false;
@@ -355,6 +355,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                             }
                                           },
                                           icon: const LMIcon(
+                                            type: LMIconType.icon,
                                             icon: Icons.close,
                                             color: kGreyColor,
                                             size: 24,
@@ -376,6 +377,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           // ),
                           sendButton: LMIconButton(
                             icon: LMIcon(
+                              type: LMIconType.icon,
                               icon: Icons.send,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
@@ -396,6 +398,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             appBar: AppBar(
               leading: LMIconButton(
                 icon: const LMIcon(
+                  type: LMIconType.icon,
                   icon: Icons.arrow_back_ios,
                   color: kHeadingColor,
                   size: 28,
@@ -451,12 +454,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     state is PaginatedAllCommentsLoading) {
                   late PostDetailResponse postDetailResponse;
                   if (state is AllCommentsLoaded) {
-                    print("AllCommentsLoaded$state");
+                    debugPrint("AllCommentsLoaded$state");
                     postDetailResponse = state.postDetails;
                     postDetailResponse.users!.putIfAbsent(
                         currentUser.userUniqueId, () => currentUser);
                   } else {
-                    print("PaginatedAllCommentsLoading$state");
+                    debugPrint("PaginatedAllCommentsLoading$state");
                     postDetailResponse =
                         (state as PaginatedAllCommentsLoading).prevPostDetails;
                     postDetailResponse.users!.putIfAbsent(
@@ -480,6 +483,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                     ? const LMPostShimmer()
                                     : LMPostWidget(
                                         post: postData!,
+                                        isFeed: false,
                                         user: postDetailResponse.users![
                                             postDetailResponse
                                                 .postReplies!.userId]!,
@@ -536,6 +540,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                       comment: item,
                                       user: postDetailResponse
                                           .users![item.userId]!,
+                                      onMenuTap: (value) {},
                                     );
                                   },
                                 ),

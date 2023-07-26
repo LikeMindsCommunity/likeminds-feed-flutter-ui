@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
+import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/text_button.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/text/text_view.dart';
 
@@ -9,19 +10,23 @@ class LMPostMenu extends StatelessWidget {
     super.key,
     this.children,
     required this.menuItems,
+    required this.isFeed,
+    required this.onSelected,
     this.menuIcon,
   });
 
   final Map<int, LMTextView>? children;
   final LMIcon? menuIcon;
   final List<PopupMenuItemModel> menuItems;
+  final bool isFeed;
+  final Function(int)? onSelected;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Builder(builder: (context) {
         return PopupMenuButton<int>(
-          onSelected: (value) async {},
+          onSelected: onSelected,
           itemBuilder: (context) => menuItems
               .map(
                 (element) => PopupMenuItem(

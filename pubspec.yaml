@@ -5,24 +5,25 @@ publish_to: none
 homepage: "www.likeminds.community/"
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  likeminds_feed: 
+  likeminds_feed:
     path: ../LikeMinds-Flutter-Feed-SDK
 
-  timeago: 
+  timeago:
   shimmer:
   chewie:
   carousel_slider:
-  video_player: 
-  visibility_detector: 
-  cached_network_image: 
-  url_launcher: 
+  video_player:
+  visibility_detector:
+  cached_network_image:
+  url_launcher:
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:

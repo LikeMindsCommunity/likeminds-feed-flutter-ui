@@ -16,12 +16,16 @@ class LMPostHeader extends StatelessWidget {
     this.titleText,
     this.subText,
     this.menu,
+    this.createdAt,
+    required this.isFeed,
   });
 
   final double? imageSize;
   final LMTextView? titleText;
   final LMTextView? subText;
   final LMPostMenu? menu;
+  final LMTextView? createdAt;
+  final bool isFeed;
 
   final User user;
 
@@ -29,7 +33,7 @@ class LMPostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final postDetails = InheritedPostProvider.of(context)?.post;
     Size screenSize = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: screenSize.width,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8),
@@ -116,16 +120,17 @@ class LMPostHeader extends StatelessWidget {
                         subText != null
                             ? kHorizontalPaddingXSmall
                             : const SizedBox(),
-                        LMTextView(
-                          text: postDetails!.createdAt.timeAgo(),
-                          textStyle: const TextStyle(
-                            fontSize: kFontSmall,
-                            color: kGrey3Color,
-                          ),
-                        ),
+                        createdAt ??
+                            LMTextView(
+                              text: postDetails!.createdAt.timeAgo(),
+                              textStyle: const TextStyle(
+                                fontSize: kFontSmall,
+                                color: kGrey3Color,
+                              ),
+                            ),
                         kHorizontalPaddingXSmall,
                         LMTextView(
-                          text: postDetails.isEdited ? '·' : '',
+                          text: postDetails!.isEdited ? '·' : '',
                           textStyle: const TextStyle(
                             fontSize: kFontSmall,
                             color: kGrey3Color,
@@ -149,6 +154,7 @@ class LMPostHeader extends StatelessWidget {
                 children: [
                   postDetails.isPinned
                       ? const LMIcon(
+                          type: LMIconType.icon,
                           icon: Icons.pin,
                           color: kGrey3Color,
                           size: 24,
@@ -157,9 +163,11 @@ class LMPostHeader extends StatelessWidget {
                   kHorizontalPaddingLarge,
                   // postDetails..
                   postDetails.menuItems.isNotEmpty
-                      ? LMPostMenu(
-                          menuItems: postDetails.menuItems,
-                        )
+                      ? menu ??
+                          LMPostMenu(
+                              menuItems: postDetails.menuItems,
+                              isFeed: isFeed,
+                              onSelected: (id) {})
                       : const SizedBox()
                 ],
               )

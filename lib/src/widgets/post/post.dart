@@ -20,13 +20,15 @@ class LMPostWidget extends StatefulWidget {
   // Required variables
   final Post post;
   final User user;
+  final bool isFeed;
   final Function() onTap;
 
-  LMPostWidget({
+  const LMPostWidget({
     super.key,
     required this.post,
     required this.user,
     required this.onTap,
+    required this.isFeed,
     this.header,
     this.footer,
     this.menu,
@@ -62,7 +64,11 @@ class _LMPostWidgetState extends State<LMPostWidget> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.header ?? LMPostHeader(user: widget.user),
+                widget.header ??
+                    LMPostHeader(
+                      user: widget.user,
+                      isFeed: widget.isFeed,
+                    ),
                 const LMPostContent(),
                 widget.media == null
                     ? widget.post.attachments != null &&

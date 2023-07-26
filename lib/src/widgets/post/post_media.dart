@@ -22,11 +22,11 @@ class _LMPostMediaState extends State<LMPostMedia> {
   @override
   void initState() {
     super.initState();
-    attachments = widget.attachments;
   }
 
   @override
   Widget build(BuildContext context) {
+    attachments = widget.attachments;
     screenSize = MediaQuery.of(context).size;
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];
     if (attachments.first.attachmentType == 3) {
