@@ -14,14 +14,6 @@ class TaggingHelper {
   static const String linkRoute =
       r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+';
 
-  static void routeToProfile(String userId) {
-    debugPrint(userId);
-    // if (!locator<LikeMindsService>().isProd) {
-    //   toast('Profile call back fired');
-    // }
-    // locator<LikeMindsService>().routeToProfile(userId);
-  }
-
   /// Encodes the string with the user tags and returns the encoded string
   static String encodeString(String string, List<UserTag> userTags) {
     final Iterable<RegExpMatch> matches = tagRegExp.allMatches(string);
@@ -78,6 +70,14 @@ class TaggingHelper {
       }
     }
     return tags;
+  }
+
+  static void routeToProfile(String userId) {
+    debugPrint(userId);
+    // if (!locator<LikeMindsService>().isProd) {
+    //   toast('Profile call back fired');
+    // }
+    //locator<LikeMindsService>().routeToProfile(userId);
   }
 
   static String convertRouteToTag(String text, {bool withTilde = true}) {

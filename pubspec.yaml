@@ -24,6 +24,7 @@ dependencies:
   cached_network_image:
   url_launcher:
   flutter_svg:
+  flick_video_player: 
 
 dev_dependencies:
   flutter_test:

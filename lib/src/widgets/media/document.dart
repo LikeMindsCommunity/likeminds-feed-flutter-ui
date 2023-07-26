@@ -101,7 +101,6 @@ class _LMDocumentState extends State<LMDocument> {
                   children: [
                     Container(
                       clipBehavior: Clip.none,
-                      color: Colors.black,
                       alignment: Alignment.center,
                       child: widget.documentIcon ??
                           const LMIcon(

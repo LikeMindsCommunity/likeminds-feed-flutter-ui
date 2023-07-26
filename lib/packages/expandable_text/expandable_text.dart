@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/src/utils/constants.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -86,7 +87,7 @@ class ExpandableTextState extends State<ExpandableText>
     with TickerProviderStateMixin {
   // late String _passedText;
   bool _expanded = false;
-  RegExp regExp = TaggingHelper.tagRegExp;
+  RegExp regExp = RegExp(kRegexLinksAndTags);
   late TapGestureRecognizer _linkTapGestureRecognizer;
   late TapGestureRecognizer _prefixTapGestureRecognizer;
 
@@ -396,8 +397,6 @@ class ExpandableTextState extends State<ExpandableText>
   }
 
   List<TextSpan> extractLinksAndTags(String text) {
-    // final regExpression = RegExp(
-    //     r'<<([a-z\sA-Z]+)\|route://member/([a-zA-Z\0-9]+)>>|<<([a-z\sA-Z\s0-9]+)\|route://member/([0-9]+)>>');
     List<TextSpan> textSpans = [];
     int lastIndex = 0;
     for (Match match in regExp.allMatches(text)) {

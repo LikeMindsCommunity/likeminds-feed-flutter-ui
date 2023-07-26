@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/icon_button.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/post_shimmer.dart';
 import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class LMVideo extends StatefulWidget {
@@ -65,8 +64,9 @@ class LMVideo extends StatefulWidget {
 
 class _LMVideoState extends State<LMVideo> {
   late VideoPlayerController videoPlayerController;
+  Future? videoPlayerControllerFuture;
+  FlickManager? flickManager;
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
-  late ChewieController chewieController;
   bool _onTouch = true;
   bool initialiseOverlay = false;
 
@@ -82,6 +82,13 @@ class _LMVideoState extends State<LMVideo> {
   @override
   void initState() {
     super.initState();
+    videoPlayerControllerFuture = initialiseControllers();
+  }
+
+  @override
+  void didUpdateWidget(LMVideo oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    videoPlayerControllerFuture = initialiseControllers();
   }
 
   Future<void> initialiseControllers() async {
@@ -102,29 +109,12 @@ class _LMVideoState extends State<LMVideo> {
             ),
           );
     }
-    chewieController = ChewieController(
-      aspectRatio: widget.aspectRatio,
+    flickManager ??= FlickManager(
       videoPlayerController: videoPlayerController,
-      autoPlay: widget.autoPlay ?? false,
-      looping: widget.looping ?? true,
-      showOptions: false,
-      showControls: false,
-      allowPlaybackSpeedChanging: false,
-      allowMuting: widget.allowMuting ?? false,
-      allowFullScreen: widget.allowFullScreen ?? false,
-      autoInitialize: false,
-      showControlsOnInitialize: false,
-      overlay: ClipRRect(borderRadius: BorderRadius.circular(12)),
-      errorBuilder: (context, errorMessage) {
-        return widget.errorWidget ??
-            Center(
-              child: Text(
-                errorMessage,
-                style: const TextStyle(color: Colors.black),
-              ),
-            );
-      },
+      autoPlay: true,
+      autoInitialize: true,
     );
+
     if (!videoPlayerController.value.isInitialized) {
       await videoPlayerController.initialize();
     }
@@ -134,7 +124,7 @@ class _LMVideoState extends State<LMVideo> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return FutureBuilder(
-      future: initialiseControllers(),
+      future: videoPlayerControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LMPostShimmer();
@@ -177,12 +167,17 @@ class _LMVideoState extends State<LMVideo> {
                   ),
                   alignment: Alignment.center,
                   child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(widget.borderRadius ?? 0),
-                    child: Chewie(
-                      controller: chewieController,
-                    ),
-                  ),
+                      borderRadius:
+                          BorderRadius.circular(widget.borderRadius ?? 0),
+                      child: FlickVideoPlayer(
+                        flickManager: flickManager!,
+                        flickVideoWithControls: FlickVideoWithControls(
+                          aspectRatioWhenLoading: widget.aspectRatio ?? 16 / 9,
+                          controls: const FlickPortraitControls(),
+                          willVideoPlayerControllerChange: false,
+                          videoFit: BoxFit.cover,
+                        ),
+                      )),
                 ),
               ),
             ),

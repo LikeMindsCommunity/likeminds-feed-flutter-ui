@@ -150,27 +150,13 @@ class LMPostHeader extends StatelessWidget {
                 ),
               ),
               kHorizontalPaddingLarge,
-              Row(
-                children: [
-                  postDetails.isPinned
-                      ? const LMIcon(
-                          type: LMIconType.icon,
-                          icon: Icons.pin,
-                          color: kGrey3Color,
-                          size: 24,
-                        )
-                      : const SizedBox(),
-                  kHorizontalPaddingLarge,
-                  // postDetails..
-                  postDetails.menuItems.isNotEmpty
-                      ? menu ??
-                          LMPostMenu(
-                              menuItems: postDetails.menuItems,
-                              isFeed: isFeed,
-                              onSelected: (id) {})
-                      : const SizedBox()
-                ],
-              )
+              postDetails.menuItems.isNotEmpty
+                  ? menu ??
+                      LMPostMenu(
+                          menuItems: postDetails.menuItems,
+                          isFeed: isFeed,
+                          onSelected: (id) {})
+                  : const SizedBox()
             ],
           ),
         ),
