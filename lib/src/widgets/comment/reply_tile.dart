@@ -40,9 +40,10 @@ class _LMReplyTileState extends State<LMReplyTile> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(color: kWhiteColor),
-      padding: const EdgeInsets.all(kPaddingLarge),
+      padding: const EdgeInsets.symmetric(
+          horizontal: kPaddingLarge, vertical: kPaddingSmall),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -68,7 +69,7 @@ class _LMReplyTileState extends State<LMReplyTile> {
                     widget.subtitleText ?? const SizedBox(),
                     Container(
                       width: 240,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: const EdgeInsets.only(top: 12, bottom: 6),
                       child: LMTextView(
                         text: TaggingHelper.convertRouteToTag(
                           widget.comment.text,
@@ -87,34 +88,40 @@ class _LMReplyTileState extends State<LMReplyTile> {
               ],
             ),
           ),
-          // kVerticalPaddingMedium,
           Padding(
             padding: widget.actionsPadding ?? EdgeInsets.zero,
-            child: LMTextButton(
-              onTap: () {},
-              text: const LMTextView(
-                text: 'Like',
-                textStyle: TextStyle(
-                  fontSize: 14,
-                  color: kGrey2Color,
-                ),
-              ),
-              icon: const LMIcon(
-                type: LMIconType.icon,
-                icon: Icons.favorite_outline,
-                color: kGrey2Color,
-                size: 16,
-              ),
-              activeIcon: const LMIcon(
-                icon: Icons.favorite,
-                type: LMIconType.icon,
-                size: 16,
-                color: kPrimaryColor,
-              ),
+            child: Row(
+              children: widget.commentActions ??
+                  [
+                    LMTextButton(
+                      onTap: () {},
+                      text: const LMTextView(
+                        text: 'Like',
+                        textStyle: TextStyle(
+                          fontSize: 14,
+                          color: kGrey2Color,
+                        ),
+                      ),
+                      icon: const LMIcon(
+                        type: LMIconType.icon,
+                        icon: Icons.favorite_outline,
+                        color: kGrey2Color,
+                        size: 16,
+                      ),
+                      activeIcon: const LMIcon(
+                        icon: Icons.favorite,
+                        type: LMIconType.icon,
+                        size: 16,
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
             ),
           ),
         ],
       ),
+      // kVerticalPaddingMedium,
     );
   }
 }

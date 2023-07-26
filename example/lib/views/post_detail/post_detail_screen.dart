@@ -471,83 +471,86 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       _pagingController.refresh();
                       _page = 1;
                     },
-                    child: ValueListenableBuilder(
-                        valueListenable: rebuildPostWidget,
-                        builder: (context, _, __) {
-                          return CustomScrollView(
-                            slivers: [
-                              const SliverPadding(
-                                  padding: EdgeInsets.only(top: 16)),
-                              SliverToBoxAdapter(
-                                child: postData == null
-                                    ? const LMPostShimmer()
-                                    : LMPostWidget(
-                                        post: postData!,
-                                        isFeed: false,
-                                        user: postDetailResponse.users![
-                                            postDetailResponse
-                                                .postReplies!.userId]!,
-                                        onTap: () {},
-                                      ),
-                              ),
-                              const SliverPadding(
-                                  padding: EdgeInsets.only(bottom: 12)),
-                              SliverToBoxAdapter(
+                    child: Container(
+                      color: kWhiteColor,
+                      child: ValueListenableBuilder(
+                          valueListenable: rebuildPostWidget,
+                          builder: (context, _, __) {
+                            return CustomScrollView(
+                              slivers: [
+                                const SliverPadding(
+                                    padding: EdgeInsets.only(top: 16)),
+                                SliverToBoxAdapter(
                                   child: postData == null
-                                      ? const SizedBox.shrink()
-                                      : postData!.commentCount >= 1
-                                          ? Container(
-                                              color: kWhiteColor,
-                                              padding: const EdgeInsets.only(
-                                                  left: 15, top: 15),
-                                              child: Text(
-                                                '${postData!.commentCount} ${postData!.commentCount > 1 ? 'Comments' : 'Comment'}',
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            )
-                                          : const SizedBox.shrink()),
-                              PagedSliverList(
-                                pagingController: _pagingController,
-                                builderDelegate:
-                                    PagedChildBuilderDelegate<Reply>(
-                                  noMoreItemsIndicatorBuilder: (context) =>
-                                      const SizedBox(height: 75),
-                                  noItemsFoundIndicatorBuilder: (context) =>
-                                      const Column(
-                                    children: <Widget>[
-                                      SizedBox(height: 42),
-                                      Text(
-                                        'No comment found',
-                                        style: TextStyle(
-                                          fontSize: kFontMedium,
+                                      ? const LMPostShimmer()
+                                      : LMPostWidget(
+                                          post: postData!,
+                                          isFeed: false,
+                                          user: postDetailResponse.users![
+                                              postDetailResponse
+                                                  .postReplies!.userId]!,
+                                          onTap: () {},
                                         ),
-                                      ),
-                                      SizedBox(height: 12),
-                                      Text(
-                                        'Be the first one to comment',
-                                        style: TextStyle(
-                                          fontSize: kFontSmall,
-                                        ),
-                                      ),
-                                      SizedBox(height: 180),
-                                    ],
-                                  ),
-                                  itemBuilder: (context, item, index) {
-                                    return LMCommentTile(
-                                      key: ValueKey(item.id),
-                                      comment: item,
-                                      user: postDetailResponse
-                                          .users![item.userId]!,
-                                      onMenuTap: (value) {},
-                                    );
-                                  },
                                 ),
-                              ),
-                            ],
-                          );
-                        }),
+                                const SliverPadding(
+                                    padding: EdgeInsets.only(bottom: 12)),
+                                SliverToBoxAdapter(
+                                    child: postData == null
+                                        ? const SizedBox.shrink()
+                                        : postData!.commentCount >= 1
+                                            ? Container(
+                                                color: kWhiteColor,
+                                                padding: const EdgeInsets.only(
+                                                    left: 15, top: 15),
+                                                child: Text(
+                                                  '${postData!.commentCount} ${postData!.commentCount > 1 ? 'Comments' : 'Comment'}',
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              )
+                                            : const SizedBox.shrink()),
+                                PagedSliverList(
+                                  pagingController: _pagingController,
+                                  builderDelegate:
+                                      PagedChildBuilderDelegate<Reply>(
+                                    noMoreItemsIndicatorBuilder: (context) =>
+                                        const SizedBox(height: 75),
+                                    noItemsFoundIndicatorBuilder: (context) =>
+                                        const Column(
+                                      children: <Widget>[
+                                        SizedBox(height: 42),
+                                        Text(
+                                          'No comment found',
+                                          style: TextStyle(
+                                            fontSize: kFontMedium,
+                                          ),
+                                        ),
+                                        SizedBox(height: 12),
+                                        Text(
+                                          'Be the first one to comment',
+                                          style: TextStyle(
+                                            fontSize: kFontSmall,
+                                          ),
+                                        ),
+                                        SizedBox(height: 180),
+                                      ],
+                                    ),
+                                    itemBuilder: (context, item, index) {
+                                      return LMCommentTile(
+                                        key: ValueKey(item.id),
+                                        comment: item,
+                                        user: postDetailResponse
+                                            .users![item.userId]!,
+                                        onMenuTap: (value) {},
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                    ),
                   );
                 }
                 return const Center(child: CircularProgressIndicator());

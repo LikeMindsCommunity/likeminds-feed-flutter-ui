@@ -14,10 +14,12 @@ class LMTextButton extends StatefulWidget {
     this.borderRadius = 4,
     this.height,
     this.width,
+    this.margin,
     this.isActive = false,
   });
 
   final bool isActive;
+  final double? margin;
   final LMIcon? icon;
   final LMTextView text;
   final Function() onTap;
@@ -51,12 +53,12 @@ class _LMTextButtonState extends State<LMTextButton> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              widget.icon != null
-                  ? widget.isActive
-                      ? widget.activeIcon ?? widget.icon!
-                      : widget.icon!
+              widget.isActive
+                  ? widget.activeIcon ?? const SizedBox()
+                  : widget.icon ?? const SizedBox(),
+              widget.icon != null || widget.activeIcon != null
+                  ? SizedBox(width: widget.margin ?? 8)
                   : const SizedBox(),
-              widget.icon != null ? const SizedBox(width: 8) : const SizedBox(),
               widget.isActive ? widget.activeText ?? widget.text : widget.text,
               SizedBox(width: widget.icon != null ? 6 : 0)
             ],
