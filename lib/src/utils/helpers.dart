@@ -77,7 +77,6 @@ class TaggingHelper {
     // if (!locator<LikeMindsService>().isProd) {
     //   toast('Profile call back fired');
     // }
-    //locator<LikeMindsService>().routeToProfile(userId);
   }
 
   static String convertRouteToTag(String text, {bool withTilde = true}) {

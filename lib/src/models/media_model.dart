@@ -40,3 +40,17 @@ class MediaModel {
     }
   }
 }
+
+MediaType mapIntToMediaType(int attachmentType) {
+  if (attachmentType == 1) {
+    return MediaType.image;
+  } else if (attachmentType == 2) {
+    return MediaType.video;
+  } else if (attachmentType == 3) {
+    return MediaType.document;
+  } else if (attachmentType == 4) {
+    return MediaType.link;
+  } else {
+    throw 'no valid media type provided';
+  }
+}

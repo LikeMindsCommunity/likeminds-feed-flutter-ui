@@ -5,9 +5,8 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/constants.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './text_parser.dart';
@@ -15,7 +14,7 @@ import './text_parser.dart';
 typedef StringCallback = void Function(String value);
 
 class ExpandableText extends StatefulWidget {
-  ExpandableText(
+  const ExpandableText(
     this.text, {
     Key? key,
     required this.expandText,
@@ -49,7 +48,7 @@ class ExpandableText extends StatefulWidget {
   })  : assert(maxLines > 0),
         super(key: key);
 
-  String text;
+  final String text;
   final String expandText;
   final String? collapseText;
   final bool expanded;
@@ -57,7 +56,7 @@ class ExpandableText extends StatefulWidget {
   final VoidCallback? onLinkTap;
   final Color? linkColor;
   final bool linkEllipsis;
-  TextStyle? linkStyle;
+  final TextStyle? linkStyle;
   final String? prefixText;
   final TextStyle? prefixStyle;
   final VoidCallback? onPrefixTap;
@@ -85,7 +84,6 @@ class ExpandableText extends StatefulWidget {
 
 class ExpandableTextState extends State<ExpandableText>
     with TickerProviderStateMixin {
-  // late String _passedText;
   bool _expanded = false;
   RegExp regExp = RegExp(kRegexLinksAndTags);
   late TapGestureRecognizer _linkTapGestureRecognizer;
@@ -97,11 +95,6 @@ class ExpandableTextState extends State<ExpandableText>
   @override
   void initState() {
     super.initState();
-    // _passedText = widget.text;
-    widget.linkStyle ??= const TextStyle(
-      fontSize: 10,
-      color: kLinkColor,
-    );
     _expanded = widget.expanded;
     _linkTapGestureRecognizer = TapGestureRecognizer()..onTap = _linkTapped;
     _prefixTapGestureRecognizer = TapGestureRecognizer()..onTap = _prefixTapped;
@@ -158,14 +151,11 @@ class ExpandableTextState extends State<ExpandableText>
 
     final linkText =
         (_expanded ? widget.collapseText : widget.expandText) ?? '';
-    // final linkColor = widget.linkColor ??
-    //     widget.linkStyle?.color ??
-    //     Theme.of(context).colorScheme.secondary;
-    final linkTextStyle = const TextStyle(
-      fontSize: 14,
-      color: kLinkColor,
-    );
-    // effectiveTextStyle!.merge(widget.linkStyle).copyWith(color: linkColor);
+    final linkColor = widget.linkColor ??
+        widget.linkStyle?.color ??
+        Theme.of(context).colorScheme.secondary;
+    final linkTextStyle =
+        effectiveTextStyle!.merge(widget.linkStyle).copyWith(color: linkColor);
 
     final prefixText =
         widget.prefixText != null && widget.prefixText!.isNotEmpty
@@ -176,7 +166,7 @@ class ExpandableTextState extends State<ExpandableText>
       children: [
         if (!_expanded)
           TextSpan(
-            text: '\u2026see more',
+            text: '\u2026 ',
             style: widget.linkEllipsis ? linkTextStyle : effectiveTextStyle,
             recognizer: widget.linkEllipsis ? _linkTapGestureRecognizer : null,
           ),
@@ -186,7 +176,7 @@ class ExpandableTextState extends State<ExpandableText>
             children: <TextSpan>[
               if (_expanded)
                 const TextSpan(
-                  text: '',
+                  text: ' ',
                 ),
               TextSpan(
                 text: linkText,
@@ -224,7 +214,7 @@ class ExpandableTextState extends State<ExpandableText>
           textAlign: textAlign,
           textDirection: textDirection,
           textScaleFactor: textScaleFactor,
-          maxLines: 5,
+          maxLines: 3,
           locale: locale,
         );
         textPainter.layout(minWidth: constraints.minWidth, maxWidth: maxWidth);
@@ -256,7 +246,9 @@ class ExpandableTextState extends State<ExpandableText>
             resultText = response['text'];
             // final lineCount = textPainter.computeLineMetrics().length;
             final nCount = '\n'.allMatches(resultText).length + 1;
-            if (resultText.length > 500 || nCount > 4) {
+            if (resultText.length > 300 && nCount <= 4) {
+              resultText = resultText.substring(0, max(endOffset, 0));
+            } else {
               resultText = resultText.substring(0, max(endOffset, 0));
             }
 
@@ -415,11 +407,7 @@ class ExpandableTextState extends State<ExpandableText>
       // Add a TextSpan for the URL
       textSpans.add(TextSpan(
         text: isTag ? TaggingHelper.decodeString(link).keys.first : link,
-        style: widget.linkStyle ??
-            const TextStyle(
-              fontSize: 12,
-              color: kLinkColor,
-            ),
+        style: widget.linkStyle ?? const TextStyle(color: Colors.blue),
         recognizer: TapGestureRecognizer()
           ..onTap = () async {
             if (!isTag) {

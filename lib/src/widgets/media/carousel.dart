@@ -46,6 +46,13 @@ class _LMCarouselState extends State<LMCarousel> {
   @override
   void initState() {
     super.initState();
+  }
+
+  bool checkIfMultipleAttachments() {
+    return ((widget.attachments.isNotEmpty && widget.attachments.length > 1));
+  }
+
+  void mapAttachmentsToWidget() {
     mediaWidgets = widget.attachments.map((e) {
       if (e.attachmentType == 1) {
         return widget.imageItem ??
@@ -69,12 +76,9 @@ class _LMCarouselState extends State<LMCarousel> {
     }).toList();
   }
 
-  bool checkIfMultipleAttachments() {
-    return ((widget.attachments.isNotEmpty && widget.attachments.length > 1));
-  }
-
   @override
   Widget build(BuildContext context) {
+    mapAttachmentsToWidget();
     final size = MediaQuery.of(context).size.width;
     return Container(
       height: widget.height ?? size,
