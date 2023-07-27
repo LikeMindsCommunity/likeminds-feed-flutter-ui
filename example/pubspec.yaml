@@ -41,7 +41,6 @@ dependencies:
   infinite_scroll_pagination: 
 
   likeminds_feed: 
-    path: ../../LikeMinds-Flutter-Feed-SDK
 
   likeminds_feed_ui_fl: 
     path: ../
