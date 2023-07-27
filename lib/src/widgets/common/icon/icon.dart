@@ -16,6 +16,7 @@ class LMIcon extends StatelessWidget {
   final double? boxBorderRadius;
   final double? boxPadding;
   final Color? backgroundColor;
+  final BoxFit? fit;
 
   const LMIcon({
     super.key,
@@ -29,6 +30,7 @@ class LMIcon extends StatelessWidget {
     this.boxBorder,
     this.boxBorderRadius,
     this.boxPadding,
+    this.fit,
   });
 
   getIconWidget() {
@@ -42,7 +44,7 @@ class LMIcon extends StatelessWidget {
           child: SvgPicture.asset(
             assetPath!,
             color: color,
-            fit: BoxFit.contain,
+            fit: fit ?? BoxFit.contain,
           ),
         );
       case LMIconType.png:

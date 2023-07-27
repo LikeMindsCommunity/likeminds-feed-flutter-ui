@@ -38,15 +38,15 @@ class LMVideo extends StatefulWidget {
 
   final double? height;
   final double? width;
-  final double? aspectRatio;
-  final double? borderRadius;
+  final double? aspectRatio; // defaults to 16/9
+  final double? borderRadius; // defaults to 0
   final Color? borderColor;
 
   final Widget? loaderWidget;
   final Widget? errorWidget;
   final Widget? shimmerWidget;
 
-  final BoxFit? boxFit;
+  final BoxFit? boxFit; // defaults to BoxFit.cover
 
   final VideoPlayerController? videoPlayerController;
   final LMIconButton? playButton;
@@ -64,7 +64,6 @@ class LMVideo extends StatefulWidget {
 
 class _LMVideoState extends State<LMVideo> {
   late VideoPlayerController videoPlayerController;
-  Future? videoPlayerControllerFuture;
   FlickManager? flickManager;
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   bool _onTouch = true;
@@ -82,20 +81,18 @@ class _LMVideoState extends State<LMVideo> {
   @override
   void initState() {
     super.initState();
-    videoPlayerControllerFuture = initialiseControllers();
   }
 
   @override
   void didUpdateWidget(LMVideo oldWidget) {
     super.didUpdateWidget(oldWidget);
-    videoPlayerControllerFuture = initialiseControllers();
   }
 
   Future<void> initialiseControllers() async {
     if (widget.videoUrl != null) {
       videoPlayerController = widget.videoPlayerController ??
-          VideoPlayerController.networkUrl(
-            Uri.parse(widget.videoUrl!),
+          VideoPlayerController.network(
+            widget.videoUrl!,
             videoPlayerOptions: VideoPlayerOptions(
               allowBackgroundPlayback: false,
             ),
@@ -124,7 +121,7 @@ class _LMVideoState extends State<LMVideo> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return FutureBuilder(
-      future: videoPlayerControllerFuture,
+      future: initialiseControllers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LMPostShimmer();
@@ -157,6 +154,7 @@ class _LMVideoState extends State<LMVideo> {
                 child: Container(
                   width: widget.width ?? screenSize.width,
                   height: widget.height ?? screenSize.width,
+                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     borderRadius:
                         BorderRadius.circular(widget.borderRadius ?? 0),
@@ -166,18 +164,25 @@ class _LMVideoState extends State<LMVideo> {
                     ),
                   ),
                   alignment: Alignment.center,
-                  child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(widget.borderRadius ?? 0),
-                      child: FlickVideoPlayer(
-                        flickManager: flickManager!,
-                        flickVideoWithControls: FlickVideoWithControls(
-                          aspectRatioWhenLoading: widget.aspectRatio ?? 16 / 9,
-                          controls: const FlickPortraitControls(),
-                          willVideoPlayerControllerChange: false,
-                          videoFit: BoxFit.cover,
-                        ),
-                      )),
+                  child: Expanded(
+                    child: FlickVideoPlayer(
+                      flickManager: flickManager!,
+                      flickVideoWithControls:
+                          widget.showControls != null && widget.showControls!
+                              ? FlickVideoWithControls(
+                                  aspectRatioWhenLoading:
+                                      widget.aspectRatio ?? 16 / 9,
+                                  controls: const FlickPortraitControls(),
+                                  videoFit: widget.boxFit ?? BoxFit.cover,
+                                )
+                              : FlickVideoWithControls(
+                                  aspectRatioWhenLoading:
+                                      widget.aspectRatio ?? 16 / 9,
+                                  controls: const SizedBox(),
+                                  videoFit: widget.boxFit ?? BoxFit.cover,
+                                ),
+                    ),
+                  ),
                 ),
               ),
             ),

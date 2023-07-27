@@ -60,6 +60,8 @@ class _LMCarouselState extends State<LMCarousel> {
               videoUrl: e.attachmentMeta.url,
               borderRadius: widget.borderRadius,
               borderColor: widget.borderColor,
+              boxFit: BoxFit.cover,
+              showControls: false,
             );
       } else {
         return const SizedBox.shrink();
