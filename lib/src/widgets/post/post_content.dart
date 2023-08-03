@@ -25,7 +25,7 @@ class LMPostContent extends StatelessWidget {
     final postDetails = InheritedPostProvider.of(context)?.post;
     return ExpandableText(
       text ?? postDetails!.text,
-      expandText: "",
+      expandText: "see more",
       animation: animation ?? true,
       maxLines: visibleLines ?? 4,
       linkStyle: linkStyle ??
