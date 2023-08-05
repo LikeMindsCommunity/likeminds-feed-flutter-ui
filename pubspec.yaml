@@ -18,7 +18,7 @@ dependencies:
   shimmer:
   chewie:
   carousel_slider:
-  video_player: 
+  video_player: 2.7.0
   visibility_detector:
   cached_network_image:
   url_launcher:

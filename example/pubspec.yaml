@@ -40,8 +40,6 @@ dependencies:
   lazy_load_scrollview: 
   infinite_scroll_pagination: 
 
-  likeminds_feed: 
-
   likeminds_feed_ui_fl: 
     path: ../
 

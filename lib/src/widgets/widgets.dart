@@ -28,3 +28,7 @@ export 'media/document.dart';
 export 'media/image.dart';
 export 'media/video.dart';
 export 'media/link.dart';
+
+export 'topic/topic_chip.dart';
+export 'topic/topic_feed_bar.dart';
+export 'topic/topic_tile.dart';
