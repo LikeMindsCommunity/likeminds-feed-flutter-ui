@@ -1,24 +1,42 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
-import 'package:likeminds_feed_ui_fl/src/models/topic_view_model.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
 class TopicFeedBar extends StatelessWidget {
+  // Required parameters
+  // Text color of the topic chip
+  final Color textColor;
+  // List of selected topic [pass empty list if no topic is selected]
+  final List<TopicViewModel> selectedTopics;
+  // Action to perform after tapping on the topic feed bar
+  final Function onTap;
+
+  final bool showBorder;
+  // background color of the topic chip defaults to transparent
   final Color? backgroundColor;
   final Color? borderColor;
   final double? borderWidth;
-  final bool showBorder;
-  final Color textColor;
   final TextStyle? textStyle;
+  // Icon to be displayed on the topic chip if any defaults to null
   final Icon? icon;
-  final Function onClear;
-  final Function(TopicViewModel) onIconTap;
-  final Function onTap;
+  final Function? onClear;
+  final Function(TopicViewModel)? onIconTap;
+  final Widget? trailingIcon;
+  final Function? onTrailingIconTap;
+  final EdgeInsets? chipPadding;
+  // Whether to show divider below topic feed bar or not
+  // defaults to true
+  final bool showDivider;
+  // Height of the chips of topic feed bar
+  final double? height;
+  // Placeholder chip if no topic is selected
+  final Widget? emptyTopicChip;
+  // Whether to place the icon before the text or after the text of the topic chip
+  // LMIconPlacement.start places the icon before the text
+  // LMIconPlacement.end places the icon after the text
+  final LMIconPlacement iconPlacement;
 
-  List<TopicViewModel> selectedTopics;
-
-  TopicFeedBar({
+  const TopicFeedBar({
     Key? key,
     required this.selectedTopics,
     this.backgroundColor,
@@ -28,74 +46,122 @@ class TopicFeedBar extends StatelessWidget {
     required this.textColor,
     this.textStyle,
     this.icon,
-    required this.onClear,
-    required this.onIconTap,
+    this.onClear,
+    this.onIconTap,
     required this.onTap,
+    this.trailingIcon,
+    this.onTrailingIconTap,
+    this.chipPadding,
+    this.height,
+    this.showDivider = true,
+    this.emptyTopicChip,
+    this.iconPlacement = LMIconPlacement.end,
   }) : super(key: key);
 
   Widget selectedTopicsWidget(double width) {
-    return Container(
+    return SizedBox(
       width: width,
-      padding: const EdgeInsets.all(10.0),
       child: Row(
         children: <Widget>[
           Expanded(
             child: SizedBox(
-              height: 30,
+              height: height ?? 30,
               child: ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemCount: selectedTopics.length,
-                itemBuilder: (context, index) => LMTopicChip(
-                  topic: selectedTopics[index],
-                  textColor: textColor,
-                  onIconTap: onIconTap,
-                  showBorder: showBorder,
-                  borderColor: borderColor,
-                  borderWidth: borderWidth,
-                  backgroundColor: backgroundColor,
-                  textStyle: textStyle,
-                  icon: icon,
-                ),
-              ),
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: trailingIcon == null
+                      ? selectedTopics.length
+                      : selectedTopics.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == selectedTopics.length &&
+                        trailingIcon != null) {
+                      return Container(
+                        color: Colors.transparent,
+                        child: LMTopicChip(
+                          padding: chipPadding,
+                          topic: TopicViewModel(
+                            id: "-1",
+                            name: "",
+                            isEnabled: false,
+                          ),
+                          textColor: textColor,
+                          onIconTap: (tapped) {
+                            onTap();
+                          },
+                          showBorder: showBorder,
+                          borderColor: borderColor,
+                          borderWidth: borderWidth,
+                          backgroundColor: backgroundColor,
+                          textStyle: textStyle,
+                          icon: trailingIcon,
+                          iconPlacement: iconPlacement,
+                        ),
+                      );
+                    }
+                    return Container(
+                      color: Colors.transparent,
+                      child: LMTopicChip(
+                        padding: chipPadding,
+                        topic: selectedTopics[index],
+                        textColor: textColor,
+                        onIconTap: onIconTap,
+                        showBorder: showBorder,
+                        borderColor: borderColor,
+                        borderWidth: borderWidth,
+                        backgroundColor: backgroundColor,
+                        textStyle: textStyle,
+                        icon: icon,
+                      ),
+                    );
+                  }),
             ),
           ),
           kHorizontalPaddingMedium,
-          GestureDetector(
-            onTap: () => onClear(),
-            child: Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.all(8.0),
-              child: const Text(
-                "Clear",
-                style: TextStyle(
-                  color: kPrimaryColor,
-                ),
-              ),
-            ),
-          )
+          onClear == null
+              ? const SizedBox()
+              : GestureDetector(
+                  onTap: () => onClear!(),
+                  child: Container(
+                    color: Colors.transparent,
+                    padding: const EdgeInsets.all(8.0),
+                    child: const Text(
+                      "Clear",
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                  ),
+                )
         ],
       ),
     );
   }
 
   Widget emptyTopicsWidget() {
-    return const Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Row(
-        children: <Widget>[
-          Text(
-            'All topics',
-          ),
-          kHorizontalPaddingMedium,
-          Icon(
-            Icons.arrow_downward,
-            size: 18,
+    return emptyTopicChip != null
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              emptyTopicChip!,
+            ],
           )
-        ],
-      ),
-    );
+        : const Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  'All topics',
+                ),
+                kHorizontalPaddingMedium,
+                Icon(
+                  Icons.arrow_downward,
+                  size: 18,
+                )
+              ],
+            ),
+          );
   }
 
   @override
@@ -104,13 +170,16 @@ class TopicFeedBar extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
+        padding: showDivider ? const EdgeInsets.only(bottom: 12.0) : null,
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: kGrey2Color.withOpacity(0.1),
-            ),
-          ),
+          border: showDivider
+              ? Border(
+                  bottom: BorderSide(
+                    width: 1,
+                    color: kGrey2Color.withOpacity(0.1),
+                  ),
+                )
+              : null,
         ),
         child: selectedTopics.isEmpty
             ? emptyTopicsWidget()
