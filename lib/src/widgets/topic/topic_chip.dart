@@ -24,6 +24,8 @@ class LMTopicChip extends StatelessWidget {
   // LMIconPlacement.start places the icon before the text
   // LMIconPlacement.end places the icon after the text
   final LMIconPlacement iconPlacement;
+  final double? height;
+  final EdgeInsets? margin;
 
   const LMTopicChip({
     Key? key,
@@ -37,14 +39,17 @@ class LMTopicChip extends StatelessWidget {
     this.icon,
     this.padding,
     this.onIconTap,
+    this.height,
     this.iconPlacement = LMIconPlacement.end,
+    this.margin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 8.0),
+      margin: margin ?? const EdgeInsets.only(right: 8.0),
       alignment: Alignment.center,
+      height: height,
       padding: padding ??
           const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       decoration: BoxDecoration(
@@ -76,6 +81,8 @@ class LMTopicChip extends StatelessWidget {
           Text(
             topic.name,
             style: textStyle ?? TextStyle(color: textColor),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           icon != null && iconPlacement == LMIconPlacement.end
               ? kHorizontalPaddingSmall

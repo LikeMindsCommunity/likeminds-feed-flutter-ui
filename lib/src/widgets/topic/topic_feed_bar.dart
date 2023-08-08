@@ -141,15 +141,19 @@ class TopicFeedBar extends StatelessWidget {
   Widget emptyTopicsWidget() {
     return emptyTopicChip != null
         ? Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               emptyTopicChip!,
             ],
           )
-        : const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Row(
+        : Container(
+            height: height,
+            padding: const EdgeInsets.all(10.0),
+            child: const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
                   'All topics',
@@ -175,8 +179,8 @@ class TopicFeedBar extends StatelessWidget {
           border: showDivider
               ? Border(
                   bottom: BorderSide(
-                    width: 1,
-                    color: kGrey2Color.withOpacity(0.1),
+                    width: 0.1,
+                    color: kGrey2Color.withOpacity(0.05),
                   ),
                 )
               : null,

@@ -194,6 +194,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_layout_grid",
+      "rootUri": "file:///Users/warmac/.pub-cache/hosted/pub.dev/flutter_layout_grid-1.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///Users/warmac/.pub-cache/hosted/pub.dev/flutter_lints-2.0.2",
       "packageUri": "lib/",
@@ -414,6 +420,12 @@
       "rootUri": "file:///Users/warmac/.pub-cache/hosted/pub.dev/pubspec_parse-1.2.3",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "quiver",
+      "rootUri": "file:///Users/warmac/.pub-cache/hosted/pub.dev/quiver-3.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "rxdart",
@@ -692,7 +704,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-03T10:04:27.549807Z",
+  "generated": "2023-08-08T07:42:28.128140Z",
   "generator": "pub",
   "generatorVersion": "3.0.1"
 }

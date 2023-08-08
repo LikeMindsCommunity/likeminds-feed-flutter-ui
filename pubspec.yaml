@@ -23,7 +23,8 @@ dependencies:
   cached_network_image:
   url_launcher:
   flutter_svg:
-  flick_video_player: 
+  flick_video_player:
+  flutter_layout_grid: ^1.0.3
 
 dev_dependencies:
   flutter_test:
