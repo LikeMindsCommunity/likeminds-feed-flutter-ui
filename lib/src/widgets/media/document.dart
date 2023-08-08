@@ -80,7 +80,7 @@ class _LMDocumentState extends State<LMDocument> {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
             return GestureDetector(
-              onTap: widget.onTap,
+              onTap: widget.onTap == null ? null : () => widget.onTap!(),
               child: Container(
                 margin: const EdgeInsets.symmetric(
                   vertical: kPaddingSmall,

@@ -24,6 +24,7 @@ dependencies:
   url_launcher:
   flutter_svg:
   flick_video_player: 
+  open_filex: ^4.3.2
 
 dev_dependencies:
   flutter_test:
