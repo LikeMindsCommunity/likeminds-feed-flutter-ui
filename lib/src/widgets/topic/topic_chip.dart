@@ -25,6 +25,7 @@ class LMTopicChip extends StatelessWidget {
   final LMIconPlacement iconPlacement;
   final double? height;
   final EdgeInsets? margin;
+  final bool gripChip;
 
   const LMTopicChip({
     Key? key,
@@ -40,10 +41,19 @@ class LMTopicChip extends StatelessWidget {
     this.height,
     this.iconPlacement = LMIconPlacement.end,
     this.margin,
+    this.gripChip = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget topicText = Text(
+      topic.name,
+      style: textStyle,
+      textAlign: TextAlign.center,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+
     return Container(
       margin: margin ?? const EdgeInsets.only(right: 8.0),
       alignment: Alignment.center,
@@ -62,6 +72,7 @@ class LMTopicChip extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           icon != null && iconPlacement == LMIconPlacement.start
@@ -76,12 +87,11 @@ class LMTopicChip extends StatelessWidget {
           icon != null && iconPlacement == LMIconPlacement.start
               ? kHorizontalPaddingSmall
               : const SizedBox(),
-          Text(
-            topic.name,
-            style: textStyle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
+          topic.name.isEmpty
+              ? const SizedBox()
+              : gripChip
+                  ? Expanded(child: topicText)
+                  : topicText,
           icon != null && iconPlacement == LMIconPlacement.end
               ? kHorizontalPaddingSmall
               : const SizedBox(),

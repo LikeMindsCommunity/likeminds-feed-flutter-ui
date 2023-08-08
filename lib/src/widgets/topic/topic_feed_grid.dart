@@ -85,6 +85,7 @@ class TopicFeedGrid extends StatelessWidget {
               borderWidth: borderWidth,
               backgroundColor: backgroundColor,
               textStyle: textStyle,
+              gripChip: true,
               icon: trailingIcon,
               iconPlacement: iconPlacement,
               margin: EdgeInsets.zero,
@@ -99,6 +100,7 @@ class TopicFeedGrid extends StatelessWidget {
           height: height,
           child: LMTopicChip(
             padding: chipPadding,
+            gripChip: true,
             topic: selectedTopics[i],
             onIconTap: onIconTap,
             showBorder: showBorder,
@@ -122,13 +124,7 @@ class TopicFeedGrid extends StatelessWidget {
       height: gridHeight,
       child: LayoutGrid(
         gridFit: GridFit.passthrough,
-        columnSizes: itemCount == 1
-            ? [auto, 1.fr, 1.fr, 1.fr]
-            : itemCount == 2
-                ? [auto, auto, 1.fr, 1.fr]
-                : itemCount == 3
-                    ? [auto, auto, auto, 1.fr]
-                    : [auto, auto, auto, auto],
+        columnSizes: [1.fr, 1.fr, 1.fr, 1.fr],
         rowSizes: itemCount == 1
             ? [auto]
             : itemCount == 2

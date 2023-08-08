@@ -4,8 +4,6 @@ import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
 class TopicFeedBar extends StatelessWidget {
   // Required parameters
-  // Text color of the topic chip
-  final Color textColor;
   // List of selected topic [pass empty list if no topic is selected]
   final List<TopicViewModel> selectedTopics;
   // Action to perform after tapping on the topic feed bar
@@ -43,7 +41,6 @@ class TopicFeedBar extends StatelessWidget {
     this.borderColor,
     this.borderWidth,
     this.showBorder = false,
-    required this.textColor,
     this.textStyle,
     this.icon,
     this.onClear,
