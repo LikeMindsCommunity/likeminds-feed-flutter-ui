@@ -85,7 +85,6 @@ class TopicFeedBar extends StatelessWidget {
                             name: "",
                             isEnabled: false,
                           ),
-                          textColor: textColor,
                           onIconTap: (tapped) {
                             onTap();
                           },
@@ -104,7 +103,6 @@ class TopicFeedBar extends StatelessWidget {
                       child: LMTopicChip(
                         padding: chipPadding,
                         topic: selectedTopics[index],
-                        textColor: textColor,
                         onIconTap: onIconTap,
                         showBorder: showBorder,
                         borderColor: borderColor,

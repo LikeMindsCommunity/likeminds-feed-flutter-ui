@@ -15,8 +15,7 @@ class LMTopicChip extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
   final bool showBorder;
-  // Text color of the topic chip
-  final Color textColor;
+  // Text style of the topic chip
   final TextStyle? textStyle;
   final Widget? icon;
   final EdgeInsets? padding;
@@ -34,7 +33,6 @@ class LMTopicChip extends StatelessWidget {
     this.borderColor,
     this.borderWidth,
     this.showBorder = false,
-    required this.textColor,
     this.textStyle,
     this.icon,
     this.padding,
@@ -80,7 +78,7 @@ class LMTopicChip extends StatelessWidget {
               : const SizedBox(),
           Text(
             topic.name,
-            style: textStyle ?? TextStyle(color: textColor),
+            style: textStyle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

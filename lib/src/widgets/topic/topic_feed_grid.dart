@@ -76,7 +76,6 @@ class TopicFeedGrid extends StatelessWidget {
                 name: "",
                 isEnabled: false,
               ),
-              textColor: textColor,
               height: height,
               onIconTap: (tapped) {
                 onTap();
@@ -101,7 +100,6 @@ class TopicFeedGrid extends StatelessWidget {
           child: LMTopicChip(
             padding: chipPadding,
             topic: selectedTopics[i],
-            textColor: textColor,
             onIconTap: onIconTap,
             showBorder: showBorder,
             height: height,
