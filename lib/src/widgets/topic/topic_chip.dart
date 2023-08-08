@@ -13,6 +13,7 @@ class LMTopicChip extends StatelessWidget {
   final Color? backgroundColor;
   // border color of the topic chip defaults to null
   final Color? borderColor;
+  final double? borderRadius;
   final double? borderWidth;
   final bool showBorder;
   // Text style of the topic chip
@@ -38,6 +39,7 @@ class LMTopicChip extends StatelessWidget {
     this.icon,
     this.padding,
     this.onIconTap,
+    this.borderRadius,
     this.height,
     this.iconPlacement = LMIconPlacement.end,
     this.margin,
@@ -61,7 +63,7 @@ class LMTopicChip extends StatelessWidget {
       padding: padding ??
           const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(borderRadius ?? 5.0),
         border: showBorder
             ? Border.all(
                 color: borderColor ?? Colors.transparent,

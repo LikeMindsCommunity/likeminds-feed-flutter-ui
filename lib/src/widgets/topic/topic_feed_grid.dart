@@ -15,6 +15,7 @@ class TopicFeedGrid extends StatelessWidget {
   final bool showBorder;
   // background color of the topic chip defaults to transparent
   final Color? backgroundColor;
+  final double? borderRadius;
   final Color? borderColor;
   final double? borderWidth;
   final TextStyle? textStyle;
@@ -42,6 +43,7 @@ class TopicFeedGrid extends StatelessWidget {
     this.backgroundColor,
     this.borderColor,
     this.borderWidth,
+    this.borderRadius,
     this.showBorder = false,
     required this.textColor,
     this.textStyle,
@@ -65,75 +67,40 @@ class TopicFeedGrid extends StatelessWidget {
 
     for (int i = 0; i < itemCount; i++) {
       if (i == itemCount - 1 && trailingIcon != null) {
-        gridWidget.add(
-          Container(
-            color: Colors.transparent,
-            height: height,
-            child: LMTopicChip(
-              padding: chipPadding,
-              topic: TopicViewModel(
-                id: "-1",
-                name: "",
-                isEnabled: false,
-              ),
-              height: height,
-              onIconTap: (tapped) {
-                onTap();
-              },
-              showBorder: showBorder,
-              borderColor: borderColor,
-              borderWidth: borderWidth,
-              backgroundColor: backgroundColor,
-              textStyle: textStyle,
-              gripChip: true,
-              icon: trailingIcon,
-              iconPlacement: iconPlacement,
-              margin: EdgeInsets.zero,
-            ),
-          ),
-        );
+        gridWidget.add(trailingIcon!);
         continue;
       }
+
       gridWidget.add(
-        Container(
-          color: Colors.transparent,
-          height: height,
-          child: LMTopicChip(
-            padding: chipPadding,
-            gripChip: true,
-            topic: selectedTopics[i],
-            onIconTap: onIconTap,
-            showBorder: showBorder,
-            height: height,
-            borderColor: borderColor,
-            borderWidth: borderWidth,
-            backgroundColor: backgroundColor,
-            textStyle: textStyle,
-            icon: icon,
-            margin: EdgeInsets.zero,
-          ),
+        Chip(
+          label: Text(selectedTopics[i].name),
+          onDeleted: onIconTap == null
+              ? null
+              : () {
+                  if (onIconTap != null) {
+                    onIconTap!(selectedTopics[i]);
+                  }
+                },
+          deleteIcon: icon,
+          backgroundColor: backgroundColor,
+          labelStyle: textStyle,
+          clipBehavior: Clip.hardEdge,
+          padding: chipPadding,
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: borderColor ?? Colors.transparent,
+                width: borderWidth ?? 0.0,
+              ),
+              borderRadius: BorderRadius.circular(borderRadius ?? 5.0)),
         ),
       );
     }
-    // calculates the number of rows to calculate total height of the topic grid
-    int count = (itemCount / 4).ceil();
-    // calculates the height of topic grid using the number of rows
-    double gridHeight = (height + 8) * count;
     return SizedBox(
       width: width,
-      height: gridHeight,
-      child: LayoutGrid(
-        gridFit: GridFit.passthrough,
-        columnSizes: [1.fr, 1.fr, 1.fr, 1.fr],
-        rowSizes: itemCount == 1
-            ? [auto]
-            : itemCount == 2
-                ? [auto, auto]
-                : itemCount == 3
-                    ? [auto, auto, auto]
-                    : [auto, auto, auto, auto],
-        rowGap: 8.0,
-        columnGap: 8.0,
+      child: Wrap(
+        spacing: 5.0, // gap between adjacent chips
+        runSpacing: 5.0,
         children: gridWidget,
       ),
     );
