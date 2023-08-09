@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
 
+enum LMIconButtonPlacement { start, end }
+
 class LMIconButton extends StatefulWidget {
   const LMIconButton({
     super.key,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LMPostMedia extends StatefulWidget {
   const LMPostMedia(
@@ -56,6 +57,10 @@ class _LMPostMediaState extends State<LMPostMedia> {
             documentUrl: e.attachmentMeta.url,
             documentIcon: widget.documentIcon,
             type: e.attachmentMeta.format!,
+            onTap: () {
+              Uri fileUrl = Uri.parse(e.attachmentMeta.url!);
+              launchUrl(fileUrl, mode: LaunchMode.externalApplication);
+            },
           ),
         )
         .toList();
