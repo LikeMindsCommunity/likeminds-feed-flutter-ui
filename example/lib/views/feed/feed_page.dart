@@ -130,6 +130,7 @@ class _FeedScreenState extends State<FeedScreen> {
         icon: LMIcon(
           type: LMIconType.icon,
           icon: Icons.add,
+          size: 12,
           color: Theme.of(context).colorScheme.onPrimary,
         ),
         onTap: () {

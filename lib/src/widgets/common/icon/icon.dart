@@ -62,9 +62,9 @@ class LMIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: boxSize?.abs() ?? 32,
-      width: boxSize?.abs() ?? 32,
-      padding: EdgeInsets.all(boxPadding?.abs() ?? 6),
+      height: boxSize?.abs(),
+      width: boxSize?.abs(),
+      padding: EdgeInsets.all(boxPadding?.abs() ?? 0),
       child: Center(child: getIconWidget()),
     );
   }
