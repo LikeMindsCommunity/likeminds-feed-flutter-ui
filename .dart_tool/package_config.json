@@ -273,7 +273,7 @@
     },
     {
       "name": "likeminds_feed",
-      "rootUri": "../../LikeMinds-Flutter-Feed-SDK",
+      "rootUri": "file:///Users/warmac/.pub-cache/hosted/pub.dev/likeminds_feed-1.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -698,7 +698,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-09T18:32:29.146870Z",
+  "generated": "2023-08-09T20:14:09.944441Z",
   "generator": "pub",
   "generatorVersion": "3.0.1"
 }
