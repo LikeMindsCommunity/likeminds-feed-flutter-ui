@@ -18,6 +18,7 @@ class LMTextButton extends StatefulWidget {
     this.width,
     this.margin,
     this.isActive = false,
+    this.padding,
     this.placement = LMIconPlacement.start,
   });
 
@@ -28,6 +29,7 @@ class LMTextButton extends StatefulWidget {
   final Function() onTap;
   final LMIcon? activeIcon;
   final LMTextView? activeText;
+  final EdgeInsets? padding;
 
   final Color? backgroundColor;
   final double borderRadius;
@@ -49,6 +51,7 @@ class _LMTextButtonState extends State<LMTextButton> {
       child: Container(
         height: widget.height ?? 32,
         width: widget.width,
+        padding: widget.padding ?? EdgeInsets.zero,
         clipBehavior: Clip.none,
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? Colors.transparent,
@@ -64,7 +67,7 @@ class _LMTextButtonState extends State<LMTextButton> {
                   ? widget.isActive
                       ? widget.activeIcon ?? const SizedBox()
                       : widget.icon ?? const SizedBox()
-                  : const SizedBox(width: 8),
+                  : const SizedBox(),
               widget.placement == LMIconPlacement.start
                   ? (widget.icon != null || widget.activeIcon != null)
                       ? SizedBox(width: widget.margin ?? 8)
@@ -72,7 +75,7 @@ class _LMTextButtonState extends State<LMTextButton> {
                   : const SizedBox(),
               widget.isActive ? widget.activeText ?? widget.text : widget.text,
               widget.placement == LMIconPlacement.end
-                  ? widget.icon != null || widget.activeIcon != null
+                  ? (widget.icon != null || widget.activeIcon != null)
                       ? SizedBox(width: widget.margin ?? 8)
                       : const SizedBox()
                   : const SizedBox(),
@@ -80,7 +83,7 @@ class _LMTextButtonState extends State<LMTextButton> {
                   ? widget.isActive
                       ? widget.activeIcon ?? const SizedBox()
                       : widget.icon ?? const SizedBox()
-                  : const SizedBox(width: 8),
+                  : const SizedBox(),
             ],
           ),
         ),
