@@ -52,8 +52,9 @@ class _LMDocumentState extends State<LMDocument> {
   String? _fileSize;
   String? url;
   File? file;
+  Future<File>? fileLoaderFuture;
 
-  Future loadFile() async {
+  Future<File> loadFile() async {
     File file;
     if (widget.documentUrl != null) {
       final String url = widget.documentUrl!;
@@ -70,12 +71,13 @@ class _LMDocumentState extends State<LMDocument> {
   @override
   void initState() {
     super.initState();
+    fileLoaderFuture = loadFile();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: loadFile(),
+        future: fileLoaderFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {

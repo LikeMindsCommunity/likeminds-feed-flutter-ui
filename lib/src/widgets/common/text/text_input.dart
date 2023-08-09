@@ -17,10 +17,12 @@ class LMTextInput extends StatefulWidget {
     this.borderRadius,
     this.externalPadding,
     this.internalPadding,
+    this.enabled = true,
   });
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final bool enabled;
 
   final LMProfilePicture? profilePicture;
   final String? hintText;
@@ -89,6 +91,7 @@ class _LMTextInputState extends State<LMTextInput> {
                           decoration: InputDecoration(
                             hintText:
                                 widget.hintText ?? "Write something here..",
+                            enabled: widget.enabled,
                             hintStyle: widget.hintStyle ??
                                 const TextStyle(
                                   color: kGrey1Color,

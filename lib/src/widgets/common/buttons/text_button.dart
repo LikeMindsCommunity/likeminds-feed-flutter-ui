@@ -45,6 +45,7 @@ class _LMTextButtonState extends State<LMTextButton> {
       child: Container(
         height: widget.height ?? 32,
         width: widget.width,
+        clipBehavior: Clip.none,
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? Colors.transparent,
           borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -52,6 +53,7 @@ class _LMTextButtonState extends State<LMTextButton> {
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               widget.isActive
                   ? widget.activeIcon ?? const SizedBox()
@@ -60,7 +62,6 @@ class _LMTextButtonState extends State<LMTextButton> {
                   ? SizedBox(width: widget.margin ?? 8)
                   : const SizedBox(),
               widget.isActive ? widget.activeText ?? widget.text : widget.text,
-              SizedBox(width: widget.icon != null ? 6 : 0)
             ],
           ),
         ),
