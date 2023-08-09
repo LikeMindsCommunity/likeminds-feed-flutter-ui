@@ -395,17 +395,18 @@ packages:
   likeminds_feed:
     dependency: "direct main"
     description:
-      path: "../../LikeMinds-Flutter-Feed-SDK"
-      relative: true
-    source: path
-    version: "1.3.1"
+      name: likeminds_feed
+      sha256: "6b865510e533667aadf94fa4d1bc02cdcecc2bb5d01468c8d4d44651f7e21a38"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.2"
   likeminds_feed_ui_fl:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.2"
   lints:
     dependency: transitive
     description:
