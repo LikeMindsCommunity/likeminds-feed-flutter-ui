@@ -17,6 +17,7 @@ class LMPostHeader extends StatelessWidget {
     this.subText,
     this.menu,
     this.createdAt,
+    this.onProfileTap,
     required this.isFeed,
   });
 
@@ -25,6 +26,7 @@ class LMPostHeader extends StatelessWidget {
   final LMTextView? subText;
   final LMPostMenu? menu;
   final LMTextView? createdAt;
+  final Function()? onProfileTap;
   final bool isFeed;
 
   final User user;
@@ -47,6 +49,7 @@ class LMPostHeader extends StatelessWidget {
                 size: imageSize ?? 42,
                 fallbackText: user.name,
                 imageUrl: user.imageUrl,
+                onTap: onProfileTap,
               ),
               kHorizontalPaddingLarge,
               Expanded(

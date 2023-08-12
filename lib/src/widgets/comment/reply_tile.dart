@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/packages/expandable_text/expandable_text.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/text_button.dart';
@@ -70,11 +71,17 @@ class _LMReplyTileState extends State<LMReplyTile> {
                     Container(
                       width: 240,
                       padding: const EdgeInsets.only(top: 12, bottom: 6),
-                      child: LMTextView(
-                        text: TaggingHelper.convertRouteToTag(
-                          widget.comment.text,
-                          withTilde: false,
-                        ),
+                      child: ExpandableText(
+                        widget.comment.text,
+                        expandText: "see more",
+                        animation: true,
+                        maxLines: 4,
+                        linkStyle: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: kLinkColor),
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ],
