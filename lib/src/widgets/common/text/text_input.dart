@@ -84,7 +84,7 @@ class _LMTextInputState extends State<LMTextInput> {
                         padding: EdgeInsets.symmetric(
                             horizontal: widget.internalPadding ?? 0),
                         child: TextField(
-                          maxLines: 100,
+                          maxLines: 4,
                           minLines: 1,
                           focusNode: widget.focusNode,
                           controller: widget.controller,
