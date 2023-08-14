@@ -485,6 +485,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                       ? const LMPostShimmer()
                                       : LMPostWidget(
                                           post: postData!,
+                                          onTagTap: (String userId) {
+                                            locator<LikeMindsService>()
+                                                .routeToProfile(userId);
+                                          },
                                           isFeed: false,
                                           user: postDetailResponse.users![
                                               postDetailResponse
@@ -539,6 +543,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                     itemBuilder: (context, item, index) {
                                       return LMCommentTile(
                                         key: ValueKey(item.id),
+                                        onTagTap: (String userId) {
+                                          locator<LikeMindsService>()
+                                              .routeToProfile(userId);
+                                        },
                                         comment: item,
                                         user: postDetailResponse
                                             .users![item.userId]!,

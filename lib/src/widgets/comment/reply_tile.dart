@@ -20,6 +20,7 @@ class LMReplyTile extends StatefulWidget {
     this.commentActions,
     this.actionsPadding,
     required this.onMenuTap,
+    required this.onTagTap,
   });
 
   final User user;
@@ -31,6 +32,7 @@ class LMReplyTile extends StatefulWidget {
   final List<Widget>? commentActions;
   final EdgeInsets? actionsPadding;
   final Function(int) onMenuTap;
+  final Function(String) onTagTap;
 
   @override
   State<LMReplyTile> createState() => _LMReplyTileState();
@@ -73,6 +75,7 @@ class _LMReplyTileState extends State<LMReplyTile> {
                       padding: const EdgeInsets.only(top: 12, bottom: 6),
                       child: ExpandableText(
                         widget.comment.text,
+                        onTagTap: widget.onTagTap,
                         expandText: "see more",
                         animation: true,
                         maxLines: 4,
