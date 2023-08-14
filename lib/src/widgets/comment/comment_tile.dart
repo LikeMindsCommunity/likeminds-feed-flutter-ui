@@ -21,6 +21,7 @@ class LMCommentTile extends StatefulWidget {
     this.commentActions,
     this.actionsPadding,
     required this.onMenuTap,
+    required this.onTagTap,
   });
 
   final User user;
@@ -32,6 +33,7 @@ class LMCommentTile extends StatefulWidget {
   final List<Widget>? commentActions;
   final EdgeInsets? actionsPadding;
   final Function(int) onMenuTap;
+  final Function(String) onTagTap;
 
   @override
   State<LMCommentTile> createState() => _LMCommentTileState();
@@ -73,6 +75,7 @@ class _LMCommentTileState extends State<LMCommentTile> {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       child: ExpandableText(
                         widget.comment.text,
+                        onTagTap: widget.onTagTap,
                         expandText: "see more",
                         animation: true,
                         maxLines: 4,
