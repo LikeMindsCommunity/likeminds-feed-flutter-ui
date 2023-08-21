@@ -42,6 +42,7 @@ class LMCommentTile extends StatefulWidget {
 class _LMCommentTileState extends State<LMCommentTile> {
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(color: kWhiteColor),
       padding: const EdgeInsets.all(kPaddingLarge),
@@ -70,23 +71,6 @@ class _LMCommentTileState extends State<LMCommentTile> {
                         ? kVerticalPaddingSmall
                         : const SizedBox(),
                     widget.subtitleText ?? const SizedBox(),
-                    Container(
-                      width: 240,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: ExpandableText(
-                        widget.comment.text,
-                        onTagTap: widget.onTagTap,
-                        expandText: "see more",
-                        animation: true,
-                        maxLines: 4,
-                        linkStyle: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(color: kLinkColor),
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
                   ],
                 ),
                 const Spacer(),
@@ -98,7 +82,24 @@ class _LMCommentTileState extends State<LMCommentTile> {
               ],
             ),
           ),
-          // kVerticalPaddingMedium,
+          kVerticalPaddingMedium,
+          Container(
+            padding: widget.actionsPadding ?? EdgeInsets.zero,
+            child: ExpandableText(
+              widget.comment.text,
+              onTagTap: widget.onTagTap,
+              expandText: "see more",
+              animation: true,
+              maxLines: 4,
+              linkStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: kLinkColor),
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+          kVerticalPaddingSmall,
           Padding(
             padding: widget.actionsPadding ?? EdgeInsets.zero,
             child: Row(

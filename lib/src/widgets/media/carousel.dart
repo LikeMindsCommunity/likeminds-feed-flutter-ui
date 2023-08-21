@@ -81,8 +81,6 @@ class _LMCarouselState extends State<LMCarousel> {
     mapAttachmentsToWidget();
     final size = MediaQuery.of(context).size.width;
     return Container(
-      height: widget.height ?? size,
-      width: widget.width ?? size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
         border: Border.all(
@@ -93,7 +91,9 @@ class _LMCarouselState extends State<LMCarousel> {
       child: Column(
         children: [
           // The carousel.
-          Expanded(
+          SizedBox(
+            height: widget.height ?? size,
+            width: widget.width ?? size,
             child: ClipRRect(
               clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
@@ -101,17 +101,19 @@ class _LMCarouselState extends State<LMCarousel> {
                 itemCount: widget.attachments.length,
                 itemBuilder: (context, index, index2) => mediaWidgets[index],
                 options: CarouselOptions(
-                    aspectRatio: 1.0,
-                    initialPage: 0,
-                    disableCenter: true,
-                    scrollDirection: Axis.horizontal,
-                    enableInfiniteScroll: false,
-                    enlargeFactor: 0.0,
-                    viewportFraction: 1.0,
-                    onPageChanged: (index, reason) {
-                      currPosition = index;
-                      rebuildCurr.value = !rebuildCurr.value;
-                    }),
+                  aspectRatio: 1.0,
+                  height: size,
+                  initialPage: 0,
+                  disableCenter: true,
+                  scrollDirection: Axis.horizontal,
+                  enableInfiniteScroll: false,
+                  enlargeFactor: 0.0,
+                  viewportFraction: 1.0,
+                  onPageChanged: (index, reason) {
+                    currPosition = index;
+                    rebuildCurr.value = !rebuildCurr.value;
+                  },
+                ),
               ),
             ),
           ),
