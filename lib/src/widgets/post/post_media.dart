@@ -8,11 +8,15 @@ class LMPostMedia extends StatefulWidget {
       {super.key,
       required this.attachments,
       this.documentIcon,
+      this.width,
+      this.height,
       this.borderRadius});
 
   final List<Attachment> attachments;
   final LMIcon? documentIcon;
   final double? borderRadius;
+  final double? width;
+  final double? height;
 
   @override
   State<LMPostMedia> createState() => _LMPostMediaState();
@@ -41,6 +45,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
       return LMCarousel(
         attachments: attachments,
         borderRadius: widget.borderRadius,
+        width: widget.width,
+        height: widget.height,
       );
     }
   }
