@@ -29,6 +29,7 @@ class LMTextView extends StatelessWidget {
       onTap: onTap,
       child: Text(
         text,
+        textAlign: textAlign,
         overflow: overflow ?? TextOverflow.fade,
         maxLines: maxLines,
         style: textStyle ?? defaultTextStyle,
