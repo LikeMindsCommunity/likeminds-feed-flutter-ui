@@ -23,7 +23,7 @@ class TaggingHelper {
           userTags.firstWhereOrNull((element) => element.name! == tag);
       if (userTag != null) {
         string = string.replaceAll('@$tag~',
-            '<<${userTag.name}|route://member/${userTag.sdkClientInfo!.userUniqueId}>>');
+            '<<${userTag.name}|route://member/${userTag.sdkClientInfo?.userUniqueId ?? userTag.userUniqueId}>>');
       }
     }
     return string;
