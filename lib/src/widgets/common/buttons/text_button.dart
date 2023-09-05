@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
 
 class LMTextButton extends StatefulWidget {
   const LMTextButton({
@@ -16,6 +15,8 @@ class LMTextButton extends StatefulWidget {
     this.width,
     this.margin,
     this.isActive = false,
+    this.padding,
+    this.placement = LMIconPlacement.start,
   });
 
   final bool isActive;
@@ -25,11 +26,13 @@ class LMTextButton extends StatefulWidget {
   final Function() onTap;
   final LMIcon? activeIcon;
   final LMTextView? activeText;
+  final EdgeInsets? padding;
 
   final Color? backgroundColor;
   final double borderRadius;
   final double? height;
   final double? width;
+  final LMIconPlacement placement;
 
   @override
   State<LMTextButton> createState() => _LMTextButtonState();
@@ -45,22 +48,39 @@ class _LMTextButtonState extends State<LMTextButton> {
       child: Container(
         height: widget.height ?? 32,
         width: widget.width,
+        padding: widget.padding ?? EdgeInsets.zero,
+        clipBehavior: Clip.none,
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? Colors.transparent,
           borderRadius: BorderRadius.circular(widget.borderRadius),
         ),
+        alignment: Alignment.center,
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              widget.isActive
-                  ? widget.activeIcon ?? const SizedBox()
-                  : widget.icon ?? const SizedBox(),
-              widget.icon != null || widget.activeIcon != null
-                  ? SizedBox(width: widget.margin ?? 8)
+              widget.placement == LMIconPlacement.start
+                  ? widget.isActive
+                      ? widget.activeIcon ?? const SizedBox()
+                      : widget.icon ?? const SizedBox()
+                  : const SizedBox(),
+              widget.placement == LMIconPlacement.start
+                  ? (widget.icon != null || widget.activeIcon != null)
+                      ? SizedBox(width: widget.margin ?? 8)
+                      : const SizedBox()
                   : const SizedBox(),
               widget.isActive ? widget.activeText ?? widget.text : widget.text,
-              SizedBox(width: widget.icon != null ? 6 : 0)
+              widget.placement == LMIconPlacement.end
+                  ? (widget.icon != null || widget.activeIcon != null)
+                      ? SizedBox(width: widget.margin ?? 8)
+                      : const SizedBox()
+                  : const SizedBox(),
+              widget.placement == LMIconPlacement.end
+                  ? widget.isActive
+                      ? widget.activeIcon ?? const SizedBox()
+                      : widget.icon ?? const SizedBox()
+                  : const SizedBox(),
             ],
           ),
         ),

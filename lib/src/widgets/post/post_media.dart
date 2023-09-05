@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LMPostMedia extends StatefulWidget {
   const LMPostMedia(
       {super.key,
       required this.attachments,
       this.documentIcon,
+      this.width,
+      this.height,
       this.borderRadius});
 
   final List<Attachment> attachments;
   final LMIcon? documentIcon;
   final double? borderRadius;
+  final double? width;
+  final double? height;
 
   @override
   State<LMPostMedia> createState() => _LMPostMediaState();
@@ -40,6 +45,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
       return LMCarousel(
         attachments: attachments,
         borderRadius: widget.borderRadius,
+        width: widget.width,
+        height: widget.height,
       );
     }
   }
@@ -56,6 +63,10 @@ class _LMPostMediaState extends State<LMPostMedia> {
             documentUrl: e.attachmentMeta.url,
             documentIcon: widget.documentIcon,
             type: e.attachmentMeta.format!,
+            onTap: () {
+              Uri fileUrl = Uri.parse(e.attachmentMeta.url!);
+              launchUrl(fileUrl, mode: LaunchMode.externalApplication);
+            },
           ),
         )
         .toList();

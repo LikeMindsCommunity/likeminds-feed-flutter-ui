@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/packages/expandable_text/expandable_text.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
@@ -20,6 +21,7 @@ class LMCommentTile extends StatefulWidget {
     this.commentActions,
     this.actionsPadding,
     required this.onMenuTap,
+    required this.onTagTap,
   });
 
   final User user;
@@ -31,6 +33,7 @@ class LMCommentTile extends StatefulWidget {
   final List<Widget>? commentActions;
   final EdgeInsets? actionsPadding;
   final Function(int) onMenuTap;
+  final Function(String) onTagTap;
 
   @override
   State<LMCommentTile> createState() => _LMCommentTileState();
@@ -39,6 +42,7 @@ class LMCommentTile extends StatefulWidget {
 class _LMCommentTileState extends State<LMCommentTile> {
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(color: kWhiteColor),
       padding: const EdgeInsets.all(kPaddingLarge),
@@ -67,16 +71,6 @@ class _LMCommentTileState extends State<LMCommentTile> {
                         ? kVerticalPaddingSmall
                         : const SizedBox(),
                     widget.subtitleText ?? const SizedBox(),
-                    Container(
-                      width: 240,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: LMTextView(
-                        text: TaggingHelper.convertRouteToTag(
-                          widget.comment.text,
-                          withTilde: false,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
                 const Spacer(),
@@ -88,7 +82,24 @@ class _LMCommentTileState extends State<LMCommentTile> {
               ],
             ),
           ),
-          // kVerticalPaddingMedium,
+          kVerticalPaddingMedium,
+          Container(
+            padding: widget.actionsPadding ?? EdgeInsets.zero,
+            child: ExpandableText(
+              widget.comment.text,
+              onTagTap: widget.onTagTap,
+              expandText: "see more",
+              animation: true,
+              maxLines: 4,
+              linkStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: kLinkColor),
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+          kVerticalPaddingSmall,
           Padding(
             padding: widget.actionsPadding ?? EdgeInsets.zero,
             child: Row(

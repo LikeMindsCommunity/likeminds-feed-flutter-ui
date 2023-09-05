@@ -45,6 +45,7 @@ class ExpandableText extends StatefulWidget {
     this.animationDuration,
     this.animationCurve,
     this.semanticsLabel,
+    required this.onTagTap,
   })  : assert(maxLines > 0),
         super(key: key);
 
@@ -77,6 +78,7 @@ class ExpandableText extends StatefulWidget {
   final Duration? animationDuration;
   final Curve? animationCurve;
   final String? semanticsLabel;
+  final Function(String) onTagTap; // user id of the tag of user tapped
 
   @override
   ExpandableTextState createState() => ExpandableTextState();
@@ -419,9 +421,12 @@ class ExpandableTextState extends State<ExpandableText>
                 );
               }
             } else {
-              TaggingHelper.routeToProfile(
+              widget.onTagTap(
                 TaggingHelper.decodeString(link).values.first,
               );
+              // TaggingHelper.routeToProfile(
+              //   TaggingHelper.decodeString(link).values.first,
+              // );
             }
           },
       ));

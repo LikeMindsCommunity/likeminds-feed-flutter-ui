@@ -22,6 +22,7 @@ class LMPostWidget extends StatefulWidget {
   final User user;
   final bool isFeed;
   final Function() onTap;
+  final Function(String) onTagTap;
 
   const LMPostWidget({
     super.key,
@@ -29,6 +30,7 @@ class LMPostWidget extends StatefulWidget {
     required this.user,
     required this.onTap,
     required this.isFeed,
+    required this.onTagTap,
     this.header,
     this.footer,
     this.menu,
@@ -69,7 +71,9 @@ class _LMPostWidgetState extends State<LMPostWidget> {
                       user: widget.user,
                       isFeed: widget.isFeed,
                     ),
-                const LMPostContent(),
+                LMPostContent(
+                  onTagTap: widget.onTagTap,
+                ),
                 widget.media == null
                     ? widget.post.attachments != null &&
                             widget.post.attachments!.isNotEmpty
