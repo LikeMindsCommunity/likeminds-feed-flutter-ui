@@ -18,6 +18,8 @@ class LMLinkPreview extends StatelessWidget {
     this.subtitle,
     this.url,
     this.imageUrl,
+    this.showLinkUrl = false,
+    this.border,
   });
 
   final MediaModel? linkModel;
@@ -34,6 +36,8 @@ class LMLinkPreview extends StatelessWidget {
   final LMTextView? title;
   final LMTextView? subtitle;
   final LMTextView? url;
+  final bool showLinkUrl;
+  final Border? border;
 
   bool checkNullMedia() {
     return ((linkModel == null ||
@@ -53,12 +57,14 @@ class LMLinkPreview extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: kWhiteColor,
-          border: Border.all(
-            color: kGrey3Color,
-            width: 0.5,
-          ),
+          border: border ??
+              Border.all(
+                color: kGrey3Color,
+                width: 0.5,
+              ),
           borderRadius: BorderRadius.circular(8.0),
         ),
+        height: height,
         width: width ?? MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
@@ -73,13 +79,15 @@ class LMLinkPreview extends StatelessWidget {
                             ? linkModel!.ogTags!.image!
                             : attachment!.attachmentMeta.ogTags!.image!),
                   ),
-            Padding(
+            Container(
+              height: height != null ? (height! - 152) : null,
+              color: backgroundColor,
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: width ?? MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
+                    Container(
                       width: width ?? MediaQuery.of(context).size.width,
                       child: title ??
                           LMTextView(
@@ -112,22 +120,25 @@ class LMLinkPreview extends StatelessWidget {
                           ),
                     ),
                     kVerticalPaddingXSmall,
-                    SizedBox(
-                      width: width ?? MediaQuery.of(context).size.width,
-                      child: LMTextView(
-                        text: linkModel != null
-                            ? linkModel!.link ?? linkModel!.ogTags!.url!
-                            : attachment!.attachmentMeta.ogTags!.url != null
-                                ? attachment!.attachmentMeta.ogTags!.url!
-                                    .toLowerCase()
-                                : 'NOT PRODUCING',
-                        maxLines: 1,
-                        textStyle: const TextStyle(
-                          color: kGrey3Color,
-                          fontSize: kFontXSmall,
-                        ),
-                      ),
-                    ),
+                    showLinkUrl
+                        ? SizedBox(
+                            width: width ?? MediaQuery.of(context).size.width,
+                            child: LMTextView(
+                              text: linkModel != null
+                                  ? linkModel!.link ?? linkModel!.ogTags!.url!
+                                  : attachment!.attachmentMeta.ogTags!.url !=
+                                          null
+                                      ? attachment!.attachmentMeta.ogTags!.url!
+                                          .toLowerCase()
+                                      : 'NOT PRODUCING',
+                              maxLines: 1,
+                              textStyle: const TextStyle(
+                                color: kGrey3Color,
+                                fontSize: kFontXSmall,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),
