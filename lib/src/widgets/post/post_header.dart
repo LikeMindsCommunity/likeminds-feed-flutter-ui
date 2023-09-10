@@ -59,15 +59,18 @@ class LMPostHeader extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        titleText ??
-                            LMTextView(
-                              text: user.name,
-                              textStyle: const TextStyle(
-                                fontSize: kFontMedium,
-                                color: kGrey1Color,
-                                fontWeight: FontWeight.w500,
+                        GestureDetector(
+                          onTap: onProfileTap,
+                          child: titleText ??
+                              LMTextView(
+                                text: user.name,
+                                textStyle: const TextStyle(
+                                  fontSize: kFontMedium,
+                                  color: kGrey1Color,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
+                        ),
                         kHorizontalPaddingMedium,
                         (user.customTitle == null ||
                                     user.customTitle!.isEmpty) ||
