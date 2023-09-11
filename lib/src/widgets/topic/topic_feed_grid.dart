@@ -3,6 +3,9 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
+// This widget is used to display a topic grid
+// A [TopicFeedGrid] displays a grid of selected topics
+// The [TopicFeedGrid] can be customized by passing in the required parameters
 class TopicFeedGrid extends StatelessWidget {
   // Required parameters
   // Text color of the topic chip
@@ -15,7 +18,9 @@ class TopicFeedGrid extends StatelessWidget {
   final bool showBorder;
   // background color of the topic chip defaults to transparent
   final Color? backgroundColor;
+  // border color of the topic chip defaults to 5.0
   final double? borderRadius;
+  // border color of the topic chip defaults to transparent
   final Color? borderColor;
   final double? borderWidth;
   final TextStyle? textStyle;

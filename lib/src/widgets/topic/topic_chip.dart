@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
+// defines icon placement
+// LMIconPlacement.start places the icon before the text
+// LMIconPlacement.end places the icon after the text
 enum LMIconPlacement { start, end }
 
+/*
+* Topic chip widget
+* This widget is used to display a topic chip
+* A topic chip is a chip that displays a topic name and an icon
+* The icon can be placed before or after the topic name
+* The icon can be tapped to perform an action
+* The topic chip can be customized by passing in the required parameters
+* and can be used in a list of chips
+*/
 class LMTopicChip extends StatelessWidget {
   // Action to perform after tapping on the topic chip
   final Function(TopicViewModel)? onIconTap;
@@ -13,12 +25,18 @@ class LMTopicChip extends StatelessWidget {
   final Color? backgroundColor;
   // border color of the topic chip defaults to null
   final Color? borderColor;
+  // border radius of the topic chip defaults to 5.0
   final double? borderRadius;
+  // showBorder must be true, border width of the topic chip defaults to 1.0
   final double? borderWidth;
+  // Whether to show a border around the topic chip
+  // defaults to false
   final bool showBorder;
   // Text style of the topic chip
   final TextStyle? textStyle;
+  // Icon to be displayed in the topic chip
   final Widget? icon;
+  // Padding of the topic chip
   final EdgeInsets? padding;
   // Whether to place the icon before the text or after the text of the topic chip
   // LMIconPlacement.start places the icon before the text

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
+// This widget is used to display a topic feed bar
+// A [TopicFeedBar] displays a list of selected topics
+// The [TopicFeedBar] can be customized by passing in the required parameters
 class TopicFeedBar extends StatelessWidget {
   // Required parameters
   // List of selected topic [pass empty list if no topic is selected]
@@ -12,7 +15,9 @@ class TopicFeedBar extends StatelessWidget {
   final bool showBorder;
   // background color of the topic chip defaults to transparent
   final Color? backgroundColor;
+  // border color of the topic chip defaults to null
   final Color? borderColor;
+  // border width of the topic chip defaults to 1.0
   final double? borderWidth;
   final TextStyle? textStyle;
   // Icon to be displayed on the topic chip if any defaults to null
@@ -25,7 +30,7 @@ class TopicFeedBar extends StatelessWidget {
   // Whether to show divider below topic feed bar or not
   // defaults to true
   final bool showDivider;
-  // Height of the chips of topic feed bar
+  // Height of the chips of topic feed bar, defaults to 30.0
   final double? height;
   // Placeholder chip if no topic is selected
   final Widget? emptyTopicChip;
@@ -55,6 +60,9 @@ class TopicFeedBar extends StatelessWidget {
     this.iconPlacement = LMIconPlacement.end,
   }) : super(key: key);
 
+  // Topic feed bar with selected topics
+  // If a trailing icon is passed, it is displayed at the end of the list of selected topics
+  // If no trailing icon is passed, the topic feed bar displays only the list of selected topics
   Widget selectedTopicsWidget(double width) {
     return SizedBox(
       width: width,
@@ -133,6 +141,9 @@ class TopicFeedBar extends StatelessWidget {
     );
   }
 
+  // Topic feed bar with no topic selected [Placeholder chip]
+  // If no placeholder chip is passed, a default placeholder chip is displayed`
+  // The default placeholder chip displays "All topics" text
   Widget emptyTopicsWidget() {
     return emptyTopicChip != null
         ? Row(
