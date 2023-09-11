@@ -3,6 +3,12 @@ import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
+/*
+* Topic chip widget
+* This widget is used to display link preview
+* A [LMLinkPreview] displays link heading, description and URL
+* The [LMLinkPreview] can be customized by passing in the required parameters
+*/
 class LMLinkPreview extends StatelessWidget {
   const LMLinkPreview({
     super.key,
@@ -22,20 +28,29 @@ class LMLinkPreview extends StatelessWidget {
     this.border,
   });
 
+  // data class to provide link preview data
   final MediaModel? linkModel;
   final Attachment? attachment;
 
+  // defaults to width of screen
   final double? width;
+  // defaults to null
   final double? height;
+  // defaults to null
   final Color? backgroundColor;
+  // defaults to 8.0
   final double? borderRadius;
   final double? padding;
   final VoidCallback? onTap;
-
+  // defaults to null,
   final String? imageUrl;
+  // defaults to null, for custom styling
   final LMTextView? title;
+  // defaults to null, for custom styling
   final LMTextView? subtitle;
+  // defaults to null, for custom styling
   final LMTextView? url;
+  // defaults to false, to show link url
   final bool showLinkUrl;
   final Border? border;
 
