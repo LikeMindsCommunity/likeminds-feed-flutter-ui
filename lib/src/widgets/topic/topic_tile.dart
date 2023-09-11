@@ -7,9 +7,9 @@ import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 // Tile has a text and an icon
 // The tile can be tapped to perform an action
 // Icon is displayed only if the tile is selected
-class TopicTile extends StatelessWidget {
+class LMTopicTile extends StatelessWidget {
   // Action to perform after tapping on the tile, required
-  final Function(TopicViewModel) onTap;
+  final Function(TopicUI) onTap;
   // Alignment of the row of the tile, defaults to MainAxisAlignment.spaceBetween
   final MainAxisAlignment? tileRowAlignment;
   // Background color of the tile, defaults to null
@@ -24,10 +24,10 @@ class TopicTile extends StatelessWidget {
   final bool isSelected;
   // Text to be displayed in the tile, required
   final LMTextView text;
-  // [TopicViewModel], consists id, topic and isEnabled boolean, required
-  final TopicViewModel topic;
+  // [TopicUI], consists id, topic and isEnabled boolean, required
+  final TopicUI topic;
 
-  const TopicTile({
+  const LMTopicTile({
     Key? key,
     required this.topic,
     required this.icon,

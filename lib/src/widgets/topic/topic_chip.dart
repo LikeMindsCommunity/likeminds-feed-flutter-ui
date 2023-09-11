@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-
-// defines icon placement
-// LMIconPlacement.start places the icon before the text
-// LMIconPlacement.end places the icon after the text
-enum LMIconPlacement { start, end }
+import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 /*
 * Topic chip widget
@@ -18,9 +14,9 @@ enum LMIconPlacement { start, end }
 */
 class LMTopicChip extends StatelessWidget {
   // Action to perform after tapping on the topic chip
-  final Function(TopicViewModel)? onIconTap;
+  final Function(TopicUI)? onIconTap;
   // Required parameters
-  final TopicViewModel topic;
+  final TopicUI topic;
   // background color of the topic chip defaults to transparent
   final Color? backgroundColor;
   // border color of the topic chip defaults to null

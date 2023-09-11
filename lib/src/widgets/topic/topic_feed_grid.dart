@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
+import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 // This widget is used to display a topic grid
-// A [TopicFeedGrid] displays a grid of selected topics
-// The [TopicFeedGrid] can be customized by passing in the required parameters
-class TopicFeedGrid extends StatelessWidget {
+// A [LMTopicFeedGrid] displays a grid of selected topics
+// The [LMTopicFeedGrid] can be customized by passing in the required parameters
+class LMTopicFeedGrid extends StatelessWidget {
   // Required parameters
   // Text color of the topic chip
   final Color textColor;
   // List of selected topic [pass empty list if no topic is selected]
-  final List<TopicViewModel> selectedTopics;
+  final List<TopicUI> selectedTopics;
   // Action to perform after tapping on the topic feed bar
   final Function onTap;
 
@@ -26,7 +27,7 @@ class TopicFeedGrid extends StatelessWidget {
   final TextStyle? textStyle;
   // Icon to be displayed on the topic chip if any defaults to null
   final Icon? icon;
-  final Function(TopicViewModel)? onIconTap;
+  final Function(TopicUI)? onIconTap;
   final Widget? trailingIcon;
   final Function? onTrailingIconTap;
   final EdgeInsets? chipPadding;
@@ -42,7 +43,7 @@ class TopicFeedGrid extends StatelessWidget {
   // LMIconPlacement.end places the icon after the text
   final LMIconPlacement iconPlacement;
 
-  const TopicFeedGrid({
+  const LMTopicFeedGrid({
     Key? key,
     required this.selectedTopics,
     this.backgroundColor,

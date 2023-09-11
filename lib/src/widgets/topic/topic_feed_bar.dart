@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
+import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 // This widget is used to display a topic feed bar
-// A [TopicFeedBar] displays a list of selected topics
-// The [TopicFeedBar] can be customized by passing in the required parameters
-class TopicFeedBar extends StatelessWidget {
+// A [LMTopicFeedBar] displays a list of selected topics
+// The [LMTopicFeedBar] can be customized by passing in the required parameters
+class LMTopicFeedBar extends StatelessWidget {
   // Required parameters
   // List of selected topic [pass empty list if no topic is selected]
-  final List<TopicViewModel> selectedTopics;
+  final List<TopicUI> selectedTopics;
   // Action to perform after tapping on the topic feed bar
   final Function onTap;
 
@@ -23,7 +24,7 @@ class TopicFeedBar extends StatelessWidget {
   // Icon to be displayed on the topic chip if any defaults to null
   final Icon? icon;
   final Function? onClear;
-  final Function(TopicViewModel)? onIconTap;
+  final Function(TopicUI)? onIconTap;
   final Widget? trailingIcon;
   final Function? onTrailingIconTap;
   final EdgeInsets? chipPadding;
@@ -39,7 +40,7 @@ class TopicFeedBar extends StatelessWidget {
   // LMIconPlacement.end places the icon after the text
   final LMIconPlacement iconPlacement;
 
-  const TopicFeedBar({
+  const LMTopicFeedBar({
     Key? key,
     required this.selectedTopics,
     this.backgroundColor,
@@ -85,11 +86,11 @@ class TopicFeedBar extends StatelessWidget {
                         color: Colors.transparent,
                         child: LMTopicChip(
                           padding: chipPadding,
-                          topic: TopicViewModel(
-                            id: "-1",
-                            name: "",
-                            isEnabled: false,
-                          ),
+                          topic: (TopicUIBuilder()
+                                ..id("-1")
+                                ..isEnabled(false)
+                                ..name("name"))
+                              .build(),
                           onIconTap: (tapped) {
                             onTap();
                           },
