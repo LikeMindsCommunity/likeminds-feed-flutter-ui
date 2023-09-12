@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
-import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+
 import 'package:lm_feed_ui_example/services/callback.dart';
 import 'package:lm_feed_ui_example/services/likeminds_service.dart';
 import 'package:lm_feed_ui_example/services/service_locator.dart';
