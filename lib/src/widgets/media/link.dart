@@ -3,6 +3,12 @@ import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
+/*
+* Topic chip widget
+* This widget is used to display link preview
+* A [LMLinkPreview] displays link heading, description and URL
+* The [LMLinkPreview] can be customized by passing in the required parameters
+*/
 class LMLinkPreview extends StatelessWidget {
   const LMLinkPreview({
     super.key,
@@ -18,22 +24,35 @@ class LMLinkPreview extends StatelessWidget {
     this.subtitle,
     this.url,
     this.imageUrl,
+    this.showLinkUrl = false,
+    this.border,
   });
 
+  // data class to provide link preview data
   final MediaModel? linkModel;
   final Attachment? attachment;
 
+  // defaults to width of screen
   final double? width;
+  // defaults to null
   final double? height;
+  // defaults to null
   final Color? backgroundColor;
+  // defaults to 8.0
   final double? borderRadius;
   final double? padding;
   final VoidCallback? onTap;
-
+  // defaults to null,
   final String? imageUrl;
+  // defaults to null, for custom styling
   final LMTextView? title;
+  // defaults to null, for custom styling
   final LMTextView? subtitle;
+  // defaults to null, for custom styling
   final LMTextView? url;
+  // defaults to false, to show link url
+  final bool showLinkUrl;
+  final Border? border;
 
   bool checkNullMedia() {
     return ((linkModel == null ||
@@ -53,12 +72,14 @@ class LMLinkPreview extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: kWhiteColor,
-          border: Border.all(
-            color: kGrey3Color,
-            width: 0.5,
-          ),
+          border: border ??
+              Border.all(
+                color: kGrey3Color,
+                width: 0.5,
+              ),
           borderRadius: BorderRadius.circular(8.0),
         ),
+        height: height,
         width: width ?? MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
@@ -73,13 +94,15 @@ class LMLinkPreview extends StatelessWidget {
                             ? linkModel!.ogTags!.image!
                             : attachment!.attachmentMeta.ogTags!.image!),
                   ),
-            Padding(
+            Container(
+              height: height != null ? (height! - 152) : null,
+              color: backgroundColor,
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: width ?? MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
+                    Container(
                       width: width ?? MediaQuery.of(context).size.width,
                       child: title ??
                           LMTextView(
@@ -112,22 +135,25 @@ class LMLinkPreview extends StatelessWidget {
                           ),
                     ),
                     kVerticalPaddingXSmall,
-                    SizedBox(
-                      width: width ?? MediaQuery.of(context).size.width,
-                      child: LMTextView(
-                        text: linkModel != null
-                            ? linkModel!.link ?? linkModel!.ogTags!.url!
-                            : attachment!.attachmentMeta.ogTags!.url != null
-                                ? attachment!.attachmentMeta.ogTags!.url!
-                                    .toLowerCase()
-                                : 'NOT PRODUCING',
-                        maxLines: 1,
-                        textStyle: const TextStyle(
-                          color: kGrey3Color,
-                          fontSize: kFontXSmall,
-                        ),
-                      ),
-                    ),
+                    showLinkUrl
+                        ? SizedBox(
+                            width: width ?? MediaQuery.of(context).size.width,
+                            child: LMTextView(
+                              text: linkModel != null
+                                  ? linkModel!.link ?? linkModel!.ogTags!.url!
+                                  : attachment!.attachmentMeta.ogTags!.url !=
+                                          null
+                                      ? attachment!.attachmentMeta.ogTags!.url!
+                                          .toLowerCase()
+                                      : 'NOT PRODUCING',
+                              maxLines: 1,
+                              textStyle: const TextStyle(
+                                color: kGrey3Color,
+                                fontSize: kFontXSmall,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),

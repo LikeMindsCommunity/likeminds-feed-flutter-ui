@@ -4,19 +4,24 @@ import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LMPostMedia extends StatefulWidget {
-  const LMPostMedia(
-      {super.key,
-      required this.attachments,
-      this.documentIcon,
-      this.width,
-      this.height,
-      this.borderRadius});
+  const LMPostMedia({
+    super.key,
+    required this.attachments,
+    this.documentIcon,
+    this.width,
+    this.height,
+    this.borderRadius,
+    this.backgroundColor,
+    this.showLinkUrl = false,
+  });
 
   final List<Attachment> attachments;
   final LMIcon? documentIcon;
   final double? borderRadius;
   final double? width;
   final double? height;
+  final Color? backgroundColor;
+  final bool showLinkUrl;
 
   @override
   State<LMPostMedia> createState() => _LMPostMediaState();
@@ -40,7 +45,12 @@ class _LMPostMediaState extends State<LMPostMedia> {
       /// If the attachment is a document, we need to call the method 'getDocumentList'
       return getPostDocuments();
     } else if (attachments.first.attachmentType == 4) {
-      return LMLinkPreview(attachment: attachments[0]);
+      return LMLinkPreview(
+        attachment: attachments[0],
+        borderRadius: widget.borderRadius,
+        backgroundColor: widget.backgroundColor,
+        showLinkUrl: widget.showLinkUrl,
+      );
     } else {
       return LMCarousel(
         attachments: attachments,
