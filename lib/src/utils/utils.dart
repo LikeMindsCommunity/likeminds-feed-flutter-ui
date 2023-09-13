@@ -19,3 +19,8 @@ extension DateTimeAgo on DateTime {
     return format(this);
   }
 }
+
+// defines icon placement
+// LMIconPlacement.start places the icon before the text
+// LMIconPlacement.end places the icon after the text
+enum LMIconPlacement { start, end }
