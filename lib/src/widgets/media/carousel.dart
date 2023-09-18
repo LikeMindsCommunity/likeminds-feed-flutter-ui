@@ -57,6 +57,8 @@ class _LMCarouselState extends State<LMCarousel> {
       if (e.attachmentType == 1) {
         return widget.imageItem ??
             LMImage(
+              height: e.attachmentMeta.height,
+              width: e.attachmentMeta.width,
               imageUrl: e.attachmentMeta.url,
               borderRadius: widget.borderRadius,
               borderColor: widget.borderColor,
@@ -64,6 +66,8 @@ class _LMCarouselState extends State<LMCarousel> {
       } else if ((e.attachmentType == 2)) {
         return widget.videoItem ??
             LMVideo(
+              height: e.attachmentMeta.height,
+              width: e.attachmentMeta.width,
               videoUrl: e.attachmentMeta.url,
               borderRadius: widget.borderRadius,
               borderColor: widget.borderColor,
@@ -101,8 +105,7 @@ class _LMCarouselState extends State<LMCarousel> {
                 itemCount: widget.attachments.length,
                 itemBuilder: (context, index, index2) => mediaWidgets[index],
                 options: CarouselOptions(
-                  aspectRatio: 1.0,
-                  height: size,
+                  aspectRatio: 4 / 5,
                   initialPage: 0,
                   disableCenter: true,
                   scrollDirection: Axis.horizontal,

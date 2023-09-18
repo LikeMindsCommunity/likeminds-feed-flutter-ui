@@ -106,11 +106,11 @@ class _LMVideoState extends State<LMVideo> {
       autoInitialize: true,
     );
 
-    if (!flickManager!
-        .flickVideoManager!.videoPlayerController!.value.isInitialized) {
-      await flickManager!.flickVideoManager!.videoPlayerController!
-          .initialize();
-    }
+    // if (!flickManager!
+    //     .flickVideoManager!.videoPlayerController!.value.isInitialized) {
+    //   await flickManager!.flickVideoManager!.videoPlayerController!
+    //       .initialize();
+    // }
   }
 
   @override
@@ -151,8 +151,8 @@ class _LMVideoState extends State<LMVideo> {
                   }
                 },
                 child: Container(
-                  width: widget.width ?? screenSize.width,
-                  height: widget.height ?? screenSize.width,
+                  // width: widget.width ?? screenSize.width,
+                  // height: widget.height ?? screenSize.width,
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     borderRadius:
