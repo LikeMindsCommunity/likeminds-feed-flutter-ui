@@ -30,7 +30,7 @@ class LMTextView extends StatelessWidget {
       child: Text(
         text,
         textAlign: textAlign,
-        overflow: overflow ?? TextOverflow.fade,
+        overflow: overflow,
         maxLines: maxLines,
         style: textStyle ?? defaultTextStyle,
       ),
