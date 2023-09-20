@@ -44,60 +44,78 @@ class LMImage extends StatefulWidget {
 class _LMImageState extends State<LMImage> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: widget.height ?? MediaQuery.of(context).size.width,
-      width: widget.width ?? MediaQuery.of(context).size.width,
-      child: widget.imageUrl != null
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
-              child: CachedNetworkImage(
-                height: widget.height,
-                width: widget.width,
-                imageUrl: widget.imageUrl!,
-                fit: widget.boxFit ?? BoxFit.cover,
-                fadeInDuration: const Duration(
-                  milliseconds: 100,
-                ),
-                errorWidget: (context, url, error) {
-                  return widget.errorWidget ??
-                      Container(
-                        color: kBackgroundColor,
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            LMIcon(
-                              type: LMIconType.icon,
-                              icon: Icons.error_outline,
-                              size: 24,
-                              color: kGrey3Color,
-                            ),
-                            SizedBox(height: 24),
-                            Text(
-                              "An error occurred fetching media",
-                              style: TextStyle(
-                                fontSize: 14,
+    return FutureBuilder(
+        future: widget.imageFile != null
+            ? getImageFileDimensions(widget.imageFile!)
+            : getNetworkImageDimensions(widget.imageUrl!),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final result = snapshot.data!;
+            final imageHeight = result["height"]!;
+            final imageWidth = result["width"]!;
+            return widget.imageUrl != null
+                ? ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(widget.borderRadius ?? 0),
+                    child: CachedNetworkImage(
+                      height: widget.height ?? imageHeight.toDouble(),
+                      width: widget.width ?? imageWidth.toDouble(),
+                      imageUrl: widget.imageUrl!,
+                      fit: widget.boxFit != null
+                          ? widget.boxFit!
+                          : imageHeight > imageWidth
+                              ? BoxFit.fitWidth
+                              : BoxFit.fitHeight,
+                      fadeInDuration: const Duration(
+                        milliseconds: 100,
+                      ),
+                      errorWidget: (context, url, error) {
+                        return widget.errorWidget ??
+                            Container(
+                              color: kBackgroundColor,
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  LMIcon(
+                                    type: LMIconType.icon,
+                                    icon: Icons.error_outline,
+                                    size: 24,
+                                    color: kGrey3Color,
+                                  ),
+                                  SizedBox(height: 24),
+                                  Text(
+                                    "An error occurred fetching media",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
-                          ],
+                            );
+                      },
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          widget.shimmerWidget ?? const LMPostShimmer(),
+                    ),
+                  )
+                : widget.imageFile != null
+                    ? ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(widget.borderRadius ?? 0),
+                        child: Image.file(
+                          widget.imageFile!,
+                          height: widget.height ?? imageHeight.toDouble(),
+                          width: widget.width ?? imageWidth.toDouble(),
+                          fit: widget.boxFit != null
+                              ? widget.boxFit!
+                              : imageHeight > imageWidth
+                                  ? BoxFit.fitWidth
+                                  : BoxFit.fitHeight,
                         ),
-                      );
-                },
-                progressIndicatorBuilder: (context, url, progress) =>
-                    widget.shimmerWidget ?? const LMPostShimmer(),
-              ),
-            )
-          : widget.imageFile != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
-                  child: Image.file(
-                    widget.imageFile!,
-                    height: widget.height,
-                    width: widget.width,
-                    fit: widget.boxFit ?? BoxFit.cover,
-                  ),
-                )
-              : const SizedBox(),
-    );
+                      )
+                    : const SizedBox();
+          }
+          return LMPostShimmer();
+        });
   }
 }

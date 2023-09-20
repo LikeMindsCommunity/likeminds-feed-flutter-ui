@@ -115,7 +115,7 @@ class _LMVideoState extends State<LMVideo> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    // final screenSize = MediaQuery.of(context).size;
     return FutureBuilder(
       future: initialiseControllers(),
       builder: (context, snapshot) {
@@ -130,56 +130,47 @@ class _LMVideoState extends State<LMVideo> {
             });
           }
           return Stack(children: [
-            GestureDetector(
-              onTap: () {
-                _onTouch = !_onTouch;
-                rebuildOverlay.value = !rebuildOverlay.value;
-              },
-              child: VisibilityDetector(
-                key: Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
-                onVisibilityChanged: (visibilityInfo) async {
-                  var visiblePercentage = visibilityInfo.visibleFraction * 100;
-                  if (visiblePercentage <= 50) {}
-                  if (visiblePercentage > 50) {
-                    if (!videoPlayerController.value.isInitialized) {
-                      await flickManager!
-                          .flickVideoManager!.videoPlayerController!
-                          .initialize();
-                    }
-                    flickManager!.flickControlManager!.play();
-                    rebuildOverlay.value = !rebuildOverlay.value;
+            VisibilityDetector(
+              key: Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
+              onVisibilityChanged: (visibilityInfo) async {
+                var visiblePercentage = visibilityInfo.visibleFraction * 100;
+                if (visiblePercentage <= 50) {}
+                if (visiblePercentage > 50) {
+                  if (!videoPlayerController.value.isInitialized) {
+                    await flickManager!
+                        .flickVideoManager!.videoPlayerController!
+                        .initialize();
                   }
-                },
-                child: Container(
-                  // width: widget.width ?? screenSize.width,
-                  // height: widget.height ?? screenSize.width,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(widget.borderRadius ?? 0),
-                    border: Border.all(
-                      color: widget.borderColor ?? Colors.transparent,
-                      width: 0,
-                    ),
+                  flickManager!.flickControlManager!.play();
+                  rebuildOverlay.value = !rebuildOverlay.value;
+                }
+              },
+              child: Container(
+                // width: widget.width ?? screenSize.width,
+                // height: widget.height ?? screenSize.width,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+                  border: Border.all(
+                    color: widget.borderColor ?? Colors.transparent,
+                    width: 0,
                   ),
-                  alignment: Alignment.center,
-                  child: FlickVideoPlayer(
-                    flickManager: flickManager!,
-                    flickVideoWithControls:
-                        widget.showControls != null && widget.showControls!
-                            ? FlickVideoWithControls(
-                                aspectRatioWhenLoading:
-                                    widget.aspectRatio ?? 16 / 9,
-                                controls: const FlickPortraitControls(),
-                                videoFit: widget.boxFit ?? BoxFit.cover,
-                              )
-                            : FlickVideoWithControls(
-                                aspectRatioWhenLoading:
-                                    widget.aspectRatio ?? 16 / 9,
-                                controls: const SizedBox(),
-                                videoFit: widget.boxFit ?? BoxFit.cover,
-                              ),
-                  ),
+                ),
+                alignment: Alignment.center,
+                child: FlickVideoPlayer(
+                  flickManager: flickManager!,
+                  flickVideoWithControls:
+                      widget.showControls != null && widget.showControls!
+                          ? FlickVideoWithControls(
+                              aspectRatioWhenLoading: widget.aspectRatio ?? 1,
+                              controls: const FlickPortraitControls(),
+                              videoFit: widget.boxFit ?? BoxFit.cover,
+                            )
+                          : FlickVideoWithControls(
+                              aspectRatioWhenLoading: widget.aspectRatio ?? 1,
+                              controls: const SizedBox(),
+                              videoFit: widget.boxFit ?? BoxFit.cover,
+                            ),
                 ),
               ),
             ),
@@ -237,7 +228,7 @@ class _LMVideoState extends State<LMVideo> {
             )
           ]);
         } else {
-          return const SizedBox();
+          return widget.errorWidget ?? const SizedBox();
         }
       },
     );

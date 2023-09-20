@@ -55,8 +55,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
       return LMCarousel(
         attachments: attachments,
         borderRadius: widget.borderRadius,
-        width: widget.width,
-        height: widget.height,
+        // width: widget.width,
+        // height: widget.height,
       );
     }
   }
