@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flick_video_player/flick_video_player.dart';
+// import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/icon_button.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/post_shimmer.dart';
+import 'package:media_kit/media_kit.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
+    as media_kit_video_controls;
 
 class LMVideo extends StatefulWidget {
   const LMVideo({
@@ -64,10 +68,13 @@ class LMVideo extends StatefulWidget {
 
 class _LMVideoState extends State<LMVideo> {
   late VideoPlayerController videoPlayerController;
-  FlickManager? flickManager;
+  // FlickManager? flickManager;
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   bool _onTouch = true;
   bool initialiseOverlay = false;
+
+  late final player = Player(configuration: PlayerConfiguration());
+  late final controller = VideoController(player);
 
   Timer? _timer;
 
@@ -79,6 +86,8 @@ class _LMVideoState extends State<LMVideo> {
 
   @override
   void initState() {
+    MediaKit.ensureInitialized();
+    player.open(Media(widget.videoUrl!));
     super.initState();
   }
 
@@ -100,11 +109,11 @@ class _LMVideoState extends State<LMVideo> {
             ),
           );
     }
-    flickManager ??= FlickManager(
-      videoPlayerController: videoPlayerController,
-      autoPlay: true,
-      autoInitialize: true,
-    );
+    // flickManager ??= FlickManager(
+    //   videoPlayerController: videoPlayerController,
+    //   autoPlay: true,
+    //   autoInitialize: true,
+    // );
 
     // if (!flickManager!
     //     .flickVideoManager!.videoPlayerController!.value.isInitialized) {
@@ -136,12 +145,12 @@ class _LMVideoState extends State<LMVideo> {
                 var visiblePercentage = visibilityInfo.visibleFraction * 100;
                 if (visiblePercentage <= 50) {}
                 if (visiblePercentage > 50) {
-                  if (!videoPlayerController.value.isInitialized) {
-                    await flickManager!
-                        .flickVideoManager!.videoPlayerController!
-                        .initialize();
-                  }
-                  flickManager!.flickControlManager!.play();
+                  // if (!videoPlayerController.value.isInitialized) {
+                  //   await flickManager!
+                  //       .flickVideoManager!.videoPlayerController!
+                  //       .initialize();
+                  // }
+                  // flickManager!.flickControlManager!.play();
                   rebuildOverlay.value = !rebuildOverlay.value;
                 }
               },
@@ -157,21 +166,27 @@ class _LMVideoState extends State<LMVideo> {
                   ),
                 ),
                 alignment: Alignment.center,
-                child: FlickVideoPlayer(
-                  flickManager: flickManager!,
-                  flickVideoWithControls:
-                      widget.showControls != null && widget.showControls!
-                          ? FlickVideoWithControls(
-                              aspectRatioWhenLoading: widget.aspectRatio ?? 1,
-                              controls: const FlickPortraitControls(),
-                              videoFit: widget.boxFit ?? BoxFit.cover,
-                            )
-                          : FlickVideoWithControls(
-                              aspectRatioWhenLoading: widget.aspectRatio ?? 1,
-                              controls: const SizedBox(),
-                              videoFit: widget.boxFit ?? BoxFit.cover,
-                            ),
+                // child: FlickVideoPlayer(
+                //   flickManager: flickManager!,
+                //   flickVideoWithControls:
+                //       widget.showControls != null && widget.showControls!
+                //           ? FlickVideoWithControls(
+                //               aspectRatioWhenLoading: widget.aspectRatio ?? 1,
+                //               controls: const FlickPortraitControls(),
+                //               videoFit: widget.boxFit ?? BoxFit.cover,
+                //             )
+                //           : FlickVideoWithControls(
+                //               aspectRatioWhenLoading: widget.aspectRatio ?? 1,
+                //               controls: const SizedBox(),
+                //               videoFit: widget.boxFit ?? BoxFit.cover,
+                //             ),
+                child: Video(
+                  controller: controller,
+                  controls: widget.showControls != null && widget.showControls!
+                      ? null
+                      : media_kit_video_controls.NoVideoControls,
                 ),
+                // ),
               ),
             ),
             Positioned(
@@ -192,8 +207,7 @@ class _LMVideoState extends State<LMVideo> {
                                 side: BorderSide(color: Colors.white))),
                           ),
                           child: Icon(
-                            flickManager!.flickVideoManager!
-                                    .videoPlayerController!.value.isPlaying
+                            controller.player.state.playing
                                 ? Icons.pause
                                 : Icons.play_arrow,
                             size: 30,
@@ -204,14 +218,9 @@ class _LMVideoState extends State<LMVideo> {
 
                             // pause while video is playing, play while video is pausing
 
-                            flickManager!.flickVideoManager!
-                                    .videoPlayerController!.value.isPlaying
-                                ? flickManager!
-                                    .flickVideoManager!.videoPlayerController!
-                                    .pause()
-                                : flickManager!
-                                    .flickVideoManager!.videoPlayerController!
-                                    .play();
+                            controller.player.state.playing
+                                ? controller.player.pause()
+                                : controller.player.play();
                             rebuildOverlay.value = !rebuildOverlay.value;
 
                             // Auto dismiss overlay after 1 second
