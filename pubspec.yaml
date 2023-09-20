@@ -25,8 +25,8 @@ dependencies:
   flutter_layout_grid: 2.0.5
   open_filex: ^4.3.2
 
-  likeminds_feed: 1.4.0
-  #  path: ../LikeMinds-Flutter-Feed-SDK
+  likeminds_feed: 1.4.1
+   # path: ../LikeMinds-Flutter-Feed-SDK
 
 dev_dependencies:
   flutter_test:
