@@ -14,19 +14,23 @@ dependencies:
 
   timeago:
   shimmer:
-  chewie: 1.5.0
   carousel_slider:
   video_player: 2.7.1
   visibility_detector:
   cached_network_image:
   url_launcher:
   flutter_svg:
-  flick_video_player:
   flutter_layout_grid: 2.0.5
   open_filex: ^4.3.2
+  http:
+  extended_image: 8.1.1
 
-  likeminds_feed: 1.4.0
-  #  path: ../LikeMinds-Flutter-Feed-SDK
+  media_kit: ^1.1.7                              # Primary package.
+  media_kit_video: ^1.1.8                        # For video rendering.
+  media_kit_libs_video: ^1.0.1 
+
+  likeminds_feed:
+    path: ../LikeMinds-Flutter-Feed-SDK
 
 dev_dependencies:
   flutter_test:

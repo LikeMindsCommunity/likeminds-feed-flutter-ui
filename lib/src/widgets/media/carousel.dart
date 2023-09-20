@@ -55,21 +55,38 @@ class _LMCarouselState extends State<LMCarousel> {
   void mapAttachmentsToWidget() {
     mediaWidgets = widget.attachments.map((e) {
       if (e.attachmentType == 1) {
-        return widget.imageItem ??
-            LMImage(
-              imageUrl: e.attachmentMeta.url,
-              borderRadius: widget.borderRadius,
-              borderColor: widget.borderColor,
-            );
+        return Container(
+          color: Colors.black,
+          width: MediaQuery.of(context).size.width,
+          child: Center(
+            child: widget.imageItem ??
+                LMImage(
+                  // height: e.attachmentMeta.height,
+                  // width: e.attachmentMeta.width,
+                  imageUrl: e.attachmentMeta.url,
+                  borderRadius: widget.borderRadius,
+                  borderColor: widget.borderColor,
+                  boxFit: BoxFit.contain,
+                  // boxFit: BoxFit.contain,
+                ),
+          ),
+        );
       } else if ((e.attachmentType == 2)) {
-        return widget.videoItem ??
-            LMVideo(
-              videoUrl: e.attachmentMeta.url,
-              borderRadius: widget.borderRadius,
-              borderColor: widget.borderColor,
-              boxFit: BoxFit.cover,
-              showControls: false,
-            );
+        return Container(
+          color: Colors.black,
+          width: MediaQuery.of(context).size.width,
+          child: widget.videoItem ??
+              LMVideo(
+                // height: e.attachmentMeta.height,
+                // width: e.attachmentMeta.width,
+                videoUrl: e.attachmentMeta.url,
+                borderRadius: widget.borderRadius,
+                borderColor: widget.borderColor,
+                // boxFit: BoxFit.cover,
+                boxFit: BoxFit.contain,
+                showControls: false,
+              ),
+        );
       } else {
         return const SizedBox.shrink();
       }
@@ -91,29 +108,25 @@ class _LMCarouselState extends State<LMCarousel> {
       child: Column(
         children: [
           // The carousel.
-          SizedBox(
-            height: widget.height ?? size,
-            width: widget.width ?? size,
-            child: ClipRRect(
-              clipBehavior: Clip.antiAlias,
-              borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
-              child: CarouselSlider.builder(
-                itemCount: widget.attachments.length,
-                itemBuilder: (context, index, index2) => mediaWidgets[index],
-                options: CarouselOptions(
-                  aspectRatio: 1.0,
-                  height: size,
-                  initialPage: 0,
-                  disableCenter: true,
-                  scrollDirection: Axis.horizontal,
-                  enableInfiniteScroll: false,
-                  enlargeFactor: 0.0,
-                  viewportFraction: 1.0,
-                  onPageChanged: (index, reason) {
-                    currPosition = index;
-                    rebuildCurr.value = !rebuildCurr.value;
-                  },
-                ),
+          ClipRRect(
+            clipBehavior: Clip.hardEdge,
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+            child: CarouselSlider.builder(
+              itemCount: widget.attachments.length,
+              itemBuilder: (context, index, index2) => mediaWidgets[index],
+              options: CarouselOptions(
+                initialPage: 0,
+                disableCenter: true,
+                aspectRatio: 1,
+                scrollDirection: Axis.horizontal,
+                enableInfiniteScroll: false,
+                enlargeFactor: 0.0,
+                viewportFraction: 1.0,
+                enlargeStrategy: CenterPageEnlargeStrategy.height,
+                onPageChanged: (index, reason) {
+                  currPosition = index;
+                  rebuildCurr.value = !rebuildCurr.value;
+                },
               ),
             ),
           ),
