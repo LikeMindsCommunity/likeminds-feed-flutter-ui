@@ -10,6 +10,7 @@ class LMProfilePicture extends StatelessWidget {
       this.borderRadius = 24,
       this.border = 0,
       this.backgroundColor,
+      this.boxShape,
       this.onTap});
 
   final double size;
@@ -18,6 +19,7 @@ class LMProfilePicture extends StatelessWidget {
   final double borderRadius;
   final double border;
   final Color? backgroundColor;
+  final BoxShape? boxShape;
   final Function()? onTap;
 
   @override
@@ -30,11 +32,13 @@ class LMProfilePicture extends StatelessWidget {
         height: size,
         width: size,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius:
+              boxShape == null ? BorderRadius.circular(borderRadius) : null,
           border: Border.all(
             color: Colors.white,
             width: border,
           ),
+          shape: boxShape ?? BoxShape.rectangle,
           color: imageUrl != null && imageUrl!.isNotEmpty
               ? kGrey3Color
               : backgroundColor ?? Theme.of(context).primaryColor,
