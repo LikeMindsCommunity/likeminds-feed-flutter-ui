@@ -19,6 +19,7 @@ class LMTextButton extends StatefulWidget {
     this.margin,
     this.isActive = false,
     this.padding,
+    this.border,
     this.placement = LMIconPlacement.start,
   });
 
@@ -43,6 +44,7 @@ class LMTextButton extends StatefulWidget {
   final double borderRadius;
   final double? height;
   final double? width;
+  final Border? border;
   // Placement of the icon in the button, required
   final LMIconPlacement placement;
 
@@ -65,36 +67,34 @@ class _LMTextButtonState extends State<LMTextButton> {
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? Colors.transparent,
           borderRadius: BorderRadius.circular(widget.borderRadius),
+          border: widget.border,
         ),
-        alignment: Alignment.center,
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              widget.placement == LMIconPlacement.start
-                  ? widget.isActive
-                      ? widget.activeIcon ?? const SizedBox()
-                      : widget.icon ?? const SizedBox()
-                  : const SizedBox(),
-              widget.placement == LMIconPlacement.start
-                  ? (widget.icon != null || widget.activeIcon != null)
-                      ? SizedBox(width: widget.margin ?? 8)
-                      : const SizedBox()
-                  : const SizedBox(),
-              widget.isActive ? widget.activeText ?? widget.text : widget.text,
-              widget.placement == LMIconPlacement.end
-                  ? (widget.icon != null || widget.activeIcon != null)
-                      ? SizedBox(width: widget.margin ?? 8)
-                      : const SizedBox()
-                  : const SizedBox(),
-              widget.placement == LMIconPlacement.end
-                  ? widget.isActive
-                      ? widget.activeIcon ?? const SizedBox()
-                      : widget.icon ?? const SizedBox()
-                  : const SizedBox(),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            widget.placement == LMIconPlacement.start
+                ? widget.isActive
+                    ? widget.activeIcon ?? const SizedBox()
+                    : widget.icon ?? const SizedBox()
+                : const SizedBox(),
+            widget.placement == LMIconPlacement.start
+                ? (widget.icon != null || widget.activeIcon != null)
+                    ? SizedBox(width: widget.margin ?? 8)
+                    : const SizedBox()
+                : const SizedBox(),
+            widget.isActive ? widget.activeText ?? widget.text : widget.text,
+            widget.placement == LMIconPlacement.end
+                ? (widget.icon != null || widget.activeIcon != null)
+                    ? SizedBox(width: widget.margin ?? 8)
+                    : const SizedBox()
+                : const SizedBox(),
+            widget.placement == LMIconPlacement.end
+                ? widget.isActive
+                    ? widget.activeIcon ?? const SizedBox()
+                    : widget.icon ?? const SizedBox()
+                : const SizedBox(),
+          ],
         ),
       ),
     );
