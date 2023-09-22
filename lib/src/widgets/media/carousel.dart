@@ -61,13 +61,10 @@ class _LMCarouselState extends State<LMCarousel> {
           child: Center(
             child: widget.imageItem ??
                 LMImage(
-                  // height: e.attachmentMeta.height,
-                  // width: e.attachmentMeta.width,
                   imageUrl: e.attachmentMeta.url,
                   borderRadius: widget.borderRadius,
                   borderColor: widget.borderColor,
                   boxFit: BoxFit.contain,
-                  // boxFit: BoxFit.contain,
                 ),
           ),
         );
@@ -77,12 +74,9 @@ class _LMCarouselState extends State<LMCarousel> {
           width: MediaQuery.of(context).size.width,
           child: widget.videoItem ??
               LMVideo(
-                // height: e.attachmentMeta.height,
-                // width: e.attachmentMeta.width,
                 videoUrl: e.attachmentMeta.url,
                 borderRadius: widget.borderRadius,
                 borderColor: widget.borderColor,
-                // boxFit: BoxFit.cover,
                 boxFit: BoxFit.contain,
                 showControls: false,
               ),
@@ -107,16 +101,15 @@ class _LMCarouselState extends State<LMCarousel> {
       ),
       child: Column(
         children: [
-          // The carousel.
           ClipRRect(
             clipBehavior: Clip.hardEdge,
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
             child: CarouselSlider.builder(
-              itemCount: widget.attachments.length,
-              itemBuilder: (context, index, index2) => mediaWidgets[index],
+              itemCount: mediaWidgets.length,
+              itemBuilder: (context, index, _) => mediaWidgets[index],
               options: CarouselOptions(
                 initialPage: 0,
-                disableCenter: true,
+                animateToClosest: false,
                 aspectRatio: 1,
                 scrollDirection: Axis.horizontal,
                 enableInfiniteScroll: false,
