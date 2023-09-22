@@ -8,8 +8,8 @@ class LMPostShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Shimmer.fromColors(
-      baseColor: Colors.black26,
-      highlightColor: Colors.black12,
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
       child: Container(
         color: Colors.white,
         width: screenSize.width,
