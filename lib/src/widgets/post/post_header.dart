@@ -19,14 +19,19 @@ class LMPostHeader extends StatelessWidget {
     this.createdAt,
     this.onProfileTap,
     required this.isFeed,
+    this.fallbackTextStyle,
+    this.customTitle,
   });
 
   final double? imageSize;
   final LMTextView? titleText;
+  final LMTextView? customTitle;
   final LMTextView? subText;
-  final LMPostMenu? menu;
+  final Widget? menu;
   final LMTextView? createdAt;
   final Function()? onProfileTap;
+  final TextStyle? fallbackTextStyle;
+
   final bool isFeed;
 
   final User user;
@@ -59,6 +64,7 @@ class LMPostHeader extends StatelessWidget {
                         fallbackText: user.name,
                         imageUrl: user.imageUrl,
                         onTap: onProfileTap,
+                        fallbackTextStyle: fallbackTextStyle,
                       ),
                       kHorizontalPaddingLarge,
                       Container(
@@ -116,22 +122,25 @@ class LMPostHeader extends StatelessWidget {
                                                 child: Padding(
                                                   padding:
                                                       const EdgeInsets.all(4.0),
-                                                  child: Text(
-                                                    user.customTitle!.isNotEmpty
-                                                        ? user.customTitle!
-                                                        : "",
-                                                    // maxLines: 1,
-                                                    style: TextStyle(
-                                                      fontSize: kFontSmall,
-                                                      color: kWhiteColor,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle: user
-                                                              .name.isNotEmpty
-                                                          ? FontStyle.normal
-                                                          : FontStyle.italic,
-                                                    ),
-                                                  ),
+                                                  child: customTitle ??
+                                                      Text(
+                                                        user.customTitle!
+                                                                .isNotEmpty
+                                                            ? user.customTitle!
+                                                            : "",
+                                                        // maxLines: 1,
+                                                        style: TextStyle(
+                                                          fontSize: kFontSmall,
+                                                          color: kWhiteColor,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontStyle: user.name
+                                                                  .isNotEmpty
+                                                              ? FontStyle.normal
+                                                              : FontStyle
+                                                                  .italic,
+                                                        ),
+                                                      ),
                                                 ),
                                               ),
                                             ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class LMPostShimmer extends StatelessWidget {
-  const LMPostShimmer({super.key});
+class LMPostMediaShimmer extends StatelessWidget {
+  const LMPostMediaShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

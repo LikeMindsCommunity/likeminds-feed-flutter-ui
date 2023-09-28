@@ -39,7 +39,7 @@ class LMDocument extends StatefulWidget {
 
   final LMTextView? title;
   final LMTextView? subtitle;
-  final LMIcon? documentIcon;
+  final Widget? documentIcon;
   final Function? onRemove;
 
   @override

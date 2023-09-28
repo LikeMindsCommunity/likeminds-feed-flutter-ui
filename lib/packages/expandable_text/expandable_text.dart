@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/constants.dart';
+import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './text_parser.dart';
@@ -403,31 +404,38 @@ class ExpandableTextState extends State<ExpandableText>
           style: widget.style,
         ));
       }
-      bool isTag = link != null && link[0] == '<';
-      // Add a TextSpan for the URL
-      textSpans.add(TextSpan(
-        text: isTag ? TaggingHelper.decodeString(link).keys.first : link,
-        style: widget.linkStyle ?? const TextStyle(color: Colors.blue),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () async {
-            if (!isTag) {
-              String checkLink = getFirstValidLinkFromString(link ?? '');
-              if (Uri.parse(checkLink).isAbsolute) {
-                launchUrl(
-                  Uri.parse(checkLink),
-                  mode: LaunchMode.externalApplication,
+      if (link != null && link.isNotEmpty && link[0] == '#') {
+        textSpans.add(TextSpan(
+          text: link,
+          style: widget.hashtagStyle ?? const TextStyle(color: kPrimaryColor),
+        ));
+      } else {
+        bool isTag = link != null && link[0] == '<';
+        // Add a TextSpan for the URL
+        textSpans.add(TextSpan(
+          text: isTag ? TaggingHelper.decodeString(link).keys.first : link,
+          style: widget.linkStyle ?? const TextStyle(color: kPrimaryColor),
+          recognizer: TapGestureRecognizer()
+            ..onTap = () async {
+              if (!isTag) {
+                String checkLink = getFirstValidLinkFromString(link ?? '');
+                if (Uri.parse(checkLink).isAbsolute) {
+                  launchUrl(
+                    Uri.parse(checkLink),
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
+              } else {
+                widget.onTagTap(
+                  TaggingHelper.decodeString(link).values.first,
                 );
+                // TaggingHelper.routeToProfile(
+                //   TaggingHelper.decodeString(link).values.first,
+                // );
               }
-            } else {
-              widget.onTagTap(
-                TaggingHelper.decodeString(link).values.first,
-              );
-              // TaggingHelper.routeToProfile(
-              //   TaggingHelper.decodeString(link).values.first,
-              // );
-            }
-          },
-      ));
+            },
+        ));
+      }
 
       lastIndex = endIndex;
     }

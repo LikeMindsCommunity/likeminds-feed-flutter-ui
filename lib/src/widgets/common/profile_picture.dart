@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
 class LMProfilePicture extends StatelessWidget {
-  const LMProfilePicture(
-      {super.key,
-      this.imageUrl,
-      required this.fallbackText,
-      this.size = 48,
-      this.borderRadius = 24,
-      this.border = 0,
-      this.backgroundColor,
-      this.boxShape,
-      this.onTap});
+  const LMProfilePicture({
+    super.key,
+    this.imageUrl,
+    required this.fallbackText,
+    this.size = 48,
+    this.borderRadius = 24,
+    this.border = 0,
+    this.backgroundColor,
+    this.boxShape,
+    this.fallbackTextStyle,
+    this.onTap,
+  });
 
   final double size;
   final String? imageUrl;
   final String fallbackText;
+  final TextStyle? fallbackTextStyle;
   final double borderRadius;
   final double border;
   final Color? backgroundColor;
@@ -53,11 +56,12 @@ class LMProfilePicture extends StatelessWidget {
             ? Center(
                 child: Text(
                   fallbackText.isNotEmpty ? fallbackText[0].toUpperCase() : "",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: size / 2,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: fallbackTextStyle ??
+                      TextStyle(
+                        color: Colors.white,
+                        fontSize: size / 2,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               )
             : null,
