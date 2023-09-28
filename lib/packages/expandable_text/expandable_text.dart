@@ -288,6 +288,7 @@ class ExpandableTextState extends State<ExpandableText>
           textDirection: textDirection,
           textAlign: textAlign,
           textScaleFactor: textScaleFactor,
+          style: widget.style,
         );
 
         if (widget.animation) {
