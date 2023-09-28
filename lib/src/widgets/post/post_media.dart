@@ -17,6 +17,7 @@ class LMPostMedia extends StatefulWidget {
     this.carouselInactiveIndicatorColor,
     this.title,
     this.subtitle,
+    this.showBorder = true,
   });
 
   final List<Attachment> attachments;
@@ -28,6 +29,7 @@ class LMPostMedia extends StatefulWidget {
   final bool showLinkUrl;
   final LMTextView? title;
   final LMTextView? subtitle;
+  final bool showBorder;
 
   final Color? carouselActiveIndicatorColor;
   final Color? carouselInactiveIndicatorColor;
@@ -86,7 +88,9 @@ class _LMPostMediaState extends State<LMPostMedia> {
             size: PostHelper.getFileSizeString(bytes: e.attachmentMeta.size!),
             documentUrl: e.attachmentMeta.url,
             documentIcon: widget.documentIcon,
+            showBorder: widget.showBorder,
             type: e.attachmentMeta.format!,
+            backgroundColor: widget.backgroundColor,
             onTap: () {
               Uri fileUrl = Uri.parse(e.attachmentMeta.url!);
               launchUrl(fileUrl, mode: LaunchMode.externalApplication);
