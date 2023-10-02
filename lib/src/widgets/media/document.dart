@@ -22,6 +22,7 @@ class LMDocument extends StatefulWidget {
     this.subtitle,
     this.documentIcon,
     this.onRemove,
+    this.removeIcon,
     this.showBorder = true,
     this.backgroundColor,
   }) : assert(documentFile != null || documentUrl != null);
@@ -42,6 +43,7 @@ class LMDocument extends StatefulWidget {
   final LMTextView? title;
   final LMTextView? subtitle;
   final Widget? documentIcon;
+  final LMIcon? removeIcon;
   final Function? onRemove;
   final bool showBorder;
   final Color? backgroundColor;
@@ -116,7 +118,7 @@ class _LMDocumentState extends State<LMDocument> {
                           const LMIcon(
                             type: LMIconType.icon,
                             icon: Icons.picture_as_pdf,
-                            size: 30,
+                            size: 24,
                             color: Colors.red,
                           ),
                     ),
@@ -125,55 +127,58 @@ class _LMDocumentState extends State<LMDocument> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          LMTextView(
-                            text: _fileName ?? '',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textStyle: theme.textTheme.titleLarge ??
-                                const TextStyle(
-                                  fontSize: kFontMedium,
-                                  color: kGrey2Color,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                          ),
+                          widget.title ??
+                              LMTextView(
+                                text: _fileName ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textStyle: theme.textTheme.titleMedium ??
+                                    const TextStyle(
+                                      fontSize: 14,
+                                      color: kGrey2Color,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
                           kVerticalPaddingSmall,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              kHorizontalPaddingXSmall,
-                              Text(
-                                _fileSize!.toUpperCase(),
-                                style: theme.textTheme.labelMedium ??
-                                    const TextStyle(
-                                        fontSize: kFontSmall,
-                                        color: kGrey3Color),
-                              ),
-                              kHorizontalPaddingXSmall,
-                              Text(
-                                '·',
-                                style: theme.textTheme.labelMedium ??
-                                    TextStyle(
-                                        fontSize: kFontSmall,
-                                        color: kGrey3Color),
-                              ),
-                              kHorizontalPaddingXSmall,
-                              Text(
-                                _fileExtension!.toUpperCase(),
-                                style: theme.textTheme.labelMedium ??
-                                    const TextStyle(
-                                        fontSize: kFontSmall,
-                                        color: kGrey3Color),
-                              ),
-                            ],
-                          )
+                          widget.subtitle ??
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  kHorizontalPaddingXSmall,
+                                  Text(
+                                    _fileSize!.toUpperCase(),
+                                    style: theme.textTheme.labelMedium ??
+                                        const TextStyle(
+                                            fontSize: kFontSmall,
+                                            color: kGrey3Color),
+                                  ),
+                                  kHorizontalPaddingXSmall,
+                                  Text(
+                                    '·',
+                                    style: theme.textTheme.labelMedium ??
+                                        TextStyle(
+                                            fontSize: kFontSmall,
+                                            color: kGrey3Color),
+                                  ),
+                                  kHorizontalPaddingXSmall,
+                                  Text(
+                                    _fileExtension!.toUpperCase(),
+                                    style: theme.textTheme.labelMedium ??
+                                        const TextStyle(
+                                            fontSize: kFontSmall,
+                                            color: kGrey3Color),
+                                  ),
+                                ],
+                              )
                         ],
                       ),
                     ),
                     const SizedBox(width: 32),
                     widget.documentFile != null
                         ? LMIconButton(
-                            icon: const LMIcon(
-                                type: LMIconType.icon, icon: Icons.close),
+                            icon: widget.removeIcon ??
+                                const LMIcon(
+                                    type: LMIconType.icon, icon: Icons.close),
                             onTap: (actice) {
                               if (widget.onRemove != null) {
                                 widget.onRemove!();

@@ -15,6 +15,7 @@ class LMBottomSheet extends StatefulWidget {
   final EdgeInsets? margin;
   final List<Widget> children;
   final List<BoxShadow>? boxShadow;
+  final Widget? dragBar;
   final Color? dragBarColor;
 
   const LMBottomSheet({
@@ -29,6 +30,7 @@ class LMBottomSheet extends StatefulWidget {
     this.padding,
     this.margin,
     this.boxShadow,
+    this.dragBar,
     this.dragBarColor,
   }) : super(key: key);
 
@@ -70,17 +72,18 @@ class _LMBottomSheetState extends State<LMBottomSheet> {
       child: Column(
         children: [
           const SizedBox(height: 12),
-          Container(
-            width: 43.67,
-            height: 7.23,
-            decoration: ShapeDecoration(
-              color: widget.dragBarColor ?? theme.colorScheme.background
-                ..withAlpha(200),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(99),
+          widget.dragBar ??
+              Container(
+                width: 48,
+                height: 8,
+                decoration: ShapeDecoration(
+                  color: widget.dragBarColor ?? theme.colorScheme.background
+                    ..withAlpha(200),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                ),
               ),
-            ),
-          ),
           const SizedBox(height: 24),
           Expanded(
             child: ListView.builder(

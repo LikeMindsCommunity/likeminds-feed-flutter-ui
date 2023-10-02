@@ -16,6 +16,7 @@ class LMPostHeader extends StatelessWidget {
     this.titleText,
     this.subText,
     this.menu,
+    this.editedText,
     this.createdAt,
     this.onProfileTap,
     required this.isFeed,
@@ -28,6 +29,8 @@ class LMPostHeader extends StatelessWidget {
   final LMTextView? titleText;
   final LMTextView? customTitle;
   final LMTextView? subText;
+  final LMTextView? editedText;
+
   final Widget? menu;
   final LMTextView? createdAt;
   final Function()? onProfileTap;
@@ -185,7 +188,7 @@ class LMPostHeader extends StatelessWidget {
                                           color: kGrey3Color,
                                         ),
                                       ),
-                                  kHorizontalPaddingXSmall,
+                                  kHorizontalPaddingSmall,
                                   LMTextView(
                                     text: postDetails!.isEdited ? '·' : '',
                                     textStyle: const TextStyle(
@@ -193,14 +196,17 @@ class LMPostHeader extends StatelessWidget {
                                       color: kGrey3Color,
                                     ),
                                   ),
-                                  kHorizontalPaddingXSmall,
-                                  LMTextView(
-                                    text: postDetails.isEdited ? 'Edited' : '',
-                                    textStyle: const TextStyle(
-                                      fontSize: kFontSmall,
-                                      color: kGrey3Color,
-                                    ),
-                                  ),
+                                  kHorizontalPaddingSmall,
+                                  editedText ??
+                                      LMTextView(
+                                        text: postDetails.isEdited
+                                            ? 'Edited'
+                                            : '',
+                                        textStyle: const TextStyle(
+                                          fontSize: kFontSmall,
+                                          color: kGrey3Color,
+                                        ),
+                                      ),
                                 ],
                               )
                             ],
