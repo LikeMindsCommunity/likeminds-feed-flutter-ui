@@ -14,6 +14,7 @@ class LMPostContent extends StatelessWidget {
     this.expandTextStyle,
     this.expandText,
     required this.onTagTap,
+    this.expanded = false,
   });
 
   final String? text;
@@ -25,6 +26,7 @@ class LMPostContent extends StatelessWidget {
   final String? expandText;
   final bool? animation;
   final Function(String) onTagTap;
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class LMPostContent extends StatelessWidget {
       expandText: expandText ?? "see more",
       animation: animation ?? true,
       maxLines: visibleLines ?? 4,
+      expanded: expanded,
       hashtagStyle: Theme.of(context)
           .textTheme
           .bodyMedium!
