@@ -23,6 +23,7 @@ class LMPostHeader extends StatelessWidget {
     this.fallbackTextStyle,
     this.customTitle,
     this.showCustomTitle = true,
+    this.profilePicture,
   });
 
   final double? imageSize;
@@ -36,6 +37,7 @@ class LMPostHeader extends StatelessWidget {
   final Function()? onProfileTap;
   final TextStyle? fallbackTextStyle;
   final bool? showCustomTitle;
+  final Widget? profilePicture;
 
   final bool isFeed;
 
@@ -64,13 +66,14 @@ class LMPostHeader extends StatelessWidget {
                   color: Colors.transparent,
                   child: Row(
                     children: [
-                      LMProfilePicture(
-                        size: imageSize ?? 42,
-                        fallbackText: user.name,
-                        imageUrl: user.imageUrl,
-                        onTap: onProfileTap,
-                        fallbackTextStyle: fallbackTextStyle,
-                      ),
+                      profilePicture ??
+                          LMProfilePicture(
+                            size: imageSize ?? 42,
+                            fallbackText: user.name,
+                            imageUrl: user.imageUrl,
+                            onTap: onProfileTap,
+                            fallbackTextStyle: fallbackTextStyle,
+                          ),
                       kHorizontalPaddingLarge,
                       Container(
                         constraints: BoxConstraints(
