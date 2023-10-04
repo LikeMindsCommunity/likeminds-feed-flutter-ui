@@ -200,16 +200,18 @@ class LMPostHeader extends StatelessWidget {
                                     ),
                                   ),
                                   kHorizontalPaddingSmall,
-                                  editedText ??
-                                      LMTextView(
-                                        text: postDetails.isEdited
-                                            ? 'Edited'
-                                            : '',
-                                        textStyle: const TextStyle(
-                                          fontSize: kFontSmall,
-                                          color: kGrey3Color,
-                                        ),
-                                      ),
+                                  postDetails.isEdited
+                                      ? editedText ??
+                                          LMTextView(
+                                            text: postDetails.isEdited
+                                                ? 'Edited'
+                                                : '',
+                                            textStyle: const TextStyle(
+                                              fontSize: kFontSmall,
+                                              color: kGrey3Color,
+                                            ),
+                                          )
+                                      : const SizedBox(),
                                 ],
                               )
                             ],
