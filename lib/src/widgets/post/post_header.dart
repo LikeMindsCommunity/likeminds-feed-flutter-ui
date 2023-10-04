@@ -16,17 +16,29 @@ class LMPostHeader extends StatelessWidget {
     this.titleText,
     this.subText,
     this.menu,
+    this.editedText,
     this.createdAt,
     this.onProfileTap,
     required this.isFeed,
+    this.fallbackTextStyle,
+    this.customTitle,
+    this.showCustomTitle = true,
+    this.profilePicture,
   });
 
   final double? imageSize;
   final LMTextView? titleText;
+  final LMTextView? customTitle;
   final LMTextView? subText;
-  final LMPostMenu? menu;
+  final LMTextView? editedText;
+
+  final Widget? menu;
   final LMTextView? createdAt;
   final Function()? onProfileTap;
+  final TextStyle? fallbackTextStyle;
+  final bool? showCustomTitle;
+  final Widget? profilePicture;
+
   final bool isFeed;
 
   final User user;
@@ -54,12 +66,14 @@ class LMPostHeader extends StatelessWidget {
                   color: Colors.transparent,
                   child: Row(
                     children: [
-                      LMProfilePicture(
-                        size: imageSize ?? 42,
-                        fallbackText: user.name,
-                        imageUrl: user.imageUrl,
-                        onTap: onProfileTap,
-                      ),
+                      profilePicture ??
+                          LMProfilePicture(
+                            size: imageSize ?? 42,
+                            fallbackText: user.name,
+                            imageUrl: user.imageUrl,
+                            onTap: onProfileTap,
+                            fallbackTextStyle: fallbackTextStyle,
+                          ),
                       kHorizontalPaddingLarge,
                       Container(
                         constraints: BoxConstraints(
@@ -93,50 +107,62 @@ class LMPostHeader extends StatelessWidget {
                                     ),
                                   ),
                                   kHorizontalPaddingMedium,
-                                  (user.customTitle == null ||
-                                              user.customTitle!.isEmpty) ||
-                                          (user.isDeleted != null &&
-                                              user.isDeleted!)
+                                  !showCustomTitle!
                                       ? const SizedBox()
-                                      : IntrinsicWidth(
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          3.0),
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4.0),
-                                                  child: Text(
-                                                    user.customTitle!.isNotEmpty
-                                                        ? user.customTitle!
-                                                        : "",
-                                                    // maxLines: 1,
-                                                    style: TextStyle(
-                                                      fontSize: kFontSmall,
-                                                      color: kWhiteColor,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle: user
-                                                              .name.isNotEmpty
-                                                          ? FontStyle.normal
-                                                          : FontStyle.italic,
+                                      : ((user.customTitle == null ||
+                                                  user.customTitle!.isEmpty) ||
+                                              (user.isDeleted != null &&
+                                                  user.isDeleted!))
+                                          ? const SizedBox()
+                                          : IntrinsicWidth(
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              3.0),
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: customTitle ??
+                                                          Text(
+                                                            user.customTitle!
+                                                                    .isNotEmpty
+                                                                ? user
+                                                                    .customTitle!
+                                                                : "",
+                                                            // maxLines: 1,
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  kFontSmall,
+                                                              color:
+                                                                  kWhiteColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontStyle: user
+                                                                      .name
+                                                                      .isNotEmpty
+                                                                  ? FontStyle
+                                                                      .normal
+                                                                  : FontStyle
+                                                                      .italic,
+                                                            ),
+                                                          ),
                                                     ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
+                                            ),
                                 ],
                               ),
                               kVerticalPaddingSmall,
@@ -165,7 +191,7 @@ class LMPostHeader extends StatelessWidget {
                                           color: kGrey3Color,
                                         ),
                                       ),
-                                  kHorizontalPaddingXSmall,
+                                  kHorizontalPaddingSmall,
                                   LMTextView(
                                     text: postDetails!.isEdited ? '·' : '',
                                     textStyle: const TextStyle(
@@ -173,14 +199,19 @@ class LMPostHeader extends StatelessWidget {
                                       color: kGrey3Color,
                                     ),
                                   ),
-                                  kHorizontalPaddingXSmall,
-                                  LMTextView(
-                                    text: postDetails.isEdited ? 'Edited' : '',
-                                    textStyle: const TextStyle(
-                                      fontSize: kFontSmall,
-                                      color: kGrey3Color,
-                                    ),
-                                  ),
+                                  kHorizontalPaddingSmall,
+                                  postDetails.isEdited
+                                      ? editedText ??
+                                          LMTextView(
+                                            text: postDetails.isEdited
+                                                ? 'Edited'
+                                                : '',
+                                            textStyle: const TextStyle(
+                                              fontSize: kFontSmall,
+                                              color: kGrey3Color,
+                                            ),
+                                          )
+                                      : const SizedBox(),
                                 ],
                               )
                             ],

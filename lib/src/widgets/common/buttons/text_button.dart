@@ -21,6 +21,7 @@ class LMTextButton extends StatefulWidget {
     this.padding,
     this.border,
     this.placement = LMIconPlacement.start,
+    this.mainAxisAlignment,
   });
 
   // Required parameters, defines whether the button is active or disabled
@@ -47,6 +48,7 @@ class LMTextButton extends StatefulWidget {
   final Border? border;
   // Placement of the icon in the button, required
   final LMIconPlacement placement;
+  final MainAxisAlignment? mainAxisAlignment;
 
   @override
   State<LMTextButton> createState() => _LMTextButtonState();
@@ -70,7 +72,8 @@ class _LMTextButtonState extends State<LMTextButton> {
           border: widget.border,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment:
+              widget.mainAxisAlignment ?? MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             widget.placement == LMIconPlacement.start

@@ -482,7 +482,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                     padding: EdgeInsets.only(top: 16)),
                                 SliverToBoxAdapter(
                                   child: postData == null
-                                      ? const LMPostShimmer()
+                                      ? const LMPostMediaShimmer()
                                       : LMPostWidget(
                                           post: postData!,
                                           onTagTap: (String userId) {

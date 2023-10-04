@@ -81,7 +81,7 @@ class _LMImageState extends State<LMImage> {
                     );
               },
               progressIndicatorBuilder: (context, url, progress) =>
-                  widget.shimmerWidget ?? const LMPostShimmer(),
+                  widget.shimmerWidget ?? const LMPostMediaShimmer(),
             ),
           )
         : widget.imageFile != null

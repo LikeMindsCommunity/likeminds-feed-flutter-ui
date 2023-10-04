@@ -27,12 +27,15 @@ class LMTextView extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Text(
-        text,
-        textAlign: textAlign,
-        overflow: overflow ?? TextOverflow.ellipsis,
-        maxLines: maxLines,
-        style: textStyle ?? defaultTextStyle,
+      child: Container(
+        color: Colors.transparent,
+        child: Text(
+          text,
+          textAlign: textAlign,
+          overflow: overflow ?? TextOverflow.ellipsis,
+          maxLines: maxLines,
+          style: textStyle ?? defaultTextStyle,
+        ),
       ),
     );
   }

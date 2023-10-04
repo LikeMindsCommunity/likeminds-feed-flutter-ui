@@ -12,6 +12,8 @@ class LMIconButton extends StatefulWidget {
     this.containerSize,
     this.borderRadius,
     this.backgroundColor,
+    this.margin,
+    this.padding,
   });
 
   final LMIcon icon;
@@ -21,6 +23,8 @@ class LMIconButton extends StatefulWidget {
   final double? containerSize;
   final double? borderRadius;
   final Color? backgroundColor;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
 
   @override
   State<LMIconButton> createState() => _LMIconButtonState();
@@ -46,6 +50,8 @@ class _LMIconButtonState extends State<LMIconButton> {
       child: Container(
         height: widget.containerSize ?? 32,
         width: widget.containerSize ?? 32,
+        margin: widget.margin,
+        padding: widget.padding,
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? Colors.transparent,
           borderRadius: BorderRadius.circular(widget.borderRadius ?? 16),

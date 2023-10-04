@@ -73,7 +73,7 @@ class _LMVideoState extends State<LMVideo> {
   bool _onTouch = true;
   bool initialiseOverlay = false;
 
-  late final player = Player(configuration: PlayerConfiguration());
+  late final player = Player(configuration: const PlayerConfiguration());
   late final controller = VideoController(player);
 
   Timer? _timer;
@@ -129,7 +129,7 @@ class _LMVideoState extends State<LMVideo> {
       future: initialiseControllers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LMPostShimmer();
+          return const LMPostMediaShimmer();
         } else if (snapshot.connectionState == ConnectionState.done) {
           if (!initialiseOverlay) {
             _timer = Timer.periodic(const Duration(milliseconds: 2500), (_) {

@@ -13,15 +13,30 @@ class LMPostMedia extends StatefulWidget {
     this.borderRadius,
     this.backgroundColor,
     this.showLinkUrl = false,
+    this.carouselActiveIndicatorColor,
+    this.carouselInactiveIndicatorColor,
+    this.title,
+    this.subtitle,
+    this.showBorder = true,
+    this.errorWidget,
+    this.boxFit,
   });
 
   final List<Attachment> attachments;
-  final LMIcon? documentIcon;
+  final Widget? documentIcon;
   final double? borderRadius;
   final double? width;
   final double? height;
   final Color? backgroundColor;
   final bool showLinkUrl;
+  final LMTextView? title;
+  final LMTextView? subtitle;
+  final bool showBorder;
+  final Widget? errorWidget;
+  final BoxFit? boxFit;
+
+  final Color? carouselActiveIndicatorColor;
+  final Color? carouselInactiveIndicatorColor;
 
   @override
   State<LMPostMedia> createState() => _LMPostMediaState();
@@ -40,6 +55,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
   Widget build(BuildContext context) {
     attachments = widget.attachments;
     screenSize = MediaQuery.of(context).size;
+    ThemeData theme = Theme.of(context);
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];
     if (attachments.first.attachmentType == 3) {
       /// If the attachment is a document, we need to call the method 'getDocumentList'
@@ -50,13 +66,20 @@ class _LMPostMediaState extends State<LMPostMedia> {
         borderRadius: widget.borderRadius,
         backgroundColor: widget.backgroundColor,
         showLinkUrl: widget.showLinkUrl,
+        title: widget.title,
+        subtitle: widget.subtitle,
+        errorWidget: widget.errorWidget,
       );
     } else {
       return LMCarousel(
         attachments: attachments,
         borderRadius: widget.borderRadius,
-        // width: widget.width,
-        // height: widget.height,
+        activeIndicatorColor: widget.carouselActiveIndicatorColor,
+        inactiveIndicatorColor: widget.carouselInactiveIndicatorColor,
+        errorWidget: widget.errorWidget,
+        boxFit: widget.boxFit,
+        width: widget.width,
+        height: widget.height,
       );
     }
   }
@@ -72,7 +95,10 @@ class _LMPostMediaState extends State<LMPostMedia> {
             size: PostHelper.getFileSizeString(bytes: e.attachmentMeta.size!),
             documentUrl: e.attachmentMeta.url,
             documentIcon: widget.documentIcon,
+            showBorder: widget.showBorder,
             type: e.attachmentMeta.format!,
+
+            backgroundColor: widget.backgroundColor,
             onTap: () {
               Uri fileUrl = Uri.parse(e.attachmentMeta.url!);
               launchUrl(fileUrl, mode: LaunchMode.externalApplication);
