@@ -62,9 +62,9 @@ class LMTopicChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget topicText = Text(
-      topic.name,
-      style: textStyle,
+    Widget topicText = LMTextView(
+      text: topic.name,
+      textStyle: textStyle,
       textAlign: TextAlign.center,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
@@ -89,7 +89,6 @@ class LMTopicChip extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
         children: [
           icon != null && iconPlacement == LMIconPlacement.start
               ? GestureDetector(

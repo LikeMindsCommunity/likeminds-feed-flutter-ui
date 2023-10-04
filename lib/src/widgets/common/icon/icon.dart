@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
 enum LMIconType { icon, svg, png }
 
@@ -43,7 +44,9 @@ class LMIcon extends StatelessWidget {
           height: size?.abs() ?? 24,
           child: SvgPicture.asset(
             assetPath!,
-            color: color,
+            colorFilter: color == null
+                ? null
+                : ColorFilter.mode(color!, BlendMode.srcATop),
             fit: fit ?? BoxFit.contain,
           ),
         );

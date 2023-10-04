@@ -44,7 +44,7 @@ class NewPostScreen extends StatefulWidget {
 }
 
 class _NewPostScreenState extends State<NewPostScreen> {
-  final TextEditingController? _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   NewPostBloc? newPostBloc;
   // final ImagePicker _picker = ImagePicker();
   // final FilePicker _filePicker = FilePicker.platform;
@@ -67,7 +67,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     // rebuildFeedRoomSelectTab.dispose();
     _debounce?.cancel();
     super.dispose();

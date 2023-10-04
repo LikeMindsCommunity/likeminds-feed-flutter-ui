@@ -19,9 +19,12 @@ export 'common/text/text_view.dart';
 export 'common/text/text_input.dart';
 
 export 'common/shimmer/post_shimmer.dart';
+export 'common/shimmer/feed_shimmer.dart';
 export 'common/shimmer/document_shimmer.dart';
 
 export 'common/profile_picture.dart';
+
+export 'feed/bottom_sheet.dart';
 
 export 'media/carousel.dart';
 export 'media/document.dart';

@@ -13,12 +13,16 @@ class LMCarousel extends StatefulWidget {
   final double? borderRadius;
   final double? borderSize;
   final Color? borderColor;
+  final Color? activeIndicatorColor;
+  final Color? inactiveIndicatorColor;
 
   final Widget? activeIndicator;
   final Widget? inactiveIndicator;
 
   final LMImage? imageItem;
   final LMVideo? videoItem;
+  final Widget? errorWidget;
+  final BoxFit? boxFit;
 
   const LMCarousel({
     Key? key,
@@ -32,6 +36,10 @@ class LMCarousel extends StatefulWidget {
     this.inactiveIndicator,
     this.imageItem,
     this.videoItem,
+    this.activeIndicatorColor,
+    this.inactiveIndicatorColor,
+    this.errorWidget,
+    this.boxFit,
   }) : super(key: key);
 
   @override
@@ -62,9 +70,12 @@ class _LMCarouselState extends State<LMCarousel> {
             child: widget.imageItem ??
                 LMImage(
                   imageUrl: e.attachmentMeta.url,
+                  height: widget.height,
+                  width: widget.width,
                   borderRadius: widget.borderRadius,
                   borderColor: widget.borderColor,
-                  boxFit: BoxFit.contain,
+                  boxFit: widget.boxFit ?? BoxFit.contain,
+                  errorWidget: widget.errorWidget,
                 ),
           ),
         );
@@ -75,10 +86,13 @@ class _LMCarouselState extends State<LMCarousel> {
           child: widget.videoItem ??
               LMVideo(
                 videoUrl: e.attachmentMeta.url,
+                width: widget.width,
+                height: widget.height,
                 borderRadius: widget.borderRadius,
                 borderColor: widget.borderColor,
-                boxFit: BoxFit.contain,
+                boxFit: widget.boxFit ?? BoxFit.contain,
                 showControls: false,
+                errorWidget: widget.errorWidget,
               ),
         );
       } else {
@@ -115,7 +129,6 @@ class _LMCarouselState extends State<LMCarousel> {
                 enableInfiniteScroll: false,
                 enlargeFactor: 0.0,
                 viewportFraction: 1.0,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
                 onPageChanged: (index, reason) {
                   currPosition = index;
                   rebuildCurr.value = !rebuildCurr.value;
@@ -143,11 +156,12 @@ class _LMCarouselState extends State<LMCarousel> {
                                         height: 8.0,
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 7.0, horizontal: 2.0),
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
                                             Radius.circular(4),
                                           ),
-                                          color: kPrimaryColor,
+                                          color: widget.activeIndicatorColor ??
+                                              kPrimaryColor,
                                         ),
                                       )
                                   : widget.inactiveIndicator ??
@@ -156,11 +170,13 @@ class _LMCarouselState extends State<LMCarousel> {
                                         height: 8.0,
                                         margin: const EdgeInsets.symmetric(
                                             vertical: 7.0, horizontal: 2.0),
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
                                             Radius.circular(4),
                                           ),
-                                          color: kGrey1Color,
+                                          color:
+                                              widget.inactiveIndicatorColor ??
+                                                  kGrey1Color,
                                           // color: Color.fromRGBO(0, 0, 0, 0.4),
                                         ),
                                       );

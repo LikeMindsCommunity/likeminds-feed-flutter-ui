@@ -11,7 +11,10 @@ class LMPostContent extends StatelessWidget {
     this.textStyle,
     this.linkStyle,
     this.animation,
+    this.expandTextStyle,
+    this.expandText,
     required this.onTagTap,
+    this.expanded = false,
   });
 
   final String? text;
@@ -19,20 +22,33 @@ class LMPostContent extends StatelessWidget {
   final int? visibleLines;
   final TextStyle? textStyle;
   final TextStyle? linkStyle;
+  final TextStyle? expandTextStyle;
+  final String? expandText;
   final bool? animation;
   final Function(String) onTagTap;
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {
     final postDetails = InheritedPostProvider.of(context)?.post;
+    final ThemeData theme = Theme.of(context);
     return ExpandableText(
       text ?? postDetails!.text,
       onTagTap: onTagTap,
-      expandText: "see more",
+      expandText: expandText ?? "see more",
       animation: animation ?? true,
       maxLines: visibleLines ?? 4,
+      expanded: expanded,
+      hashtagStyle: Theme.of(context)
+          .textTheme
+          .bodyMedium!
+          .copyWith(color: theme.colorScheme.primary),
+      prefixStyle: expandTextStyle,
       linkStyle: linkStyle ??
-          Theme.of(context).textTheme.bodyMedium!.copyWith(color: kLinkColor),
+          Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(color: theme.colorScheme.primary),
       textAlign: TextAlign.left,
       style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
     );
