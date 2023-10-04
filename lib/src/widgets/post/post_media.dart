@@ -18,6 +18,8 @@ class LMPostMedia extends StatefulWidget {
     this.title,
     this.subtitle,
     this.showBorder = true,
+    this.errorWidget,
+    this.boxFit,
   });
 
   final List<Attachment> attachments;
@@ -30,6 +32,8 @@ class LMPostMedia extends StatefulWidget {
   final LMTextView? title;
   final LMTextView? subtitle;
   final bool showBorder;
+  final Widget? errorWidget;
+  final BoxFit? boxFit;
 
   final Color? carouselActiveIndicatorColor;
   final Color? carouselInactiveIndicatorColor;
@@ -64,6 +68,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
         showLinkUrl: widget.showLinkUrl,
         title: widget.title,
         subtitle: widget.subtitle,
+        errorWidget: widget.errorWidget,
       );
     } else {
       return LMCarousel(
@@ -71,8 +76,10 @@ class _LMPostMediaState extends State<LMPostMedia> {
         borderRadius: widget.borderRadius,
         activeIndicatorColor: widget.carouselActiveIndicatorColor,
         inactiveIndicatorColor: widget.carouselInactiveIndicatorColor,
-        // width: widget.width,
-        // height: widget.height,
+        errorWidget: widget.errorWidget,
+        boxFit: widget.boxFit,
+        width: widget.width,
+        height: widget.height,
       );
     }
   }
@@ -90,6 +97,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
             documentIcon: widget.documentIcon,
             showBorder: widget.showBorder,
             type: e.attachmentMeta.format!,
+
             backgroundColor: widget.backgroundColor,
             onTap: () {
               Uri fileUrl = Uri.parse(e.attachmentMeta.url!);

@@ -21,6 +21,8 @@ class LMCarousel extends StatefulWidget {
 
   final LMImage? imageItem;
   final LMVideo? videoItem;
+  final Widget? errorWidget;
+  final BoxFit? boxFit;
 
   const LMCarousel({
     Key? key,
@@ -36,6 +38,8 @@ class LMCarousel extends StatefulWidget {
     this.videoItem,
     this.activeIndicatorColor,
     this.inactiveIndicatorColor,
+    this.errorWidget,
+    this.boxFit,
   }) : super(key: key);
 
   @override
@@ -66,9 +70,12 @@ class _LMCarouselState extends State<LMCarousel> {
             child: widget.imageItem ??
                 LMImage(
                   imageUrl: e.attachmentMeta.url,
+                  height: widget.height,
+                  width: widget.width,
                   borderRadius: widget.borderRadius,
                   borderColor: widget.borderColor,
-                  boxFit: BoxFit.contain,
+                  boxFit: widget.boxFit ?? BoxFit.contain,
+                  errorWidget: widget.errorWidget,
                 ),
           ),
         );
@@ -79,10 +86,13 @@ class _LMCarouselState extends State<LMCarousel> {
           child: widget.videoItem ??
               LMVideo(
                 videoUrl: e.attachmentMeta.url,
+                width: widget.width,
+                height: widget.height,
                 borderRadius: widget.borderRadius,
                 borderColor: widget.borderColor,
-                boxFit: BoxFit.contain,
+                boxFit: widget.boxFit ?? BoxFit.contain,
                 showControls: false,
+                errorWidget: widget.errorWidget,
               ),
         );
       } else {
@@ -119,7 +129,6 @@ class _LMCarouselState extends State<LMCarousel> {
                 enableInfiniteScroll: false,
                 enlargeFactor: 0.0,
                 viewportFraction: 1.0,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
                 onPageChanged: (index, reason) {
                   currPosition = index;
                   rebuildCurr.value = !rebuildCurr.value;

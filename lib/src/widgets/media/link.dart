@@ -26,6 +26,7 @@ class LMLinkPreview extends StatelessWidget {
     this.imageUrl,
     this.showLinkUrl = false,
     this.border,
+    this.errorWidget,
   });
 
   // data class to provide link preview data
@@ -53,6 +54,7 @@ class LMLinkPreview extends StatelessWidget {
   // defaults to false, to show link url
   final bool showLinkUrl;
   final Border? border;
+  final Widget? errorWidget;
 
   bool checkNullMedia() {
     return ((linkModel == null ||
@@ -89,6 +91,7 @@ class LMLinkPreview extends StatelessWidget {
                     width: width,
                     height: 150,
                     borderRadius: borderRadius,
+                    errorWidget: errorWidget,
                     imageUrl: imageUrl ??
                         (linkModel != null
                             ? linkModel!.ogTags!.image!
