@@ -44,8 +44,9 @@ class LMIcon extends StatelessWidget {
           height: size?.abs() ?? 24,
           child: SvgPicture.asset(
             assetPath!,
-            colorFilter:
-                ColorFilter.mode(color ?? kWhiteColor, BlendMode.srcATop),
+            colorFilter: color == null
+                ? null
+                : ColorFilter.mode(color!, BlendMode.srcATop),
             fit: fit ?? BoxFit.contain,
           ),
         );
