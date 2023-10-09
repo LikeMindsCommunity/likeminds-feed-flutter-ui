@@ -24,6 +24,7 @@ class LMPostHeader extends StatelessWidget {
     this.customTitle,
     this.showCustomTitle = true,
     this.profilePicture,
+    this.removeItemIds,
   });
 
   final double? imageSize;
@@ -40,6 +41,7 @@ class LMPostHeader extends StatelessWidget {
   final Widget? profilePicture;
 
   final bool isFeed;
+  final Set<int>? removeItemIds;
 
   final User user;
 
@@ -227,6 +229,7 @@ class LMPostHeader extends StatelessWidget {
                       LMPostMenu(
                           menuItems: postDetails.menuItems,
                           isFeed: isFeed,
+                          removeItemIds: const {},
                           onSelected: (id) {})
                   : const SizedBox()
             ],
