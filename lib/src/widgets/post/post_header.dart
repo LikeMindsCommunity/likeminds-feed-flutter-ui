@@ -227,6 +227,7 @@ class LMPostHeader extends StatelessWidget {
                       LMPostMenu(
                           menuItems: postDetails.menuItems,
                           isFeed: isFeed,
+                          removeItemIds: const {},
                           onSelected: (id) {})
                   : const SizedBox()
             ],

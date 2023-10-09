@@ -12,6 +12,7 @@ class LMPostMenu extends StatelessWidget {
     required this.isFeed,
     required this.onSelected,
     this.menuIcon,
+    this.removeItemIds = const {4, 7},
   });
 
   final Map<int, LMTextView>? children;
@@ -19,12 +20,12 @@ class LMPostMenu extends StatelessWidget {
   final List<PopupMenuItemModel> menuItems;
   final bool isFeed;
   final Function(int)? onSelected;
+  final Set<int> removeItemIds;
 
   void removeReportIntegration() {
     menuItems.removeWhere((element) {
-      return element.id == 4 || element.id == 7;
+      return removeItemIds.contains(element.id);
     });
-    print(menuItems);
   }
 
   @override
