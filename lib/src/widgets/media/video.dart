@@ -2,15 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 // import 'package:flick_video_player/flick_video_player.dart';
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/icon_button.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/post_shimmer.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+// import 'package:media_kit/media_kit.dart';
+// import 'package:media_kit_video/media_kit_video.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
-    as media_kit_video_controls;
+// import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
+//     as media_kit_video_controls;
 
 class LMVideo extends StatefulWidget {
   const LMVideo({
@@ -67,14 +69,15 @@ class LMVideo extends StatefulWidget {
 }
 
 class _LMVideoState extends State<LMVideo> {
-  late VideoPlayerController videoPlayerController;
+  late VlcPlayerController controller;
+  // late VideoPlayerController videoPlayerController;
   // FlickManager? flickManager;
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   bool _onTouch = true;
   bool initialiseOverlay = false;
 
-  late final player = Player(configuration: const PlayerConfiguration());
-  late final controller = VideoController(player);
+  // late final player = Player(configuration: const PlayerConfiguration());
+  // late final controller = VideoController(player);
 
   Timer? _timer;
 
@@ -86,28 +89,38 @@ class _LMVideoState extends State<LMVideo> {
 
   @override
   void initState() {
-    MediaKit.ensureInitialized();
-    player.open(Media(widget.videoUrl!));
+    // MediaKit.ensureInitialized();
+    // player.open(Media(widget.videoUrl!));
     super.initState();
   }
 
   Future<void> initialiseControllers() async {
     if (widget.videoUrl != null) {
-      videoPlayerController = widget.videoPlayerController ??
-          VideoPlayerController.networkUrl(
-            Uri.parse(widget.videoUrl!),
-            videoPlayerOptions: VideoPlayerOptions(
-              allowBackgroundPlayback: false,
-            ),
-          );
+      controller = VlcPlayerController.network(
+        Uri.parse(widget.videoUrl!).toString(),
+        hwAcc: HwAcc.auto,
+        autoPlay: false,
+        options: VlcPlayerOptions(
+          advanced: VlcAdvancedOptions([
+            VlcAdvancedOptions.networkCaching(2000),
+          ]),
+          rtp: VlcRtpOptions([
+            VlcRtpOptions.rtpOverRtsp(true),
+          ]),
+        ),
+      );
+      // videoPlayerController = widget.videoPlayerController ??
+      //     VideoPlayerController.networkUrl(
+      //       Uri.parse(widget.videoUrl!),
+      //       videoPlayerOptions: VideoPlayerOptions(
+      //         allowBackgroundPlayback: false,
+      //         mixWithOthers: true,
+      //       ),
+      //     );
     } else {
-      videoPlayerController = widget.videoPlayerController ??
-          VideoPlayerController.file(
-            widget.videoFile!,
-            videoPlayerOptions: VideoPlayerOptions(
-              allowBackgroundPlayback: false,
-            ),
-          );
+      controller = VlcPlayerController.file(
+        widget.videoFile!,
+      );
     }
     // flickManager ??= FlickManager(
     //   videoPlayerController: videoPlayerController,
@@ -151,6 +164,7 @@ class _LMVideoState extends State<LMVideo> {
                   //       .initialize();
                   // }
                   // flickManager!.flickControlManager!.play();
+                  controller.play();
                   rebuildOverlay.value = !rebuildOverlay.value;
                 }
               },
@@ -166,6 +180,10 @@ class _LMVideoState extends State<LMVideo> {
                   ),
                 ),
                 alignment: Alignment.center,
+                child: VlcPlayer(
+                  controller: controller,
+                  aspectRatio: 16 / 9,
+                ),
                 // child: FlickVideoPlayer(
                 //   flickManager: flickManager!,
                 //   flickVideoWithControls:
@@ -180,12 +198,12 @@ class _LMVideoState extends State<LMVideo> {
                 //               controls: const SizedBox(),
                 //               videoFit: widget.boxFit ?? BoxFit.cover,
                 //             ),
-                child: Video(
-                  controller: controller,
-                  controls: widget.showControls != null && widget.showControls!
-                      ? null
-                      : media_kit_video_controls.NoVideoControls,
-                ),
+                // child: Video(
+                //   controller: controller,
+                //   controls: widget.showControls != null && widget.showControls!
+                //       ? null
+                //       : media_kit_video_controls.NoVideoControls,
+                // ),
                 // ),
               ),
             ),
@@ -207,7 +225,7 @@ class _LMVideoState extends State<LMVideo> {
                                 side: BorderSide(color: Colors.white))),
                           ),
                           child: Icon(
-                            controller.player.state.playing
+                            controller.value.isPlaying
                                 ? Icons.pause
                                 : Icons.play_arrow,
                             size: 30,
@@ -218,9 +236,9 @@ class _LMVideoState extends State<LMVideo> {
 
                             // pause while video is playing, play while video is pausing
 
-                            controller.player.state.playing
-                                ? controller.player.pause()
-                                : controller.player.play();
+                            controller.value.isPlaying
+                                ? controller.pause()
+                                : controller.play();
                             rebuildOverlay.value = !rebuildOverlay.value;
 
                             // Auto dismiss overlay after 1 second

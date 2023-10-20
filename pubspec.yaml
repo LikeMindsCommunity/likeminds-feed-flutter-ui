@@ -23,12 +23,14 @@ dependencies:
   flutter_layout_grid: 2.0.5
   open_filex: ^4.3.2
   http:
+  flick_video_player:
   extended_image: 8.1.1
-  media_kit: ^1.1.7                              # Primary package.
-  media_kit_video: ^1.1.8                        # For video rendering.
-  media_kit_libs_video: ^1.0.1 
+  # media_kit: ^1.1.7                              # Primary package.
+  # media_kit_video: ^1.1.8                        # For video rendering.
+  # media_kit_libs_video: ^1.0.1 
 
   likeminds_feed: 1.5.0
+  flutter_vlc_player: ^7.4.0
   #  path: ../LikeMinds-Flutter-Feed-SDK
 
 
@@ -36,6 +38,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
+dependency_override:
+  wakelock: 0.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

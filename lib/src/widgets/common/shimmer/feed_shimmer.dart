@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:media_kit/media_kit.dart';
+// import 'package:media_kit/media_kit.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LMFeedShimmer extends StatelessWidget {
