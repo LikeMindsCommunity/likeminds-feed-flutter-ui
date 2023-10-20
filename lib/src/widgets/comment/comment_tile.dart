@@ -28,11 +28,13 @@ class LMCommentTile extends StatefulWidget {
     this.borderRadius,
     this.width,
     this.menu,
+    this.style,
   });
 
   final User user;
   final Reply comment;
 
+  final TextStyle? style;
   final LMProfilePicture? profilePicture;
   final LMTextView? titleText;
   final LMTextView? subtitleText;
@@ -77,7 +79,7 @@ class _LMCommentTileState extends State<LMCommentTile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: widget.width != null ? widget.width! * 0.6 : null,
                       child: widget.titleText ??
                           LMTextView(
@@ -123,7 +125,7 @@ class _LMCommentTileState extends State<LMCommentTile> {
                   .bodyMedium!
                   .copyWith(color: theme.colorScheme.primary),
               textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: widget.style ?? Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           kVerticalPaddingSmall,

@@ -54,6 +54,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
   @override
   Widget build(BuildContext context) {
     attachments = widget.attachments;
+    attachments.removeWhere((element) => element.attachmentType == 5);
     screenSize = MediaQuery.of(context).size;
     ThemeData theme = Theme.of(context);
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];

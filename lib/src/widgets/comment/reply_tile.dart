@@ -26,11 +26,13 @@ class LMReplyTile extends StatefulWidget {
     this.margin,
     this.width,
     this.menu,
+    this.style,
   });
 
   final User user;
   final CommentReply comment;
 
+  final TextStyle? style;
   final LMProfilePicture? profilePicture;
   final LMTextView? titleText;
   final LMTextView? subtitleText;
@@ -111,7 +113,8 @@ class _LMReplyTileState extends State<LMReplyTile> {
                             .bodyMedium!
                             .copyWith(color: theme.colorScheme.primary),
                         textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: widget.style ??
+                            Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ],
