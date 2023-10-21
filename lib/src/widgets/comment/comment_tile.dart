@@ -28,13 +28,13 @@ class LMCommentTile extends StatefulWidget {
     this.borderRadius,
     this.width,
     this.menu,
-    this.style,
+    this.textStyle,
   });
 
   final User user;
   final Reply comment;
 
-  final TextStyle? style;
+  final TextStyle? textStyle;
   final LMProfilePicture? profilePicture;
   final LMTextView? titleText;
   final LMTextView? subtitleText;
@@ -125,7 +125,7 @@ class _LMCommentTileState extends State<LMCommentTile> {
                   .bodyMedium!
                   .copyWith(color: theme.colorScheme.primary),
               textAlign: TextAlign.left,
-              style: widget.style ?? Theme.of(context).textTheme.bodyMedium,
+              style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           kVerticalPaddingSmall,
