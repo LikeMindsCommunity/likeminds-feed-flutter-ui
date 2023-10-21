@@ -20,6 +20,7 @@ class LMPostMedia extends StatefulWidget {
     this.showBorder = true,
     this.errorWidget,
     this.boxFit,
+    this.textColor,
   });
 
   final List<Attachment> attachments;
@@ -34,6 +35,7 @@ class LMPostMedia extends StatefulWidget {
   final bool showBorder;
   final Widget? errorWidget;
   final BoxFit? boxFit;
+  final Color? textColor;
 
   final Color? carouselActiveIndicatorColor;
   final Color? carouselInactiveIndicatorColor;
@@ -53,7 +55,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
 
   @override
   Widget build(BuildContext context) {
-    attachments = widget.attachments;
+    attachments = [...widget.attachments];
     attachments.removeWhere((element) => element.attachmentType == 5);
     screenSize = MediaQuery.of(context).size;
     ThemeData theme = Theme.of(context);
@@ -98,8 +100,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
             documentIcon: widget.documentIcon,
             showBorder: widget.showBorder,
             type: e.attachmentMeta.format!,
-
             backgroundColor: widget.backgroundColor,
+            textColor: widget.textColor,
             onTap: () {
               Uri fileUrl = Uri.parse(e.attachmentMeta.url!);
               launchUrl(fileUrl, mode: LaunchMode.externalApplication);
@@ -128,7 +130,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
                     child: LMTextView(
                       text: '+ ${documents.length - 3} more',
                       textStyle: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: widget.textColor ??
+                            Theme.of(context).colorScheme.secondary,
                       ),
                     ))
                 : const SizedBox()
