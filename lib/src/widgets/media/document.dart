@@ -25,6 +25,7 @@ class LMDocument extends StatefulWidget {
     this.removeIcon,
     this.showBorder = true,
     this.backgroundColor,
+    this.textColor,
   }) : assert(documentFile != null || documentUrl != null);
 
   final Function()? onTap;
@@ -39,6 +40,7 @@ class LMDocument extends StatefulWidget {
   final double? borderRadius;
   final double? borderSize;
   final Color? borderColor;
+  final Color? textColor;
 
   final LMTextView? title;
   final LMTextView? subtitle;
@@ -82,7 +84,6 @@ class _LMDocumentState extends State<LMDocument> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return FutureBuilder(
         future: fileLoaderFuture,
         builder: (context, snapshot) {
@@ -132,12 +133,11 @@ class _LMDocumentState extends State<LMDocument> {
                                 text: _fileName ?? '',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                textStyle: theme.textTheme.titleMedium ??
-                                    const TextStyle(
-                                      fontSize: 14,
-                                      color: kGrey2Color,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                textStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: widget.textColor ?? kGrey2Color,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                           kVerticalPaddingSmall,
                           widget.subtitle ??
@@ -147,26 +147,23 @@ class _LMDocumentState extends State<LMDocument> {
                                   kHorizontalPaddingXSmall,
                                   Text(
                                     _fileSize!.toUpperCase(),
-                                    style: theme.textTheme.labelMedium ??
-                                        const TextStyle(
-                                            fontSize: kFontSmall,
-                                            color: kGrey3Color),
+                                    style: TextStyle(
+                                        fontSize: kFontSmall,
+                                        color: widget.textColor ?? kGrey3Color),
                                   ),
                                   kHorizontalPaddingXSmall,
                                   Text(
                                     '·',
-                                    style: theme.textTheme.labelMedium ??
-                                        TextStyle(
-                                            fontSize: kFontSmall,
-                                            color: kGrey3Color),
+                                    style: TextStyle(
+                                        fontSize: kFontSmall,
+                                        color: widget.textColor ?? kGrey3Color),
                                   ),
                                   kHorizontalPaddingXSmall,
                                   Text(
                                     _fileExtension!.toUpperCase(),
-                                    style: theme.textTheme.labelMedium ??
-                                        const TextStyle(
-                                            fontSize: kFontSmall,
-                                            color: kGrey3Color),
+                                    style: TextStyle(
+                                        fontSize: kFontSmall,
+                                        color: widget.textColor ?? kGrey3Color),
                                   ),
                                 ],
                               )
