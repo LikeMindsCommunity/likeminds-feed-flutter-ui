@@ -26,11 +26,13 @@ class LMReplyTile extends StatefulWidget {
     this.margin,
     this.width,
     this.menu,
+    this.textStyle,
   });
 
   final User user;
   final CommentReply comment;
 
+  final TextStyle? textStyle;
   final LMProfilePicture? profilePicture;
   final LMTextView? titleText;
   final LMTextView? subtitleText;
@@ -78,7 +80,7 @@ class _LMReplyTileState extends State<LMReplyTile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: widget.width != null ? widget.width! * 0.6 : null,
                       child: widget.titleText ??
                           LMTextView(
@@ -111,7 +113,8 @@ class _LMReplyTileState extends State<LMReplyTile> {
                             .bodyMedium!
                             .copyWith(color: theme.colorScheme.primary),
                         textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: widget.textStyle ??
+                            Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ],
