@@ -39,10 +39,11 @@ class LMPostContent extends StatelessWidget {
       animation: animation ?? true,
       maxLines: visibleLines ?? 4,
       expanded: expanded,
-      hashtagStyle: Theme.of(context)
-          .textTheme
-          .bodyMedium!
-          .copyWith(color: theme.colorScheme.primary),
+      hashtagStyle: linkStyle ??
+          Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(color: theme.colorScheme.primary),
       prefixStyle: expandTextStyle,
       linkStyle: linkStyle ??
           Theme.of(context)
