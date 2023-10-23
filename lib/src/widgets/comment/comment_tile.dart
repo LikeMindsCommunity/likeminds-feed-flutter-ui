@@ -29,12 +29,14 @@ class LMCommentTile extends StatefulWidget {
     this.width,
     this.menu,
     this.textStyle,
+    this.linkStyle,
   });
 
   final User user;
   final Reply comment;
 
   final TextStyle? textStyle;
+  final TextStyle? linkStyle;
   final LMProfilePicture? profilePicture;
   final LMTextView? titleText;
   final LMTextView? subtitleText;
@@ -116,14 +118,16 @@ class _LMCommentTileState extends State<LMCommentTile> {
               expandText: "see more",
               animation: true,
               maxLines: 4,
-              hashtagStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: theme.colorScheme.primary),
-              linkStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: theme.colorScheme.primary),
+              hashtagStyle: widget.linkStyle ??
+                  Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: theme.colorScheme.primary),
+              linkStyle: widget.linkStyle ??
+                  Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: theme.colorScheme.primary),
               textAlign: TextAlign.left,
               style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium,
             ),
