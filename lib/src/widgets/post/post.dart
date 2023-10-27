@@ -98,6 +98,7 @@ class InheritedPostProvider extends InheritedWidget {
     required this.post,
   }) : super(child: child);
 
+  @override
   final Widget child;
   final Post post;
 
