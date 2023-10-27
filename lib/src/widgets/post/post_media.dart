@@ -59,6 +59,9 @@ class _LMPostMediaState extends State<LMPostMedia> {
     attachments.removeWhere((element) => element.attachmentType == 5);
     screenSize = MediaQuery.of(context).size;
     ThemeData theme = Theme.of(context);
+    if (attachments.isEmpty) {
+      return const SizedBox();
+    }
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];
     if (attachments.first.attachmentType == 3) {
       /// If the attachment is a document, we need to call the method 'getDocumentList'
