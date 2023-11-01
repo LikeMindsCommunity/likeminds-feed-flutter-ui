@@ -40,7 +40,7 @@ dependencies:
   lazy_load_scrollview: 
   infinite_scroll_pagination: 
 
-  likeminds_feed: 1.6.1
+  likeminds_feed: 1.6.2
   #  path: ../../LikeMinds-Flutter-Feed-SDK
 
   likeminds_feed_ui_fl: 
