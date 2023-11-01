@@ -28,7 +28,7 @@ dependencies:
   media_kit_video: ^1.1.8                        # For video rendering.
   media_kit_libs_video: ^1.0.1 
 
-  likeminds_feed: 1.6.1
+  likeminds_feed: 1.6.2
   #  path: ../LikeMinds-Flutter-Feed-SDK
 
 
