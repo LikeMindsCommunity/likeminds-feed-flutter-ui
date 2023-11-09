@@ -84,6 +84,7 @@ class _LMVideoState extends State<LMVideo> {
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   bool _onTouch = true;
   bool initialiseOverlay = false;
+  ValueNotifier<bool> isMuted = ValueNotifier(false);
 
   late final Player player;
   late final VideoController controller;
@@ -158,7 +159,7 @@ class _LMVideoState extends State<LMVideo> {
                 if (visiblePercentage <= 50) {
                   controller.player.pause();
                 }
-                if (visiblePercentage > 50) {
+                if (visiblePercentage == 100) {
                   controller.player.play();
                   rebuildOverlay.value = !rebuildOverlay.value;
                 }
@@ -187,17 +188,25 @@ class _LMVideoState extends State<LMVideo> {
                       const Spacer(),
                       IconButton(
                         onPressed: () {
-                          player.state.volume > 0.0
-                              ? player.setVolume(0)
-                              : player.setVolume(100);
+                          if (player.state.volume > 0.0) {
+                            player.setVolume(0);
+                            isMuted.value = true;
+                          } else {
+                            player.setVolume(100);
+                            isMuted.value = false;
+                          }
                         },
-                        icon: LMIcon(
-                          type: LMIconType.icon,
-                          color: kWhiteColor,
-                          icon: player.state.volume > 0.0
-                              ? Icons.volume_off
-                              : Icons.volume_up,
-                        ),
+                        icon: ValueListenableBuilder(
+                            valueListenable: isMuted,
+                            builder: (context, isMuted, __) {
+                              return LMIcon(
+                                type: LMIconType.icon,
+                                color: kWhiteColor,
+                                icon: isMuted
+                                    ? Icons.volume_off
+                                    : Icons.volume_up,
+                              );
+                            }),
                       )
                     ],
                     seekBarMargin: const EdgeInsets.symmetric(
