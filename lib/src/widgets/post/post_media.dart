@@ -58,7 +58,6 @@ class _LMPostMediaState extends State<LMPostMedia> {
     attachments = [...widget.attachments];
     attachments.removeWhere((element) => element.attachmentType == 5);
     screenSize = MediaQuery.of(context).size;
-    ThemeData theme = Theme.of(context);
     if (attachments.isEmpty) {
       return const SizedBox();
     }
@@ -121,11 +120,11 @@ class _LMPostMediaState extends State<LMPostMedia> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
-              children: documents != null && documents.length > 3 && isCollapsed
+              children: documents.length > 3 && isCollapsed
                   ? documents.sublist(0, 3)
                   : documents,
             ),
-            documents != null && documents.length > 3 && isCollapsed
+            documents.length > 3 && isCollapsed
                 ? GestureDetector(
                     onTap: () => setState(() {
                           isCollapsed = false;

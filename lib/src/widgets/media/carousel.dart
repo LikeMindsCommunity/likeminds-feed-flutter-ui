@@ -104,7 +104,6 @@ class _LMCarouselState extends State<LMCarousel> {
   @override
   Widget build(BuildContext context) {
     mapAttachmentsToWidget();
-    final size = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
