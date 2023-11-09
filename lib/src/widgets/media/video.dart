@@ -86,6 +86,7 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
   bool _onTouch = true;
   bool initialiseOverlay = false;
   ValueNotifier<bool> isMuted = ValueNotifier(false);
+  late final Future<void> initialiseController;
 
   late final Player player;
   late final VideoController controller;
@@ -116,6 +117,11 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
 
   @override
   void initState() {
+    initialiseController = initialiseControllers();
+    super.initState();
+  }
+
+  Future<void> initialiseControllers() async {
     player = Player(
       configuration: PlayerConfiguration(
         bufferSize: 24 * 1024 * 1024,
@@ -131,19 +137,15 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
         scale: 0.2,
       ),
     );
-    super.initState();
-  }
-
-  Future<void> initialiseControllers() async {
     if (widget.videoUrl != null) {
-      player.open(
+      await player.open(
         Media(widget.videoUrl!),
-        play: widget.autoPlay ?? true,
+        play: widget.autoPlay ?? false,
       );
     } else {
-      player.open(
+      await player.open(
         Media(widget.videoFile!.uri.toString()),
-        play: widget.autoPlay ?? true,
+        play: widget.autoPlay ?? false,
       );
     }
   }
@@ -154,7 +156,7 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
         .of(context)
         .size;
     return FutureBuilder(
-      future: initialiseControllers(),
+      future: initialiseController,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LMPostMediaShimmer();
