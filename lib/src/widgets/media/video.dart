@@ -11,7 +11,8 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
-    as media_kit_video_controls;
+as media_kit_video_controls;
+import 'package:visibility_aware_state/visibility_aware_state.dart';
 
 class LMVideo extends StatefulWidget {
   // late final LMVideo? _instance;
@@ -80,7 +81,7 @@ class LMVideo extends StatefulWidget {
   State<LMVideo> createState() => _LMVideoState();
 }
 
-class _LMVideoState extends State<LMVideo> {
+class _LMVideoState extends VisibilityAwareState<LMVideo> {
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   bool _onTouch = true;
   bool initialiseOverlay = false;
@@ -93,6 +94,7 @@ class _LMVideoState extends State<LMVideo> {
 
   @override
   void dispose() async {
+    print("Disposing video");
     _timer?.cancel();
     player.dispose();
     super.dispose();
@@ -100,6 +102,17 @@ class _LMVideoState extends State<LMVideo> {
 
   @override
   void didChangeDependencies() {}
+
+  @override
+  void onVisibilityChanged(WidgetVisibility visibility) {
+    // TODO: Use visibility
+    if (visibility == WidgetVisibility.INVISIBLE) {
+      controller.player.pause();
+    } else if (visibility == WidgetVisibility.GONE) {
+      controller.player.pause();
+    }
+    super.onVisibilityChanged(visibility);
+  }
 
   @override
   void initState() {
@@ -137,7 +150,9 @@ class _LMVideoState extends State<LMVideo> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery
+        .of(context)
+        .size;
     return FutureBuilder(
       future: initialiseControllers(),
       builder: (context, snapshot) {
@@ -153,10 +168,11 @@ class _LMVideoState extends State<LMVideo> {
           }
           return Stack(children: [
             VisibilityDetector(
-              key: Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
+              key: ObjectKey(player),
+              //Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
               onVisibilityChanged: (visibilityInfo) async {
                 var visiblePercentage = visibilityInfo.visibleFraction * 100;
-                if (visiblePercentage <= 50) {
+                if (visiblePercentage < 100) {
                   controller.player.pause();
                 }
                 if (visiblePercentage == 100) {
@@ -223,57 +239,57 @@ class _LMVideoState extends State<LMVideo> {
                     controller: controller,
                     filterQuality: FilterQuality.low,
                     controls: widget.showControls != null &&
-                            widget.showControls!
+                        widget.showControls!
                         ? media_kit_video_controls.AdaptiveVideoControls
                         : (state) {
-                            return ValueListenableBuilder(
-                              valueListenable: rebuildOverlay,
-                              builder: (context, _, __) {
-                                return Visibility(
-                                  visible: _onTouch,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: TextButton(
-                                      style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                          const CircleBorder(
-                                            side: BorderSide(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      child: Icon(
-                                        controller.player.state.playing
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
-                                        size: 28,
+                      return ValueListenableBuilder(
+                        valueListenable: rebuildOverlay,
+                        builder: (context, _, __) {
+                          return Visibility(
+                            visible: _onTouch,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                    const CircleBorder(
+                                      side: BorderSide(
                                         color: Colors.white,
                                       ),
-                                      onPressed: () {
-                                        _timer?.cancel();
-                                        controller.player.state.playing
-                                            ? state.widget.controller.player
-                                                .pause()
-                                            : state.widget.controller.player
-                                                .play();
-                                        rebuildOverlay.value =
-                                            !rebuildOverlay.value;
-                                        _timer = Timer.periodic(
-                                          const Duration(milliseconds: 2500),
-                                          (_) {
-                                            _onTouch = false;
-                                            rebuildOverlay.value =
-                                                !rebuildOverlay.value;
-                                          },
-                                        );
-                                      },
                                     ),
                                   ),
-                                );
-                              },
-                            );
-                          },
+                                ),
+                                child: Icon(
+                                  controller.player.state.playing
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  size: 28,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  _timer?.cancel();
+                                  controller.player.state.playing
+                                      ? state.widget.controller.player
+                                      .pause()
+                                      : state.widget.controller.player
+                                      .play();
+                                  rebuildOverlay.value =
+                                  !rebuildOverlay.value;
+                                  _timer = Timer.periodic(
+                                    const Duration(milliseconds: 2500),
+                                        (_) {
+                                      _onTouch = false;
+                                      rebuildOverlay.value =
+                                      !rebuildOverlay.value;
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
