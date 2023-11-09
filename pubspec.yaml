@@ -1,6 +1,6 @@
 name: likeminds_feed_ui_fl
 description: A Flutter package for Likeminds Feed UI widgets. Used alongside the Likeminds Feed SDK package (likeminds_feed) to build custom interfaces.
-version: 1.3.5
+version: 1.3.6
 publish_to: none
 homepage: "www.likeminds.community/"
 
@@ -15,7 +15,6 @@ dependencies:
   timeago:
   shimmer:
   carousel_slider:
-  video_player: 2.7.1 
   visibility_detector:
   cached_network_image: 3.3.0
   url_launcher:
@@ -26,7 +25,8 @@ dependencies:
   extended_image: 8.1.1
   media_kit: ^1.1.7                              # Primary package.
   media_kit_video: ^1.1.8                        # For video rendering.
-  media_kit_libs_video: ^1.0.1 
+  media_kit_libs_video: ^1.0.1
+  visibility_aware_state: 1.0.5
 
   likeminds_feed: 1.6.3
    # path: ../LikeMinds-Flutter-Feed-SDK
