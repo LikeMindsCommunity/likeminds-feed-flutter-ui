@@ -45,29 +45,39 @@ class LMPostMedia extends StatefulWidget {
 }
 
 class _LMPostMediaState extends State<LMPostMedia> {
-  late List<Attachment> attachments;
+  List<Attachment>? attachments;
   late Size screenSize;
+
+  void initialiseAttachments() {
+    attachments = [...widget.attachments];
+    attachments?.removeWhere((element) => element.attachmentType == 5);
+  }
 
   @override
   void initState() {
     super.initState();
+    initialiseAttachments();
+  }
+
+  @override
+  void didUpdateWidget(LMPostMedia oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    initialiseAttachments();
   }
 
   @override
   Widget build(BuildContext context) {
-    attachments = [...widget.attachments];
-    attachments.removeWhere((element) => element.attachmentType == 5);
     screenSize = MediaQuery.of(context).size;
-    if (attachments.isEmpty) {
+    if (attachments == null || attachments!.isEmpty) {
       return const SizedBox();
     }
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];
-    if (attachments.first.attachmentType == 3) {
+    if (attachments!.first.attachmentType == 3) {
       /// If the attachment is a document, we need to call the method 'getDocumentList'
       return getPostDocuments();
-    } else if (attachments.first.attachmentType == 4) {
+    } else if (attachments!.first.attachmentType == 4) {
       return LMLinkPreview(
-        attachment: attachments[0],
+        attachment: attachments![0],
         borderRadius: widget.borderRadius,
         backgroundColor: widget.backgroundColor,
         showLinkUrl: widget.showLinkUrl,
@@ -77,7 +87,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
       );
     } else {
       return LMCarousel(
-        attachments: attachments,
+        attachments: attachments!,
         borderRadius: widget.borderRadius,
         activeIndicatorColor: widget.carouselActiveIndicatorColor,
         inactiveIndicatorColor: widget.carouselInactiveIndicatorColor,
@@ -93,7 +103,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
     List<Widget> documents;
     bool isCollapsed = true;
 
-    documents = attachments
+    documents = attachments!
         .map(
           (e) => LMDocument(
             // document: e,

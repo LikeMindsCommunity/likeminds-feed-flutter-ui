@@ -11,7 +11,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
-as media_kit_video_controls;
+    as media_kit_video_controls;
 import 'package:visibility_aware_state/visibility_aware_state.dart';
 
 class LMVideo extends StatefulWidget {
@@ -86,10 +86,11 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
   bool _onTouch = true;
   bool initialiseOverlay = false;
   ValueNotifier<bool> isMuted = ValueNotifier(false);
-  late final Future<void> initialiseController;
+  Future<void>? initialiseController;
+  ValueNotifier<bool> rebuildVideo = ValueNotifier(false);
 
-  late final Player player;
-  late final VideoController controller;
+  Player player = Player();
+  VideoController? controller;
 
   Timer? _timer;
 
@@ -102,23 +103,26 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
   }
 
   @override
-  void didChangeDependencies() {}
+  void didUpdateWidget(LMVideo oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    initialiseController = initialiseControllers();
+  }
 
   @override
   void onVisibilityChanged(WidgetVisibility visibility) {
     // TODO: Use visibility
     if (visibility == WidgetVisibility.INVISIBLE) {
-      controller.player.pause();
+      controller?.player.pause();
     } else if (visibility == WidgetVisibility.GONE) {
-      controller.player.pause();
+      controller?.player.pause();
     }
     super.onVisibilityChanged(visibility);
   }
 
   @override
   void initState() {
-    initialiseController = initialiseControllers();
     super.initState();
+    initialiseController = initialiseControllers();
   }
 
   Future<void> initialiseControllers() async {
@@ -152,155 +156,168 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery
-        .of(context)
-        .size;
-    return FutureBuilder(
-      future: initialiseController,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LMPostMediaShimmer();
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          if (!initialiseOverlay) {
-            _timer = Timer.periodic(const Duration(milliseconds: 3000), (_) {
-              initialiseOverlay = true;
-              _onTouch = false;
-              rebuildOverlay.value = !rebuildOverlay.value;
-            });
-          }
-          return Stack(children: [
-            VisibilityDetector(
-              key: ObjectKey(player),
-              //Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
-              onVisibilityChanged: (visibilityInfo) async {
-                var visiblePercentage = visibilityInfo.visibleFraction * 100;
-                if (visiblePercentage < 100) {
-                  controller.player.pause();
+    final screenSize = MediaQuery.of(context).size;
+    return ValueListenableBuilder(
+        valueListenable: rebuildVideo,
+        builder: (context, _, __) {
+          return FutureBuilder(
+            future: initialiseController,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const LMPostMediaShimmer();
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                if (!initialiseOverlay) {
+                  _timer =
+                      Timer.periodic(const Duration(milliseconds: 3000), (_) {
+                    initialiseOverlay = true;
+                    _onTouch = false;
+                    rebuildOverlay.value = !rebuildOverlay.value;
+                  });
                 }
-                if (visiblePercentage == 100) {
-                  controller.player.play();
-                  rebuildOverlay.value = !rebuildOverlay.value;
-                }
-              },
-              child: Container(
-                width: widget.width ?? screenSize.width,
-                height: widget.height,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
-                  border: Border.all(
-                    color: widget.borderColor ?? Colors.transparent,
-                    width: 0,
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: MaterialVideoControlsTheme(
-                  normal: MaterialVideoControlsThemeData(
-                    bottomButtonBar: [
-                      const MaterialPositionIndicator(
-                        style: TextStyle(
-                          color: kWhiteColor,
-                          fontSize: 14,
+                return Stack(children: [
+                  VisibilityDetector(
+                    key: ObjectKey(player),
+                    //Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
+                    onVisibilityChanged: (visibilityInfo) async {
+                      var visiblePercentage =
+                          visibilityInfo.visibleFraction * 100;
+                      if (visiblePercentage < 100) {
+                        controller?.player.pause();
+                      }
+                      if (visiblePercentage == 100) {
+                        controller?.player.play();
+                        rebuildOverlay.value = !rebuildOverlay.value;
+                      }
+                    },
+                    child: Container(
+                      width: widget.width ?? screenSize.width,
+                      height: widget.height,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(widget.borderRadius ?? 0),
+                        border: Border.all(
+                          color: widget.borderColor ?? Colors.transparent,
+                          width: 0,
                         ),
                       ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          if (player.state.volume > 0.0) {
-                            player.setVolume(0);
-                            isMuted.value = true;
-                          } else {
-                            player.setVolume(100);
-                            isMuted.value = false;
-                          }
-                        },
-                        icon: ValueListenableBuilder(
-                            valueListenable: isMuted,
-                            builder: (context, isMuted, __) {
-                              return LMIcon(
-                                type: LMIconType.icon,
+                      alignment: Alignment.center,
+                      child: MaterialVideoControlsTheme(
+                        normal: MaterialVideoControlsThemeData(
+                          bottomButtonBar: [
+                            const MaterialPositionIndicator(
+                              style: TextStyle(
                                 color: kWhiteColor,
-                                icon: isMuted
-                                    ? Icons.volume_off
-                                    : Icons.volume_up,
-                              );
-                            }),
-                      )
-                    ],
-                    seekBarMargin: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 8,
-                    ),
-                    seekBarPositionColor: widget.seekBarColor ??
-                        const Color.fromARGB(255, 0, 137, 123),
-                    seekBarThumbColor: widget.seekBarColor ??
-                        const Color.fromARGB(255, 0, 137, 123),
-                  ),
-                  fullscreen: const MaterialVideoControlsThemeData(),
-                  child: Video(
-                    controller: controller,
-                    filterQuality: FilterQuality.low,
-                    controls: widget.showControls != null &&
-                        widget.showControls!
-                        ? media_kit_video_controls.AdaptiveVideoControls
-                        : (state) {
-                      return ValueListenableBuilder(
-                        valueListenable: rebuildOverlay,
-                        builder: (context, _, __) {
-                          return Visibility(
-                            visible: _onTouch,
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: TextButton(
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                    const CircleBorder(
-                                      side: BorderSide(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                child: Icon(
-                                  controller.player.state.playing
-                                      ? Icons.pause
-                                      : Icons.play_arrow,
-                                  size: 28,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  _timer?.cancel();
-                                  controller.player.state.playing
-                                      ? state.widget.controller.player
-                                      .pause()
-                                      : state.widget.controller.player
-                                      .play();
-                                  rebuildOverlay.value =
-                                  !rebuildOverlay.value;
-                                  _timer = Timer.periodic(
-                                    const Duration(milliseconds: 2500),
-                                        (_) {
-                                      _onTouch = false;
-                                      rebuildOverlay.value =
-                                      !rebuildOverlay.value;
+                                fontSize: 14,
+                              ),
+                            ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                if (player.state.volume > 0.0) {
+                                  player.setVolume(0);
+                                  isMuted.value = true;
+                                } else {
+                                  player.setVolume(100);
+                                  isMuted.value = false;
+                                }
+                              },
+                              icon: ValueListenableBuilder(
+                                  valueListenable: isMuted,
+                                  builder: (context, isMuted, __) {
+                                    return LMIcon(
+                                      type: LMIconType.icon,
+                                      color: kWhiteColor,
+                                      icon: isMuted
+                                          ? Icons.volume_off
+                                          : Icons.volume_up,
+                                    );
+                                  }),
+                            )
+                          ],
+                          seekBarMargin: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 8,
+                          ),
+                          seekBarPositionColor: widget.seekBarColor ??
+                              const Color.fromARGB(255, 0, 137, 123),
+                          seekBarThumbColor: widget.seekBarColor ??
+                              const Color.fromARGB(255, 0, 137, 123),
+                        ),
+                        fullscreen: const MaterialVideoControlsThemeData(),
+                        child: Video(
+                          controller: controller!,
+                          filterQuality: FilterQuality.low,
+                          controls: widget.showControls != null &&
+                                  widget.showControls!
+                              ? media_kit_video_controls.AdaptiveVideoControls
+                              : (state) {
+                                  return ValueListenableBuilder(
+                                    valueListenable: rebuildOverlay,
+                                    builder: (context, _, __) {
+                                      return Visibility(
+                                        visible: _onTouch,
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          child: TextButton(
+                                            style: ButtonStyle(
+                                              shape: MaterialStateProperty.all(
+                                                const CircleBorder(
+                                                  side: BorderSide(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            child: Icon(
+                                              controller != null &&
+                                                      controller!
+                                                          .player.state.playing
+                                                  ? Icons.pause
+                                                  : Icons.play_arrow,
+                                              size: 28,
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () {
+                                              _timer?.cancel();
+                                              if (controller == null) {
+                                                return;
+                                              }
+                                              controller!.player.state.playing
+                                                  ? state
+                                                      .widget.controller.player
+                                                      .pause()
+                                                  : state
+                                                      .widget.controller.player
+                                                      .play();
+                                              rebuildOverlay.value =
+                                                  !rebuildOverlay.value;
+                                              _timer = Timer.periodic(
+                                                const Duration(
+                                                    milliseconds: 2500),
+                                                (_) {
+                                                  _onTouch = false;
+                                                  rebuildOverlay.value =
+                                                      !rebuildOverlay.value;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     },
                                   );
                                 },
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ]);
-        } else {
-          return widget.errorWidget ?? const SizedBox();
-        }
-      },
-    );
+                ]);
+              } else {
+                return widget.errorWidget ?? const SizedBox();
+              }
+            },
+          );
+        });
   }
 }
