@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
+import 'package:linkify/linkify.dart';
 
 class TaggingHelper {
   static final RegExp tagRegExp = RegExp(r'@([^<>~]+)~');
@@ -12,7 +13,7 @@ class TaggingHelper {
   static const String tagRoute =
       r'<<([^<>]+)\|route://member/([a-zA-Z-0-9]+)>>';
   static const String linkRoute =
-      r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+';
+      r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+|(\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b)';
 
   /// Encodes the string with the user tags and returns the encoded string
   static String encodeString(String string, List<UserTag> userTags) {
@@ -191,7 +192,7 @@ List<String> extractLinkFromString(String text) {
   List<String> links = [];
   for (var match in matches) {
     String link = text.substring(match.start, match.end);
-    if (link.isNotEmpty) {
+    if (link.isNotEmpty && match.group(1) == null) {
       links.add(link);
     }
   }
@@ -226,6 +227,25 @@ String getFirstValidLinkFromString(String text) {
   } catch (e) {
     return '';
   }
+}
+
+LinkifyElement? extractLinkAndEmailFromString(String text) {
+  debugPrint("text: $text");
+  final links = linkify(
+    text,
+    options: const LinkifyOptions(
+      looseUrl: true,
+    ),
+  );
+  if (links.isNotEmpty) {
+    final emails = linkify(text);
+    if (emails.isNotEmpty && emails.first is EmailElement) {
+      return emails.first;
+    } else if (links.first is UrlElement) {
+      return links.first;
+    }
+  }
+  return null;
 }
 
 class PostHelper {

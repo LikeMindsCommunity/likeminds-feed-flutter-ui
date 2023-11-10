@@ -8,6 +8,7 @@ import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/constants.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
+import 'package:linkify/linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './text_parser.dart';
@@ -88,7 +89,7 @@ class ExpandableText extends StatefulWidget {
 class ExpandableTextState extends State<ExpandableText>
     with TickerProviderStateMixin {
   bool _expanded = false;
-  RegExp regExp = RegExp(kRegexLinksAndTags);
+  // RegExp regExp = RegExp(kRegexLinksAndTags);
   late TapGestureRecognizer _linkTapGestureRecognizer;
   late TapGestureRecognizer _prefixTapGestureRecognizer;
 
@@ -393,6 +394,9 @@ class ExpandableTextState extends State<ExpandableText>
   List<TextSpan> extractLinksAndTags(String text) {
     List<TextSpan> textSpans = [];
     int lastIndex = 0;
+    const String regexLinksAndTags =
+        r'(?:(?:http|https|ftp|www)\:\/\/)?[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?::[a-zA-Z0-9]*)?\/?[^\s\n]+|[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}|<<([^<>]+)\|route://member/([a-zA-Z-0-9]+)>>';
+    RegExp regExp = RegExp(regexLinksAndTags);
     for (Match match in regExp.allMatches(text)) {
       int startIndex = match.start;
       int endIndex = match.end;
@@ -412,6 +416,16 @@ class ExpandableTextState extends State<ExpandableText>
         ));
       } else {
         bool isTag = link != null && link[0] == '<';
+
+        //if it is a valid link using linkify and if that is not then add normal TextSpan
+        if (!isTag && extractLinkAndEmailFromString(link ?? '') == null) {
+          textSpans.add(TextSpan(
+            text: text.substring(startIndex, endIndex),
+            style: widget.style,
+          ));
+          lastIndex = endIndex;
+          continue;
+        }
         // Add a TextSpan for the URL
         textSpans.add(TextSpan(
           text: isTag ? TaggingHelper.decodeString(link).keys.first : link,
@@ -419,10 +433,18 @@ class ExpandableTextState extends State<ExpandableText>
           recognizer: TapGestureRecognizer()
             ..onTap = () async {
               if (!isTag) {
-                String checkLink = getFirstValidLinkFromString(link ?? '');
-                if (Uri.parse(checkLink).isAbsolute) {
+                final checkLink = extractLinkAndEmailFromString(link ?? '');
+                debugPrint('checkLink: $checkLink');
+                if (checkLink is UrlElement) {
+                  if (Uri.parse(checkLink.url).isAbsolute) {
+                    launchUrl(
+                      Uri.parse(checkLink.url),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  }
+                } else if (checkLink is EmailElement) {
                   launchUrl(
-                    Uri.parse(checkLink),
+                    Uri.parse('mailto:${checkLink.emailAddress}'),
                     mode: LaunchMode.externalApplication,
                   );
                 }
