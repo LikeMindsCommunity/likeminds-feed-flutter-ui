@@ -89,7 +89,7 @@ class ExpandableText extends StatefulWidget {
 class ExpandableTextState extends State<ExpandableText>
     with TickerProviderStateMixin {
   bool _expanded = false;
-  // RegExp regExp = RegExp(kRegexLinksAndTags);
+  RegExp regExp = RegExp(kRegexLinksAndTags);
   late TapGestureRecognizer _linkTapGestureRecognizer;
   late TapGestureRecognizer _prefixTapGestureRecognizer;
 
@@ -394,9 +394,6 @@ class ExpandableTextState extends State<ExpandableText>
   List<TextSpan> extractLinksAndTags(String text) {
     List<TextSpan> textSpans = [];
     int lastIndex = 0;
-    const String regexLinksAndTags =
-        r'(?:(?:http|https|ftp|www)\:\/\/)?[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?::[a-zA-Z0-9]*)?\/?[^\s\n]+|[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}|<<([^<>]+)\|route://member/([a-zA-Z-0-9]+)>>';
-    RegExp regExp = RegExp(regexLinksAndTags);
     for (Match match in regExp.allMatches(text)) {
       int startIndex = match.start;
       int endIndex = match.end;
