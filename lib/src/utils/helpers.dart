@@ -230,14 +230,22 @@ String getFirstValidLinkFromString(String text) {
 }
 
 LinkifyElement? extractLinkAndEmailFromString(String text) {
-  debugPrint("text: $text");
+   final urls = linkify(text, linkifiers: [
+      const EmailLinkifier(),
+      const UrlLinkifier(),
+    ]);
+    if (urls.isNotEmpty) {
+      if (urls.first is EmailElement || urls.first is UrlElement) {
+        return urls.first;
+      }
+    }
   final links = linkify(text,
       options: const LinkifyOptions(
         looseUrl: true,
       ),
       linkifiers: [
-        EmailLinkifier(),
-        UrlLinkifier(),
+        const EmailLinkifier(),
+        const UrlLinkifier(),
       ]);
   if (links.isNotEmpty) {
     if (links.first is EmailElement || links.first is UrlElement) {
