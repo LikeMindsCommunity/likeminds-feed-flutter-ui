@@ -29,7 +29,6 @@ dependencies:
   visibility_aware_state: 1.0.5
 
   likeminds_feed: 1.6.3
-  linkify:
    # path: ../LikeMinds-Flutter-Feed-SDK
 
 
