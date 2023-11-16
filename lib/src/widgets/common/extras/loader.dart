@@ -9,7 +9,9 @@ class LMLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(
-      color: color ?? (isPrimary ? Theme.of(context).primaryColor : Colors.white),
+      color: color ?? (isPrimary ? Theme
+          .of(context)
+          .primaryColor : Colors.white),
     );
   }
 }

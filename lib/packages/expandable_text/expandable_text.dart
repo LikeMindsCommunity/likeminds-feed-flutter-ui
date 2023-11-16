@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+import 'package:likeminds_feed_ui_fl/packages/linkify/linkify.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/constants.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -412,6 +413,16 @@ class ExpandableTextState extends State<ExpandableText>
         ));
       } else {
         bool isTag = link != null && link[0] == '<';
+
+        //if it is a valid link using linkify and if that is not then add normal TextSpan
+        if (!isTag && extractLinkAndEmailFromString(link ?? '') == null) {
+          textSpans.add(TextSpan(
+            text: text.substring(startIndex, endIndex),
+            style: widget.style,
+          ));
+          lastIndex = endIndex;
+          continue;
+        }
         // Add a TextSpan for the URL
         textSpans.add(TextSpan(
           text: isTag ? TaggingHelper.decodeString(link).keys.first : link,
@@ -419,10 +430,18 @@ class ExpandableTextState extends State<ExpandableText>
           recognizer: TapGestureRecognizer()
             ..onTap = () async {
               if (!isTag) {
-                String checkLink = getFirstValidLinkFromString(link ?? '');
-                if (Uri.parse(checkLink).isAbsolute) {
+                final checkLink = extractLinkAndEmailFromString(link ?? '');
+                debugPrint('checkLink: $checkLink');
+                if (checkLink is UrlElement) {
+                  if (Uri.parse(checkLink.url).isAbsolute) {
+                    launchUrl(
+                      Uri.parse(checkLink.url),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  }
+                } else if (checkLink is EmailElement) {
                   launchUrl(
-                    Uri.parse(checkLink),
+                    Uri.parse('mailto:${checkLink.emailAddress}'),
                     mode: LaunchMode.externalApplication,
                   );
                 }
