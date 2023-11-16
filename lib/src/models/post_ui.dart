@@ -3,7 +3,7 @@
 
 import 'package:likeminds_feed/likeminds_feed.dart';
 
-class PostUI {
+class PostViewData {
   final String id;
   String text;
   List<String> topics;
@@ -20,7 +20,7 @@ class PostUI {
   DateTime updatedAt;
   bool isEdited;
 
-  PostUI._({
+  PostViewData._({
     required this.id,
     required this.text,
     required this.attachments,
@@ -38,8 +38,8 @@ class PostUI {
     required this.isEdited,
   });
 
-  factory PostUI.fromPost({required Post post}) {
-    return PostUI._(
+  factory PostViewData.fromPost({required Post post}) {
+    return PostViewData._(
       id: post.id,
       isEdited: post.isEdited,
       text: post.text,
@@ -79,7 +79,7 @@ class PostUI {
   }
 }
 
-class PostUIBuilder {
+class PostViewDataBuilder {
   String? _id;
   String? _text;
   List<String>? _topics;
@@ -156,8 +156,8 @@ class PostUIBuilder {
     _isEdited = isEdited;
   }
 
-  PostUI build() {
-    return PostUI._(
+  PostViewData build() {
+    return PostViewData._(
       id: _id!,
       text: _text!,
       topics: _topics!,

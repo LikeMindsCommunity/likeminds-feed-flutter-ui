@@ -484,7 +484,8 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                   child: postData == null
                                       ? const LMPostMediaShimmer()
                                       : LMPostWidget(
-                                          post: postData!,
+                                          post: PostViewData.fromPost(
+                                              post: postData!),
                                           onTagTap: (String userId) {
                                             locator<LikeMindsService>()
                                                 .routeToProfile(userId);
