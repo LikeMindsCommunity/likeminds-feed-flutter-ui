@@ -91,7 +91,7 @@ class _FeedScreenState extends State<FeedScreen> {
                   children: [
                     const SizedBox(height: 8),
                     LMPostWidget(
-                      post: item,
+                      post: PostViewData.fromPost(post: item),
                       isFeed: true,
                       user: feedResponse.users[item.userId]!,
                       onTagTap: (String userId) {
@@ -157,7 +157,7 @@ class _FeedScreenState extends State<FeedScreen> {
 class MyPostWidget extends LMPostWidget {
   MyPostWidget({
     super.key,
-    required Post post,
+    required PostViewData post,
     required User user,
     required Function() onTap,
     required bool isFeed,
