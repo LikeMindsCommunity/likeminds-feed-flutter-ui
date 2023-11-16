@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/post/post_content.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/post/post_footer.dart';
@@ -18,7 +19,7 @@ class LMPostWidget extends StatefulWidget {
   final LMPostMedia? media;
 
   // Required variables
-  final Post post;
+  final PostViewData post;
   final User user;
   final bool isFeed;
   final Function() onTap;
@@ -100,7 +101,7 @@ class InheritedPostProvider extends InheritedWidget {
 
   @override
   final Widget child;
-  final Post post;
+  final PostViewData post;
 
   static InheritedPostProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<InheritedPostProvider>();
