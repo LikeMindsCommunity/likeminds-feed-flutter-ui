@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LMPostMedia extends StatefulWidget {
@@ -21,9 +22,11 @@ class LMPostMedia extends StatefulWidget {
     this.errorWidget,
     this.boxFit,
     this.textColor,
+    this.initialiseVideoController,
   });
 
   final List<Attachment> attachments;
+  final Function(VideoController)? initialiseVideoController;
   final Widget? documentIcon;
   final double? borderRadius;
   final double? width;
@@ -87,6 +90,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
       );
     } else {
       return LMCarousel(
+        initialiseVideoController: widget.initialiseVideoController,
         attachments: attachments!,
         borderRadius: widget.borderRadius,
         activeIndicatorColor: widget.carouselActiveIndicatorColor,
