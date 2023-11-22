@@ -1,14 +1,14 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
 
-class TopicUI {
+class TopicViewData {
   String name;
   String id;
   bool isEnabled;
 
-  TopicUI._({required this.name, required this.id, required this.isEnabled});
+  TopicViewData._({required this.name, required this.id, required this.isEnabled});
 
-  factory TopicUI.fromTopic(Topic topic) {
-    return TopicUI._(
+  factory TopicViewData.fromTopic(Topic topic) {
+    return TopicViewData._(
         name: topic.name, id: topic.id, isEnabled: topic.isEnabled);
   }
 
@@ -16,7 +16,7 @@ class TopicUI {
       Topic.fromEntity(TopicEntity(name: name, id: id, isEnabled: isEnabled));
 }
 
-class TopicUIBuilder {
+class TopicViewDataBuilder {
   String? _name;
   String? _id;
   bool? _isEnabled;
@@ -33,10 +33,10 @@ class TopicUIBuilder {
     _isEnabled = isEnabled;
   }
 
-  TopicUI build() {
+  TopicViewData build() {
     if (_name == null || _id == null || _isEnabled == null) {
-      throw Exception("TopicUIBuilder: name, id and isEnabled must be set");
+      throw Exception("TopicViewDataBuilder: name, id and isEnabled must be set");
     }
-    return TopicUI._(name: _name!, id: _id!, isEnabled: _isEnabled!);
+    return TopicViewData._(name: _name!, id: _id!, isEnabled: _isEnabled!);
   }
 }

@@ -12,7 +12,7 @@ class LMTopicFeedGrid extends StatelessWidget {
   // Text color of the topic chip
   final Color textColor;
   // List of selected topic [pass empty list if no topic is selected]
-  final List<TopicUI> selectedTopics;
+  final List<TopicViewData> selectedTopics;
   // Action to perform after tapping on the topic feed bar
   final Function onTap;
 
@@ -27,7 +27,7 @@ class LMTopicFeedGrid extends StatelessWidget {
   final TextStyle? textStyle;
   // Icon to be displayed on the topic chip if any defaults to null
   final Icon? icon;
-  final Function(TopicUI)? onIconTap;
+  final Function(TopicViewData)? onIconTap;
   final Widget? trailingIcon;
   final Function? onTrailingIconTap;
   final EdgeInsets? chipPadding;

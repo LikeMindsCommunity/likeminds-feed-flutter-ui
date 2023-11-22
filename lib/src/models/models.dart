@@ -1,3 +1,3 @@
-export 'media_model.dart';
-export 'topic_ui.dart';
-export 'post_ui.dart';
+export 'post/media_model.dart';
+export 'post/topic_view_data.dart';
+export 'post/post_view_data.dart';

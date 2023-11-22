@@ -9,7 +9,7 @@ import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 class LMTopicFeedBar extends StatelessWidget {
   // Required parameters
   // List of selected topic [pass empty list if no topic is selected]
-  final List<TopicUI> selectedTopics;
+  final List<TopicViewData> selectedTopics;
   // Action to perform after tapping on the topic feed bar
   final Function onTap;
 
@@ -24,7 +24,7 @@ class LMTopicFeedBar extends StatelessWidget {
   // Icon to be displayed on the topic chip if any defaults to null
   final Icon? icon;
   final Function? onClear;
-  final Function(TopicUI)? onIconTap;
+  final Function(TopicViewData)? onIconTap;
   final Widget? trailingIcon;
   final Function? onTrailingIconTap;
   final EdgeInsets? chipPadding;
@@ -86,7 +86,7 @@ class LMTopicFeedBar extends StatelessWidget {
                         color: Colors.transparent,
                         child: LMTopicChip(
                           padding: chipPadding,
-                          topic: (TopicUIBuilder()
+                          topic: (TopicViewDataBuilder()
                                 ..id("-1")
                                 ..isEnabled(false)
                                 ..name("name"))
