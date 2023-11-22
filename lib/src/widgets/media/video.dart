@@ -8,6 +8,7 @@ import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/icon_button.dart
 import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/post_shimmer.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:visibility_aware_state/visibility_aware_state.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
     as media_kit_video_controls;
@@ -82,7 +83,7 @@ class LMVideo extends StatefulWidget {
   State<LMVideo> createState() => _LMVideoState();
 }
 
-class _LMVideoState extends State<LMVideo> {
+class _LMVideoState extends VisibilityAwareState<LMVideo> {
   ValueNotifier<bool> rebuildOverlay = ValueNotifier(false);
   bool _onTouch = true;
   bool initialiseOverlay = false;
@@ -114,6 +115,18 @@ class _LMVideoState extends State<LMVideo> {
     super.initState();
     initialiseController = initialiseControllers();
   }
+
+  @override
+  void onVisibilityChanged(WidgetVisibility visibility) {
+    // TODO: Use visibility
+    if (visibility == WidgetVisibility.INVISIBLE) {
+      controller?.player.pause();
+    } else if (visibility == WidgetVisibility.GONE) {
+      controller?.player.pause();
+    }
+    super.onVisibilityChanged(visibility);
+  }
+
 
   Future<void> initialiseControllers() async {
     player = Player(
@@ -173,10 +186,10 @@ class _LMVideoState extends State<LMVideo> {
                     onVisibilityChanged: (visibilityInfo) async {
                       var visiblePercentage =
                           visibilityInfo.visibleFraction * 100;
-                      if (visiblePercentage < 100) {
+                      if (visiblePercentage <= 70) {
                         controller?.player.pause();
                       }
-                      if (visiblePercentage == 100) {
+                      if (visiblePercentage > 70) {
                         controller?.player.play();
                         rebuildOverlay.value = !rebuildOverlay.value;
                       }
