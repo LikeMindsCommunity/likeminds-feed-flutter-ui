@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-// import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
@@ -9,10 +8,10 @@ import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/icon_button.dart
 import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/post_shimmer.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:visibility_aware_state/visibility_aware_state.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:media_kit_video/media_kit_video_controls/media_kit_video_controls.dart'
     as media_kit_video_controls;
-import 'package:visibility_aware_state/visibility_aware_state.dart';
 
 class LMVideo extends StatefulWidget {
   // late final LMVideo? _instance;
@@ -43,11 +42,14 @@ class LMVideo extends StatefulWidget {
     this.progressTextStyle,
     this.seekBarBufferColor,
     this.seekBarColor,
+    this.initialiseVideoController,
   }) : assert(videoUrl != null || videoFile != null);
 
   //Video asset variables
   final String? videoUrl;
   final File? videoFile;
+
+  final Function(VideoController)? initialiseVideoController;
 
   // Video structure variables
   final double? height;
@@ -109,6 +111,12 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    initialiseController = initialiseControllers();
+  }
+
+  @override
   void onVisibilityChanged(WidgetVisibility visibility) {
     // TODO: Use visibility
     if (visibility == WidgetVisibility.INVISIBLE) {
@@ -119,11 +127,6 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
     super.onVisibilityChanged(visibility);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    initialiseController = initialiseControllers();
-  }
 
   Future<void> initialiseControllers() async {
     player = Player(
@@ -141,6 +144,9 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
         scale: 0.2,
       ),
     );
+    if(widget.initialiseVideoController != null){
+      widget.initialiseVideoController!(controller!);
+    }
     if (widget.videoUrl != null) {
       await player.open(
         Media(widget.videoUrl!),
@@ -177,14 +183,13 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
                 return Stack(children: [
                   VisibilityDetector(
                     key: ObjectKey(player),
-                    //Key('post_video_${widget.videoUrl ?? widget.videoFile}'),
                     onVisibilityChanged: (visibilityInfo) async {
                       var visiblePercentage =
                           visibilityInfo.visibleFraction * 100;
-                      if (visiblePercentage < 100) {
+                      if (visiblePercentage <= 70) {
                         controller?.player.pause();
                       }
-                      if (visiblePercentage == 100) {
+                      if (visiblePercentage > 70) {
                         controller?.player.play();
                         rebuildOverlay.value = !rebuildOverlay.value;
                       }
