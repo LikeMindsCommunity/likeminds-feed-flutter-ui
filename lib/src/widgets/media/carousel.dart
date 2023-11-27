@@ -25,6 +25,7 @@ class LMCarousel extends StatefulWidget {
   final LMVideo? videoItem;
   final Widget? errorWidget;
   final BoxFit? boxFit;
+  final Function(String, StackTrace)? onError;
 
   const LMCarousel({
     Key? key,
@@ -43,6 +44,7 @@ class LMCarousel extends StatefulWidget {
     this.errorWidget,
     this.boxFit,
     this.initialiseVideoController,
+    this.onError,
   }) : super(key: key);
 
   @override
@@ -79,6 +81,7 @@ class _LMCarouselState extends State<LMCarousel> {
                   borderColor: widget.borderColor,
                   boxFit: widget.boxFit ?? BoxFit.contain,
                   errorWidget: widget.errorWidget,
+                  onError: widget.onError,
                 ),
           ),
         );

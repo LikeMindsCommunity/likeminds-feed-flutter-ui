@@ -127,7 +127,6 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
     super.onVisibilityChanged(visibility);
   }
 
-
   Future<void> initialiseControllers() async {
     player = Player(
       configuration: PlayerConfiguration(
@@ -144,7 +143,7 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
         scale: 0.2,
       ),
     );
-    if(widget.initialiseVideoController != null){
+    if (widget.initialiseVideoController != null) {
       widget.initialiseVideoController!(controller!);
     }
     if (widget.videoUrl != null) {

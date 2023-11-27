@@ -31,19 +31,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  get_it: 
+  get_it:
   envied:
-  shared_preferences: 
-  simple_s3: 
+  shared_preferences:
+  simple_s3:
   flutter_bloc:
-  overlay_support: 
-  lazy_load_scrollview: 
-  infinite_scroll_pagination: 
+  overlay_support:
+  lazy_load_scrollview:
+  infinite_scroll_pagination:
 
-  likeminds_feed: 1.6.3
-   # path: ../../LikeMinds-Flutter-Feed-SDK
-
-  likeminds_feed_ui_fl: 
+  likeminds_feed_ui_fl:
     path: ../
 
   # The following adds the Cupertino Icons font to your application.

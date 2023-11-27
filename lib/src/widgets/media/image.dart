@@ -20,6 +20,7 @@ class LMImage extends StatefulWidget {
     this.errorWidget,
     this.shimmerWidget,
     this.boxFit,
+    this.onError,
   }) : assert(imageUrl != null || imageFile != null);
 
   final String? imageUrl;
@@ -36,6 +37,7 @@ class LMImage extends StatefulWidget {
   final Widget? shimmerWidget;
 
   final BoxFit? boxFit;
+  final Function(String, StackTrace)? onError;
 
   @override
   State<LMImage> createState() => _LMImageState();
@@ -56,6 +58,9 @@ class _LMImageState extends State<LMImage> {
                 milliseconds: 100,
               ),
               errorWidget: (context, url, error) {
+                if (widget.onError != null) {
+                  widget.onError!(error.toString(), StackTrace.empty);
+                }
                 return widget.errorWidget ??
                     Container(
                       color: kBackgroundColor,
