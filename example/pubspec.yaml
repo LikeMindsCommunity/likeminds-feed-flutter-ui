@@ -35,6 +35,8 @@ dependencies:
   envied:
   shared_preferences:
   simple_s3:
+  equatable:
+  bloc:
   flutter_bloc:
   overlay_support:
   lazy_load_scrollview:

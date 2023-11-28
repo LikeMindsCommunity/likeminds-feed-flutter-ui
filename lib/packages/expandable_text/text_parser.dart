@@ -34,7 +34,8 @@ class TextSegment {
       isUrl.hashCode;
 }
 
-/// Split the string into multiple instances of [TextSegment] for mentions, hashtags, URLs and regular text.
+/// Split the string into multiple instances of [TextSegment]
+/// for mentions, hashtags, URLs and regular text.
 ///
 /// Mentions are all words that start with @, e.g. @mention.
 /// Hashtags are all words that start with #, e.g. #hashtag.
@@ -52,7 +53,7 @@ List<TextSegment> parseText(String? text) {
   final matches = exp.allMatches(text);
 
   var start = 0;
-  matches.forEach((match) {
+  for (var match in matches) {
     // text before the keyword
     if (match.start > start) {
       if (segments.isNotEmpty && segments.last.isText) {
@@ -72,7 +73,7 @@ List<TextSegment> parseText(String? text) {
       final isWord = match.start == 0 ||
           [' ', '\n'].contains(text.substring(match.start - 1, start));
       if (!isWord) {
-        return;
+        continue;
       }
 
       final isHashtag = keyword.startsWith('#');
@@ -83,9 +84,10 @@ List<TextSegment> parseText(String? text) {
     }
 
     start = match.end;
-  });
+  }
 
-  // text after the last keyword or the whole text if it does not contain any keywords
+  // text after the last keyword or
+  // the whole text if it does not contain any keywords
   if (start < text.length) {
     if (segments.isNotEmpty && segments.last.isText) {
       segments.last.text += text.substring(start);

@@ -10,7 +10,8 @@ import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 class LMTopicTile extends StatelessWidget {
   // Action to perform after tapping on the tile, required
   final Function(TopicUI) onTap;
-  // Alignment of the row of the tile, defaults to MainAxisAlignment.spaceBetween
+  // Alignment of the row of the tile,
+  // defaults to MainAxisAlignment.spaceBetween
   final MainAxisAlignment? tileRowAlignment;
   // Background color of the tile, defaults to null
   final Color? backgroundColor;

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:likeminds_feed/likeminds_feed.dart';
-
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 
 class LMBottomSheet extends StatefulWidget {
@@ -39,8 +37,6 @@ class LMBottomSheet extends StatefulWidget {
 }
 
 class _LMBottomSheetState extends State<LMBottomSheet> {
-  int _page = 1;
-
   @override
   void initState() {
     super.initState();

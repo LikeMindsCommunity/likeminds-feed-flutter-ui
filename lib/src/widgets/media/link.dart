@@ -116,7 +116,7 @@ class LMLinkPreview extends StatelessWidget {
                 width: width ?? MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: width ?? MediaQuery.of(context).size.width,
                       child: title ??
                           LMTextView(

@@ -78,7 +78,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
     }
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];
     if (attachments!.first.attachmentType == 3) {
-      /// If the attachment is a document, we need to call the method 'getDocumentList'
+      /// If the attachment is a document,
+      /// we need to call the method 'getDocumentList'
       return getPostDocuments();
     } else if (attachments!.first.attachmentType == 4) {
       return LMLinkPreview(
@@ -131,7 +132,6 @@ class _LMPostMediaState extends State<LMPostMedia> {
         .toList();
 
     return Align(
-      alignment: Alignment.center,
       child: SizedBox(
         width: screenSize.width - 32,
         child: Column(

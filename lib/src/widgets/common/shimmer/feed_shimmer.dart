@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:media_kit/media_kit.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LMFeedShimmer extends StatelessWidget {
@@ -16,7 +15,6 @@ class LMFeedShimmer extends StatelessWidget {
       child: SizedBox(
           width: screenSize.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -24,7 +22,6 @@ class LMFeedShimmer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         height: 52,
@@ -36,7 +33,6 @@ class LMFeedShimmer extends StatelessWidget {
                       ),
                       kHorizontalPaddingLarge,
                       Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             kVerticalPaddingMedium,
@@ -103,7 +99,6 @@ class LMFeedShimmer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       height: 20,
@@ -164,7 +159,6 @@ class LMFeedShimmer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
@@ -177,7 +171,6 @@ class LMFeedShimmer extends StatelessWidget {
                       ),
                       kHorizontalPaddingLarge,
                       Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             kVerticalPaddingMedium,
@@ -242,7 +235,6 @@ class LMFeedShimmer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       height: 20,
@@ -303,7 +295,6 @@ class LMFeedShimmer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         height: 52,
@@ -315,7 +306,6 @@ class LMFeedShimmer extends StatelessWidget {
                       ),
                       kHorizontalPaddingLarge,
                       Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             kVerticalPaddingMedium,

@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/icon_button.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/shimmer/post_shimmer.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:visibility_aware_state/visibility_aware_state.dart';
@@ -98,7 +96,7 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
 
   @override
   void dispose() async {
-    print("Disposing video");
+    debugPrint("Disposing video");
     _timer?.cancel();
     player.dispose();
     super.dispose();
@@ -118,7 +116,6 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
 
   @override
   void onVisibilityChanged(WidgetVisibility visibility) {
-    // TODO: Use visibility
     if (visibility == WidgetVisibility.INVISIBLE) {
       controller?.player.pause();
     } else if (visibility == WidgetVisibility.GONE) {
@@ -139,7 +136,6 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
     controller = VideoController(
       player,
       configuration: const VideoControllerConfiguration(
-        enableHardwareAcceleration: true,
         scale: 0.2,
       ),
     );
@@ -251,7 +247,6 @@ class _LMVideoState extends VisibilityAwareState<LMVideo> {
                         fullscreen: const MaterialVideoControlsThemeData(),
                         child: Video(
                           controller: controller!,
-                          filterQuality: FilterQuality.low,
                           controls: widget.showControls != null &&
                                   widget.showControls!
                               ? media_kit_video_controls.AdaptiveVideoControls

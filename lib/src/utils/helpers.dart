@@ -130,7 +130,7 @@ class TaggingHelper {
     List<UserTag> userTags = [];
     for (final match in matches) {
       final String tag = match.group(1)!;
-      final String mid = match.group(2)!;
+      //final String mid = match.group(2)!;
       final String id = match.group(3)!;
       userTags.add(UserTag(userUniqueId: id, name: tag));
     }
@@ -224,21 +224,23 @@ String getFirstValidLinkFromString(String text) {
       validLink = validLinks.first;
     }
     return validLink;
-  } catch (e) {
+  } on Exception catch (e, stacktrace) {
+    debugPrint(e.toString());
+    debugPrintStack(stackTrace: stacktrace);
     return '';
   }
 }
 
 LinkifyElement? extractLinkAndEmailFromString(String text) {
-   final urls = linkify(text, linkifiers: [
-      const EmailLinkifier(),
-      const UrlLinkifier(),
-    ]);
-    if (urls.isNotEmpty) {
-      if (urls.first is EmailElement || urls.first is UrlElement) {
-        return urls.first;
-      }
+  final urls = linkify(text, linkifiers: [
+    const EmailLinkifier(),
+    const UrlLinkifier(),
+  ]);
+  if (urls.isNotEmpty) {
+    if (urls.first is EmailElement || urls.first is UrlElement) {
+      return urls.first;
     }
+  }
   final links = linkify(text,
       options: const LinkifyOptions(
         looseUrl: true,

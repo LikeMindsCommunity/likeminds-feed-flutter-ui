@@ -110,10 +110,8 @@ class _LMDocumentState extends State<LMDocument> {
                 ),
                 padding: const EdgeInsets.all(kPaddingLarge),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      clipBehavior: Clip.none,
                       alignment: Alignment.center,
                       child: widget.documentIcon ??
                           const LMIcon(
@@ -142,7 +140,6 @@ class _LMDocumentState extends State<LMDocument> {
                           kVerticalPaddingSmall,
                           widget.subtitle ??
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   kHorizontalPaddingXSmall,
                                   Text(

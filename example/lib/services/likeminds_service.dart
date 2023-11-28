@@ -63,7 +63,8 @@ class LikeMindsService implements ILikeMindsService {
 
   int? get getFeedroomId => feedroomId;
 
-  LikeMindsService(LMSDKCallback sdkCallback, String apiKey) {
+  LikeMindsService(LMSDKCallback sdkCallback, String apiKey,
+      {Function(Exception, StackTrace)? onErrorHandler}) {
     debugPrint("UI Layer: LikeMindsService initialized");
     _mediaService = MediaService(_prodFlag);
     final String key = apiKey.isEmpty
@@ -73,7 +74,11 @@ class LikeMindsService implements ILikeMindsService {
         : apiKey;
     _sdkApplication = (LMFeedClientBuilder()
           ..apiKey(key)
-          ..sdkCallback(sdkCallback))
+          ..sdkCallback(sdkCallback)
+          ..onErrorHandler(onErrorHandler ??
+              (e, s) {
+                debugPrint("UI Layer: Error in LikeMindsService: $e");
+              }))
         .build();
     // LMAnalytics.get().initialize();
   }
