@@ -27,7 +27,6 @@ dependencies:
   media_kit_video: ^1.1.8 # For video rendering.
   media_kit_libs_video: ^1.0.1
   visibility_aware_state: 1.0.5
-  package_info_plus: ^4.2.0
 
   likeminds_feed: #1.6.3
     path: ../LikeMinds-Flutter-Feed-SDK

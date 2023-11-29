@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
+const String feedUIVersion = "1.3.8";
+
 extension StringColor on String {
   Color? toColor() {
     // if (primaryColor != null) {
