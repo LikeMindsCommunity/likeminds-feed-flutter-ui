@@ -74,11 +74,7 @@ class LikeMindsService implements ILikeMindsService {
         : apiKey;
     _sdkApplication = (LMFeedClientBuilder()
           ..apiKey(key)
-          ..sdkCallback(sdkCallback)
-          ..onErrorHandler(onErrorHandler ??
-              (e, s) {
-                debugPrint("UI Layer: Error in LikeMindsService: $e");
-              }))
+          ..sdkCallback(sdkCallback))
         .build();
     // LMAnalytics.get().initialize();
   }

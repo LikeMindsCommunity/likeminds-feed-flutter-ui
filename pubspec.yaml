@@ -23,14 +23,14 @@ dependencies:
   open_filex: ^4.3.2
   http:
   extended_image: 8.1.1
-  media_kit: ^1.1.7                              # Primary package.
-  media_kit_video: ^1.1.8                        # For video rendering.
+  media_kit: ^1.1.7 # Primary package.
+  media_kit_video: ^1.1.8 # For video rendering.
   media_kit_libs_video: ^1.0.1
   visibility_aware_state: 1.0.5
+  package_info_plus: ^4.2.0
 
   likeminds_feed: #1.6.3
     path: ../LikeMinds-Flutter-Feed-SDK
-
 
 dev_dependencies:
   flutter_test:
