@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
 
 class LMImage extends StatefulWidget {
   const LMImage({
@@ -20,6 +19,7 @@ class LMImage extends StatefulWidget {
     this.errorWidget,
     this.shimmerWidget,
     this.boxFit,
+    this.onError,
   }) : assert(imageUrl != null || imageFile != null);
 
   final String? imageUrl;
@@ -36,6 +36,7 @@ class LMImage extends StatefulWidget {
   final Widget? shimmerWidget;
 
   final BoxFit? boxFit;
+  final Function(String, StackTrace)? onError;
 
   @override
   State<LMImage> createState() => _LMImageState();
@@ -56,11 +57,13 @@ class _LMImageState extends State<LMImage> {
                 milliseconds: 100,
               ),
               errorWidget: (context, url, error) {
+                if (widget.onError != null) {
+                  widget.onError!(error.toString(), StackTrace.empty);
+                }
                 return widget.errorWidget ??
                     Container(
                       color: kBackgroundColor,
                       child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           LMIcon(

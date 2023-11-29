@@ -111,7 +111,7 @@ class LMPostFooter extends StatelessWidget {
 //         ),
 //       ),
 //       activeTextStyle:
-//           Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
+//        Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
 //       inactiveTextStyle: Theme.of(context).textTheme.bodyLarge,
 //     );
 //   }
@@ -127,7 +127,7 @@ class LMPostFooter extends StatelessWidget {
 //     return LMTextView(
 //       text: "Comment",
 //       textStyle:
-//           Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
+//       Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
 //     );
 //   }
 // }
@@ -156,7 +156,7 @@ class LMPostFooter extends StatelessWidget {
 //         ),
 //       ),
 //       activeTextStyle:
-//           Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
+//       Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
 //       inactiveTextStyle: Theme.of(context).textTheme.bodyLarge,
 //     );
 //   }
@@ -186,7 +186,7 @@ class LMPostFooter extends StatelessWidget {
 //         ),
 //       ),
 //       activeTextStyle:
-//           Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
+//        Theme.of(context).textTheme.bodyLarge!.copyWith(color: kPrimaryColor),
 //       inactiveTextStyle: Theme.of(context).textTheme.bodyLarge,
 //     );
 //   }

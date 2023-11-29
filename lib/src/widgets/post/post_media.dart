@@ -23,6 +23,7 @@ class LMPostMedia extends StatefulWidget {
     this.boxFit,
     this.textColor,
     this.initialiseVideoController,
+    this.onError,
   });
 
   final List<Attachment> attachments;
@@ -39,6 +40,7 @@ class LMPostMedia extends StatefulWidget {
   final Widget? errorWidget;
   final BoxFit? boxFit;
   final Color? textColor;
+  final Function(String, StackTrace)? onError;
 
   final Color? carouselActiveIndicatorColor;
   final Color? carouselInactiveIndicatorColor;
@@ -76,7 +78,8 @@ class _LMPostMediaState extends State<LMPostMedia> {
     }
     // attachments = InheritedPostProvider.of(context)?.post.attachments ?? [];
     if (attachments!.first.attachmentType == 3) {
-      /// If the attachment is a document, we need to call the method 'getDocumentList'
+      /// If the attachment is a document,
+      /// we need to call the method 'getDocumentList'
       return getPostDocuments();
     } else if (attachments!.first.attachmentType == 4) {
       return LMLinkPreview(
@@ -87,6 +90,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
         title: widget.title,
         subtitle: widget.subtitle,
         errorWidget: widget.errorWidget,
+        onError: widget.onError,
       );
     } else {
       return LMCarousel(
@@ -99,6 +103,7 @@ class _LMPostMediaState extends State<LMPostMedia> {
         boxFit: widget.boxFit,
         width: widget.width,
         height: widget.height,
+        onError: widget.onError,
       );
     }
   }
@@ -127,7 +132,6 @@ class _LMPostMediaState extends State<LMPostMedia> {
         .toList();
 
     return Align(
-      alignment: Alignment.center,
       child: SizedBox(
         width: screenSize.width - 32,
         child: Column(

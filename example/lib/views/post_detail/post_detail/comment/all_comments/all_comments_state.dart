@@ -14,7 +14,8 @@ class AllCommentsInitial extends AllCommentsState {
 class AllCommentsLoaded extends AllCommentsState {
   final PostDetailResponse postDetails;
   final bool hasReachedMax;
-  const AllCommentsLoaded({required this.postDetails, required this.hasReachedMax});
+  const AllCommentsLoaded(
+      {required this.postDetails, required this.hasReachedMax});
 
   @override
   List<Object?> get props => [postDetails, hasReachedMax];

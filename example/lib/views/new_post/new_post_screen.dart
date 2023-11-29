@@ -235,7 +235,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
   @override
   Widget build(BuildContext context) {
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    final screenSize = MediaQuery.of(context).size;
     newPostBloc = BlocProvider.of<NewPostBloc>(context);
     return WillPopScope(
       onWillPop: () {

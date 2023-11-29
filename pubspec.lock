@@ -363,10 +363,9 @@ packages:
   likeminds_feed:
     dependency: "direct main"
     description:
-      name: likeminds_feed
-      sha256: e47b77e3eadfc475cd62e9bc1ea9c76fb64b5a3dc9cdb548782b06423f7c8e28
-      url: "https://pub.dev"
-    source: hosted
+      path: "../LikeMinds-Flutter-Feed-SDK"
+      relative: true
+    source: path
     version: "1.6.3"
   lints:
     dependency: transitive
@@ -941,6 +940,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  visibility_aware_state:
+    dependency: "direct main"
+    description:
+      name: visibility_aware_state
+      sha256: "9c30877fa4909b38c56b71dade2f5dde380199b1417cc07e10628ca042611822"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   visibility_detector:
     dependency: "direct main"
     description:

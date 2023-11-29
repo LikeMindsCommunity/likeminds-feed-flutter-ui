@@ -53,8 +53,6 @@ class _LMTextInputState extends State<LMTextInput> {
         color: widget.backgroundColor,
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
@@ -76,7 +74,6 @@ class _LMTextInputState extends State<LMTextInput> {
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Flexible(

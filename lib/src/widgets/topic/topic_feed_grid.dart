@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 // This widget is used to display a topic grid
 // A [LMTopicFeedGrid] displays a grid of selected topics
@@ -38,7 +36,8 @@ class LMTopicFeedGrid extends StatelessWidget {
   final double height;
   // Placeholder chip if no topic is selected
   final Widget? emptyTopicChip;
-  // Whether to place the icon before the text or after the text of the topic chip
+  // Whether to place the icon before the text or
+  // after the text of the topic chip
   // LMIconPlacement.start places the icon before the text
   // LMIconPlacement.end places the icon after the text
   final LMIconPlacement iconPlacement;
@@ -115,8 +114,6 @@ class LMTopicFeedGrid extends StatelessWidget {
   Widget emptyTopicsWidget() {
     return emptyTopicChip != null
         ? Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               emptyTopicChip!,
             ],
@@ -149,7 +146,6 @@ class LMTopicFeedGrid extends StatelessWidget {
           border: showDivider
               ? Border(
                   bottom: BorderSide(
-                    width: 1,
                     color: kGrey2Color.withOpacity(0.1),
                   ),
                 )
