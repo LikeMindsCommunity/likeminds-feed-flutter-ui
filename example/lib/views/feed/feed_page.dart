@@ -155,7 +155,7 @@ class _FeedScreenState extends State<FeedScreen> {
 }
 
 class MyPostWidget extends LMPostWidget {
-  MyPostWidget({
+  const MyPostWidget({
     super.key,
     required PostViewData post,
     required User user,

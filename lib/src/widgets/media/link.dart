@@ -27,6 +27,7 @@ class LMLinkPreview extends StatelessWidget {
     this.showLinkUrl = false,
     this.border,
     this.errorWidget,
+    this.onError,
   });
 
   // data class to provide link preview data
@@ -35,26 +36,35 @@ class LMLinkPreview extends StatelessWidget {
 
   // defaults to width of screen
   final double? width;
+
   // defaults to null
   final double? height;
+
   // defaults to null
   final Color? backgroundColor;
+
   // defaults to 8.0
   final double? borderRadius;
   final double? padding;
   final VoidCallback? onTap;
+
   // defaults to null,
   final String? imageUrl;
+
   // defaults to null, for custom styling
   final LMTextView? title;
+
   // defaults to null, for custom styling
   final LMTextView? subtitle;
+
   // defaults to null, for custom styling
   final LMTextView? url;
+
   // defaults to false, to show link url
   final bool showLinkUrl;
   final Border? border;
   final Widget? errorWidget;
+  final Function(String, StackTrace)? onError;
 
   bool checkNullMedia() {
     return ((linkModel == null ||
@@ -92,6 +102,7 @@ class LMLinkPreview extends StatelessWidget {
                     height: 150,
                     borderRadius: borderRadius,
                     errorWidget: errorWidget,
+                    onError: onError,
                     imageUrl: imageUrl ??
                         (linkModel != null
                             ? linkModel!.ogTags!.image!
@@ -105,7 +116,7 @@ class LMLinkPreview extends StatelessWidget {
                 width: width ?? MediaQuery.of(context).size.width,
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       width: width ?? MediaQuery.of(context).size.width,
                       child: title ??
                           LMTextView(

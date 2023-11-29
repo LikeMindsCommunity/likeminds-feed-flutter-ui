@@ -3,14 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post_content.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post_footer.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post_header.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post_media.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post_menu.dart';
 
 /// A widget that displays a post on the feed.
-/// Provide a header, footer, menu, media and content instance to customize the post.
+/// Provide a header, footer, menu, media
+/// and content instance to customize the post.
 ///
 class LMPostWidget extends StatefulWidget {
   final LMPostHeader? header;

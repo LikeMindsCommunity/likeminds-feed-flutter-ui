@@ -47,7 +47,6 @@ class LMPostMenu extends StatelessWidget {
                         horizontal: 12,
                         vertical: 10,
                       ),
-                      height: 48,
                       value: element.id,
                       child: children?[element.id] ??
                           LMTextView(

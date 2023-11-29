@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/packages/linkify/linkify.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/constants.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -155,8 +154,9 @@ class ExpandableTextState extends State<ExpandableText>
 
     final linkText =
         (_expanded ? widget.collapseText : widget.expandText) ?? '';
-    final linkColor =
-        widget.linkColor ?? widget.prefixStyle?.color ?? Color(0xFF4666F6);
+    final linkColor = widget.linkColor ??
+        widget.prefixStyle?.color ??
+        const Color(0xFF4666F6);
     final linkTextStyle = effectiveTextStyle!
         .merge(widget.prefixStyle)
         .copyWith(color: linkColor);
@@ -414,7 +414,8 @@ class ExpandableTextState extends State<ExpandableText>
       } else {
         bool isTag = link != null && link[0] == '<';
 
-        //if it is a valid link using linkify and if that is not then add normal TextSpan
+        // if it is a valid link using linkify and
+        // if that is not then add normal TextSpan
         if (!isTag && extractLinkAndEmailFromString(link ?? '') == null) {
           textSpans.add(TextSpan(
             text: text.substring(startIndex, endIndex),
