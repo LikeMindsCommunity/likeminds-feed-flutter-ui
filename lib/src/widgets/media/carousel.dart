@@ -4,9 +4,11 @@ import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/media/image.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/media/video.dart';
+import 'package:media_kit_video/media_kit_video.dart';
 
 class LMCarousel extends StatefulWidget {
   final List<Attachment> attachments;
+  final Function(VideoController)? initialiseVideoController;
 
   final double? height;
   final double? width;
@@ -23,6 +25,7 @@ class LMCarousel extends StatefulWidget {
   final LMVideo? videoItem;
   final Widget? errorWidget;
   final BoxFit? boxFit;
+  final Function(String, StackTrace)? onError;
 
   const LMCarousel({
     Key? key,
@@ -40,6 +43,8 @@ class LMCarousel extends StatefulWidget {
     this.inactiveIndicatorColor,
     this.errorWidget,
     this.boxFit,
+    this.initialiseVideoController,
+    this.onError,
   }) : super(key: key);
 
   @override
@@ -76,6 +81,7 @@ class _LMCarouselState extends State<LMCarousel> {
                   borderColor: widget.borderColor,
                   boxFit: widget.boxFit ?? BoxFit.contain,
                   errorWidget: widget.errorWidget,
+                  onError: widget.onError,
                 ),
           ),
         );
@@ -85,6 +91,7 @@ class _LMCarouselState extends State<LMCarousel> {
           width: MediaQuery.of(context).size.width,
           child: widget.videoItem ??
               LMVideo(
+                initialiseVideoController: widget.initialiseVideoController,
                 videoUrl: e.attachmentMeta.url,
                 width: widget.width,
                 height: widget.height,
@@ -121,10 +128,8 @@ class _LMCarouselState extends State<LMCarousel> {
               itemCount: mediaWidgets.length,
               itemBuilder: (context, index, _) => mediaWidgets[index],
               options: CarouselOptions(
-                initialPage: 0,
                 animateToClosest: false,
                 aspectRatio: 1,
-                scrollDirection: Axis.horizontal,
                 enableInfiniteScroll: false,
                 enlargeFactor: 0.0,
                 viewportFraction: 1.0,
@@ -176,7 +181,6 @@ class _LMCarouselState extends State<LMCarousel> {
                                           color:
                                               widget.inactiveIndicatorColor ??
                                                   kGrey1Color,
-                                          // color: Color.fromRGBO(0, 0, 0, 0.4),
                                         ),
                                       );
                             }).toList())

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:lm_feed_ui_example/services/likeminds_service.dart';
@@ -145,7 +146,7 @@ class NewPostBloc extends Bloc<NewPostEvents, NewPostState> {
           }
         } catch (err) {
           emit(const NewPostError(message: 'An error occurred'));
-          print(err.toString());
+          debugPrint(err.toString());
         }
       }
       if (event is EditPost) {

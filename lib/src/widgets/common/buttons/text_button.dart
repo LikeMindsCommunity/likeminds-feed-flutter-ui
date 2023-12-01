@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 // This widget is used to display a text button
 // The [LMTextButton] can be customized by passing in the required parameters
@@ -35,7 +34,8 @@ class LMTextButton extends StatefulWidget {
   final Function() onTap;
   // Icon to be displayed in the button if the button is active
   final LMIcon? activeIcon;
-  // Text to be displayed in the button if the button is active, [LMTextView] only
+  // Text to be displayed in the button if the button is active,
+  // [LMTextView] only
   final LMTextView? activeText;
   // Padding of the button, defaults to zero
   final EdgeInsets? padding;
@@ -65,7 +65,6 @@ class _LMTextButtonState extends State<LMTextButton> {
         height: widget.height ?? 32,
         width: widget.width,
         padding: widget.padding ?? EdgeInsets.zero,
-        clipBehavior: Clip.none,
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? Colors.transparent,
           borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -74,7 +73,6 @@ class _LMTextButtonState extends State<LMTextButton> {
         child: Row(
           mainAxisAlignment:
               widget.mainAxisAlignment ?? MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             widget.placement == LMIconPlacement.start
                 ? widget.isActive

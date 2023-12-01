@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 // This widget is used to display a topic feed bar
 // A [LMTopicFeedBar] displays a list of selected topics
@@ -35,7 +34,8 @@ class LMTopicFeedBar extends StatelessWidget {
   final double? height;
   // Placeholder chip if no topic is selected
   final Widget? emptyTopicChip;
-  // Whether to place the icon before the text or after the text of the topic chip
+  // Whether to place the icon before the text
+  // or after the text of the topic chip
   // LMIconPlacement.start places the icon before the text
   // LMIconPlacement.end places the icon after the text
   final LMIconPlacement iconPlacement;
@@ -62,8 +62,10 @@ class LMTopicFeedBar extends StatelessWidget {
   }) : super(key: key);
 
   // Topic feed bar with selected topics
-  // If a trailing icon is passed, it is displayed at the end of the list of selected topics
-  // If no trailing icon is passed, the topic feed bar displays only the list of selected topics
+  // If a trailing icon is passed, it is displayed
+  // at the end of the list of selected topics
+  // If no trailing icon is passed, the topic
+  // feed bar displays only the list of selected topics
   Widget selectedTopicsWidget(double width) {
     return SizedBox(
       width: width,
@@ -149,8 +151,6 @@ class LMTopicFeedBar extends StatelessWidget {
     return emptyTopicChip != null
         ? Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               emptyTopicChip!,
             ],
@@ -160,7 +160,6 @@ class LMTopicFeedBar extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
                   'All topics',

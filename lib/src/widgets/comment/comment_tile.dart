@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/packages/expandable_text/expandable_text.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/helpers.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/text_button.dart';
@@ -58,7 +57,6 @@ class LMCommentTile extends StatefulWidget {
 class _LMCommentTileState extends State<LMCommentTile> {
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
     ThemeData theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(

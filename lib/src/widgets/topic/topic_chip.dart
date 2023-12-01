@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 
 /*
 * Topic chip widget
@@ -34,7 +33,8 @@ class LMTopicChip extends StatelessWidget {
   final Widget? icon;
   // Padding of the topic chip
   final EdgeInsets? padding;
-  // Whether to place the icon before the text or after the text of the topic chip
+  // Whether to place the icon before the text
+  // or after the text of the topic chip
   // LMIconPlacement.start places the icon before the text
   // LMIconPlacement.end places the icon after the text
   final LMIconPlacement iconPlacement;
@@ -87,7 +87,6 @@ class LMTopicChip extends StatelessWidget {
         color: backgroundColor ?? Colors.transparent,
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon != null && iconPlacement == LMIconPlacement.start
