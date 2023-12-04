@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+import 'package:likeminds_feed_ui_fl/src/models/helper/attachment/attachment_view_data.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
 /*
@@ -32,7 +33,7 @@ class LMLinkPreview extends StatelessWidget {
 
   // data class to provide link preview data
   final MediaModel? linkModel;
-  final Attachment? attachment;
+  final AttachmentViewData? attachment;
 
   // defaults to width of screen
   final double? width;
