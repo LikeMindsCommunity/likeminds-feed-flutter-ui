@@ -1,7 +1,7 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
 
 class WidgetViewData {
-  String id;
+  final String id;
   Map<String, dynamic>? lmMeta;
   int createdAt;
   Map<String, dynamic> metadata;
@@ -9,7 +9,7 @@ class WidgetViewData {
   String parentEntityType;
   int updatedAt;
 
-  WidgetViewData({
+  WidgetViewData._({
     required this.id,
     this.lmMeta,
     required this.createdAt,
@@ -18,28 +18,54 @@ class WidgetViewData {
     required this.parentEntityType,
     required this.updatedAt,
   });
+}
 
-  factory WidgetViewData.fromWidgetModel(WidgetModel data) {
-    return WidgetViewData(
-      id: data.id,
-      lmMeta: data.lmMeta,
-      createdAt: data.createdAt,
-      metadata: data.metadata,
-      parentEntityId: data.parentEntityId,
-      parentEntityType: data.parentEntityType,
-      updatedAt: data.updatedAt,
-    );
+class WidgetViewDataBuilder {
+  String? _id;
+  Map<String, dynamic>? _lmMeta;
+  int? _createdAt;
+  Map<String, dynamic>? _metadata;
+  String? _parentEntityId;
+  String? _parentEntityType;
+  int? _updatedAt;
+
+  void id(String id) {
+    _id = id;
   }
 
-  WidgetModel toWidgetModel(){
-    return WidgetModel(
-      id: id,
-      lmMeta: lmMeta,
-      createdAt: createdAt,
-      metadata: metadata,
-      parentEntityId: parentEntityId,
-      parentEntityType: parentEntityType,
-      updatedAt: updatedAt,
+  void lmMeta(Map<String, dynamic> lmMeta) {
+    _lmMeta = lmMeta;
+  }
+
+  void createdAt(int createdAt) {
+    _createdAt = createdAt;
+  }
+
+  void metadata(Map<String, dynamic> metadata) {
+    _metadata = metadata;
+  }
+
+  void parentEntityId(String parentEntityId) {
+    _parentEntityId = parentEntityId;
+  }
+
+  void parentEntityType(String parentEntityType) {
+    _parentEntityType = parentEntityType;
+  }
+
+  void updatedAt(int updatedAt) {
+    _updatedAt = updatedAt;
+  }
+
+  WidgetViewData build() {
+    return WidgetViewData._(
+      id: _id!,
+      lmMeta: _lmMeta,
+      createdAt: _createdAt!,
+      metadata: _metadata!,
+      parentEntityId: _parentEntityId!,
+      parentEntityType: _parentEntityType!,
+      updatedAt: _updatedAt!,
     );
   }
 }

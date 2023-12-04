@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
+import 'package:lm_feed_ui_example/convertors/comment/comment_convertor.dart';
+import 'package:lm_feed_ui_example/convertors/post/post_convertor.dart';
 import 'package:lm_feed_ui_example/services/likeminds_service.dart';
 import 'package:lm_feed_ui_example/services/service_locator.dart';
 import 'package:lm_feed_ui_example/utils/constants/ui_constants.dart';
@@ -14,6 +16,7 @@ import 'package:overlay_support/overlay_support.dart';
 
 class PostDetailScreen extends StatefulWidget {
   final String postId;
+
   const PostDetailScreen({
     super.key,
     required this.postId,
@@ -484,7 +487,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                   child: postData == null
                                       ? const LMPostMediaShimmer()
                                       : LMPostWidget(
-                                          post: PostViewData.fromPost(
+                                          post: PostViewDataConvertor.fromPost(
                                               post: postData!),
                                           onTagTap: (String userId) {
                                             locator<LikeMindsService>()
@@ -548,7 +551,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                           locator<LikeMindsService>()
                                               .routeToProfile(userId);
                                         },
-                                        comment: item,
+                                        comment:
+                                            CommentViewDataConvertor.fromReply(
+                                                item),
                                         user: postDetailResponse
                                             .users![item.userId]!,
                                         onMenuTap: (value) {},

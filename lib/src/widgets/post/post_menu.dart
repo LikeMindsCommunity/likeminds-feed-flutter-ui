@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/src/models/commons/popup_menu_view_data.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/icon/icon.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/text/text_view.dart';
@@ -17,7 +18,7 @@ class LMPostMenu extends StatelessWidget {
 
   final Map<int, LMTextView>? children;
   final LMIcon? menuIcon;
-  final List<PopupMenuItemModel> menuItems;
+  final List<PopUpMenuItemViewData> menuItems;
   final bool isFeed;
   final Function(int)? onSelected;
   final Set<int> removeItemIds;

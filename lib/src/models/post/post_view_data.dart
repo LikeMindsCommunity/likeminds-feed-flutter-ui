@@ -1,13 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// import 'package:likeminds_feed/src/models/feed/post.dart';
-
-import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/src/models/commons/popup_menu_view_data.dart';
+import 'package:likeminds_feed_ui_fl/src/models/helper/attachment/attachment_view_data.dart';
 
 class PostViewData {
   final String id;
   String text;
   List<String> topics;
-  List<Attachment>? attachments;
+  List<AttachmentViewData>? attachments;
   final int communityId;
   bool isPinned;
   final String userId;
@@ -15,7 +13,7 @@ class PostViewData {
   int commentCount;
   bool isSaved;
   bool isLiked;
-  List<PopupMenuItemModel> menuItems;
+  List<PopUpMenuItemViewData> menuItems;
   final DateTime createdAt;
   DateTime updatedAt;
   bool isEdited;
@@ -37,53 +35,13 @@ class PostViewData {
     required this.commentCount,
     required this.isEdited,
   });
-
-  factory PostViewData.fromPost({required Post post}) {
-    return PostViewData._(
-      id: post.id,
-      isEdited: post.isEdited,
-      text: post.text,
-      attachments: post.attachments,
-      communityId: post.communityId,
-      isPinned: post.isPinned,
-      topics: post.topics ?? [],
-      userId: post.userId,
-      likeCount: post.likeCount,
-      commentCount: post.commentCount,
-      isSaved: post.isSaved,
-      isLiked: post.isLiked,
-      menuItems: post.menuItems,
-      createdAt: post.createdAt,
-      updatedAt: post.updatedAt,
-    );
-  }
-
-  Post toPost() {
-    return Post(
-      id: id,
-      text: text,
-      topics: topics,
-      isEdited: isEdited,
-      attachments: attachments,
-      communityId: communityId,
-      isPinned: isPinned,
-      userId: userId,
-      likeCount: likeCount,
-      isSaved: isSaved,
-      isLiked: isLiked,
-      commentCount: commentCount,
-      menuItems: menuItems,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-    );
-  }
 }
 
 class PostViewDataBuilder {
   String? _id;
   String? _text;
   List<String>? _topics;
-  List<Attachment>? _attachments;
+  List<AttachmentViewData>? _attachments;
   int? _communityId;
   bool? _isPinned;
   String? _userId;
@@ -91,7 +49,7 @@ class PostViewDataBuilder {
   int? _commentCount;
   bool? _isSaved;
   bool? _isLiked;
-  List<PopupMenuItemModel>? _menuItems;
+  List<PopUpMenuItemViewData>? _menuItems;
   DateTime? _createdAt;
   DateTime? _updatedAt;
   bool? _isEdited;
@@ -108,7 +66,7 @@ class PostViewDataBuilder {
     _topics = topics;
   }
 
-  void attachments(List<Attachment> attachments) {
+  void attachments(List<AttachmentViewData> attachments) {
     _attachments = attachments;
   }
 
@@ -140,7 +98,7 @@ class PostViewDataBuilder {
     _isLiked = isLiked;
   }
 
-  void menuItems(List<PopupMenuItemModel> menuItems) {
+  void menuItems(List<PopUpMenuItemViewData> menuItems) {
     _menuItems = menuItems;
   }
 

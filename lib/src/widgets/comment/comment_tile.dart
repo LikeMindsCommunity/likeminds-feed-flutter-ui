@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/packages/expandable_text/expandable_text.dart';
+import 'package:likeminds_feed_ui_fl/src/models/comment/comment_view_data.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
 import 'package:likeminds_feed_ui_fl/src/widgets/common/buttons/text_button.dart';
@@ -32,7 +33,7 @@ class LMCommentTile extends StatefulWidget {
   });
 
   final User user;
-  final Reply comment;
+  final CommentViewData comment;
 
   final TextStyle? textStyle;
   final TextStyle? linkStyle;
