@@ -17,7 +17,7 @@ class LMCarousel extends StatefulWidget {
   final Color? borderColor;
   final Color? activeIndicatorColor;
   final Color? inactiveIndicatorColor;
-
+  final Color? backgroundColor;
   final Widget? activeIndicator;
   final Widget? inactiveIndicator;
 
@@ -35,6 +35,7 @@ class LMCarousel extends StatefulWidget {
     this.borderRadius,
     this.borderSize,
     this.borderColor,
+    this.backgroundColor,
     this.activeIndicator,
     this.inactiveIndicator,
     this.imageItem,
@@ -69,8 +70,8 @@ class _LMCarouselState extends State<LMCarousel> {
     mediaWidgets = widget.attachments.map((e) {
       if (e.attachmentType == 1) {
         return Container(
-          color: Colors.black,
-          width: MediaQuery.of(context).size.width,
+          color: widget.backgroundColor ?? Colors.black,
+          width:widget.width?? MediaQuery.of(context).size.width,
           child: Center(
             child: widget.imageItem ??
                 LMImage(
@@ -87,19 +88,21 @@ class _LMCarouselState extends State<LMCarousel> {
         );
       } else if ((e.attachmentType == 2)) {
         return Container(
-          color: Colors.black,
+          color: widget.backgroundColor ?? Colors.black,
           width: MediaQuery.of(context).size.width,
           child: widget.videoItem ??
-              LMVideo(
-                initialiseVideoController: widget.initialiseVideoController,
-                videoUrl: e.attachmentMeta.url,
-                width: widget.width,
-                height: widget.height,
-                borderRadius: widget.borderRadius,
-                borderColor: widget.borderColor,
-                boxFit: widget.boxFit ?? BoxFit.contain,
-                showControls: false,
-                errorWidget: widget.errorWidget,
+              Center(
+                child: LMVideo(
+                  initialiseVideoController: widget.initialiseVideoController,
+                  videoUrl: e.attachmentMeta.url,
+                  width: widget.width,
+                  height: widget.height,
+                  borderRadius: widget.borderRadius,
+                  borderColor: widget.borderColor,
+                  boxFit: widget.boxFit ?? BoxFit.contain,
+                  showControls: false,
+                  errorWidget: widget.errorWidget,
+                ),
               ),
         );
       } else {
