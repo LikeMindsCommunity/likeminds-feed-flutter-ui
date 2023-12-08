@@ -1,5 +1,5 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
-import 'package:likeminds_feed_ui_fl/src/models/feed/feedroom_view_data.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:lm_feed_ui_example/convertors/user/user_convertor.dart';
 
 class FeedViewDataConvertor {

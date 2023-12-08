@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:lm_feed_ui_example/convertors/post/post_convertor.dart';
+import 'package:lm_feed_ui_example/convertors/user/user_convertor.dart';
 import 'package:lm_feed_ui_example/services/likeminds_service.dart';
 import 'package:lm_feed_ui_example/services/service_locator.dart';
 import 'package:lm_feed_ui_example/utils/constants/ui_constants.dart';
@@ -94,7 +95,8 @@ class _FeedScreenState extends State<FeedScreen> {
                     LMPostWidget(
                       post: PostViewDataConvertor.fromPost(post: item),
                       isFeed: true,
-                      user: feedResponse.users[item.userId]!,
+                      user: UserViewDataConvertor.fromUser(
+                          feedResponse.users[item.userId]!),
                       onTagTap: (String userId) {
                         locator<LikeMindsService>().routeToProfile(userId);
                       },
@@ -159,7 +161,7 @@ class MyPostWidget extends LMPostWidget {
   const MyPostWidget({
     super.key,
     required PostViewData post,
-    required User user,
+    required UserViewData user,
     required Function() onTap,
     required bool isFeed,
     required Function(String) onTagTap,

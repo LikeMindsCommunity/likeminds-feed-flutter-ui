@@ -44,7 +44,7 @@ class AllCommentsBloc extends Bloc<AllCommentsEvent, AllCommentsState> {
       response.users!.addAll(users!);
       emit(AllCommentsLoaded(
           postDetails: response,
-          hasReachedMax: response.postReplies!.replies.isEmpty));
+          hasReachedMax: response.post!.replies?.isEmpty ?? true));
     }
   }
 }

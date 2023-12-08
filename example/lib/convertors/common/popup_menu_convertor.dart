@@ -1,5 +1,5 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
-import 'package:likeminds_feed_ui_fl/src/models/commons/popup_menu_view_data.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 
 class PopupMenuItemConvertor {
   static PopUpMenuItemViewData fromPopUpMenuItemModel({

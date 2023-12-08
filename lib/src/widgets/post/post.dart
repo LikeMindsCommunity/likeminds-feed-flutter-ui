@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
@@ -16,7 +15,7 @@ class LMPostWidget extends StatefulWidget {
 
   // Required variables
   final PostViewData post;
-  final User user;
+  final UserViewData user;
   final bool isFeed;
   final Function() onTap;
   final Function(String) onTagTap;

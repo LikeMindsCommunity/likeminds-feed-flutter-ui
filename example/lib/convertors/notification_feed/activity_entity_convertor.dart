@@ -1,6 +1,6 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 
-import 'package:likeminds_feed_ui_fl/src/models/notification_feed/activity_entity_view_data.dart';
 import 'package:lm_feed_ui_example/convertors/comment/comment_convertor.dart';
 import 'package:lm_feed_ui_example/convertors/helper/attachment/attachment_convertor.dart';
 
@@ -63,7 +63,7 @@ class ActivityEntityViewDataConvertor {
 
     if (activityEntityData.replies != null) {
       activityEntityViewDataBuilder.replies(activityEntityData.replies!
-          .map((e) => CommentViewDataConvertor.fromReply(e))
+          .map((e) => CommentViewDataConvertor.fromComment(e))
           .toList());
     }
 
@@ -95,7 +95,7 @@ class ActivityEntityViewDataConvertor {
       isEdited: activityEntityViewData.isEdited,
       isPinned: activityEntityViewData.isPinned,
       replies: activityEntityViewData.replies
-          ?.map((e) => CommentViewDataConvertor.toReply(e))
+          ?.map((e) => CommentViewDataConvertor.toComment(e))
           .toList(),
       text: activityEntityViewData.text,
       updatedAt: activityEntityViewData.updatedAt,

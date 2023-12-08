@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 
 enum MediaType { video, image, document, link, widget }
 
@@ -13,7 +13,7 @@ class MediaModel {
   int? duration; // required for video url
   String? format; // required for documents
   int? size; // required for documents
-  AttachmentMetaOgTags? ogTags; // required for links (attachment type 4)
+  OgTagsViewData? ogTags; // required for links (attachment type 4)
   Map<String, dynamic>? widgetsMeta; //required for widgets (attachment type 5)
 
   MediaModel({

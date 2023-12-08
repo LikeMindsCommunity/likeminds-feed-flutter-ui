@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/packages/linkify/linkify.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
 
@@ -16,11 +16,11 @@ class TaggingHelper {
       r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+|(\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b)';
 
   /// Encodes the string with the user tags and returns the encoded string
-  static String encodeString(String string, List<UserTag> userTags) {
+  static String encodeString(String string, List<UserTagViewData> userTags) {
     final Iterable<RegExpMatch> matches = tagRegExp.allMatches(string);
     for (final match in matches) {
       final String tag = match.group(1)!;
-      final UserTag? userTag =
+      final UserTagViewData? userTag =
           userTags.firstWhereOrNull((element) => element.name! == tag);
       if (userTag != null) {
         string = string.replaceAll('@$tag~',
@@ -59,12 +59,13 @@ class TaggingHelper {
   }
 
   /// Matches the tags in the string and returns the list of matched tags
-  static List<UserTag> matchTags(String text, List<UserTag> items) {
-    final List<UserTag> tags = [];
+  static List<UserTagViewData> matchTags(
+      String text, List<UserTagViewData> items) {
+    final List<UserTagViewData> tags = [];
     final Iterable<RegExpMatch> matches = tagRegExp.allMatches(text);
     for (final match in matches) {
       final String tag = match.group(1)!;
-      final UserTag? userTag =
+      final UserTagViewData? userTag =
           items.firstWhereOrNull((element) => element.name! == tag);
       if (userTag != null) {
         tags.add(userTag);
@@ -112,27 +113,41 @@ class TaggingHelper {
       {bool withTilde = true}) {
     final Iterable<RegExpMatch> matches =
         RegExp(notificationTagRoute).allMatches(text);
-    List<UserTag> userTags = [];
+    List<UserTagViewData> userTags = [];
     for (final match in matches) {
       final String tag = match.group(1)!;
       final String mid = match.group(2)!;
       final String id = match.group(3)!;
       text = text.replaceAll(
           '<<$tag|route://$mid/$id>>', withTilde ? '@$tag~' : '@$tag');
-      userTags.add(UserTag(userUniqueId: id, name: tag));
+
+      UserTagViewDataBuilder userTagViewDataBuilder = UserTagViewDataBuilder();
+
+      userTagViewDataBuilder
+        ..name(tag)
+        ..userUniqueId(id);
+
+      userTags.add(userTagViewDataBuilder.build());
     }
     return {'text': text, 'userTags': userTags};
   }
 
-  static List<UserTag> addUserTagsIfMatched(String input) {
+  static List<UserTagViewData> addUserTagsIfMatched(String input) {
     final Iterable<RegExpMatch> matches =
         RegExp(notificationTagRoute).allMatches(input);
-    List<UserTag> userTags = [];
+    List<UserTagViewData> userTags = [];
     for (final match in matches) {
       final String tag = match.group(1)!;
       //final String mid = match.group(2)!;
       final String id = match.group(3)!;
-      userTags.add(UserTag(userUniqueId: id, name: tag));
+
+      UserTagViewDataBuilder userTagViewDataBuilder = UserTagViewDataBuilder();
+
+      userTagViewDataBuilder
+        ..name(tag)
+        ..userUniqueId(id);
+
+      userTags.add(userTagViewDataBuilder.build());
     }
     return userTags;
   }

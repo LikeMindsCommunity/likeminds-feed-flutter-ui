@@ -1,5 +1,3 @@
-import 'package:likeminds_feed/likeminds_feed.dart';
-
 class WidgetViewData {
   final String id;
   Map<String, dynamic>? lmMeta;

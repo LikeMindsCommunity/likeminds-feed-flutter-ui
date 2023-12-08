@@ -13,7 +13,7 @@ class MediaModel {
   int? duration; // required for video url
   String? format; // required for documents
   int? size; // required for documents
-  AttachmentMetaOgTags? ogTags; // required for links (attachment type 4)
+  OgTags? ogTags; // required for links (attachment type 4)
 
   MediaModel({
     required this.mediaType,

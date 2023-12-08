@@ -6,13 +6,16 @@ class CommentViewData {
   String text;
   int level;
   int likesCount;
-  bool? isEdited;
+  bool isEdited;
   int repliesCount;
   CommentViewData? parentComment;
   List<PopUpMenuItemViewData> menuItems;
   DateTime createdAt;
   DateTime updatedAt;
   bool isLiked;
+  List<CommentViewData>? replies;
+  String uuid;
+  String? tempId;
 
   CommentViewData._({
     required this.id,
@@ -25,8 +28,11 @@ class CommentViewData {
     required this.createdAt,
     required this.updatedAt,
     required this.isLiked,
-    this.isEdited,
+    required this.isEdited,
     this.parentComment,
+    required this.uuid,
+    this.tempId,
+    this.replies,
   });
 }
 
@@ -43,6 +49,9 @@ class CommentViewDataBuilder {
   DateTime? _createdAt;
   DateTime? _updatedAt;
   bool? _isLiked;
+  String? _uuid;
+  String? _tempId;
+  List<CommentViewData>? _replies;
 
   void id(String id) {
     _id = id;
@@ -92,6 +101,18 @@ class CommentViewDataBuilder {
     _isLiked = isLiked;
   }
 
+  void uuid(String uuid) {
+    _uuid = uuid;
+  }
+
+  void tempId(String tempId) {
+    _tempId = tempId;
+  }
+
+  void replies(List<CommentViewData> replies) {
+    _replies = replies;
+  }
+
   CommentViewData build() {
     return CommentViewData._(
       id: _id!,
@@ -99,13 +120,16 @@ class CommentViewDataBuilder {
       text: _text!,
       level: _level!,
       likesCount: _likesCount!,
-      isEdited: _isEdited,
+      isEdited: _isEdited!,
       repliesCount: _repliesCount!,
       parentComment: _parentComment,
       menuItems: _menuItems!,
       createdAt: _createdAt!,
       updatedAt: _updatedAt!,
       isLiked: _isLiked!,
+      uuid: _uuid!,
+      tempId: _tempId,
+      replies: _replies,
     );
   }
 }

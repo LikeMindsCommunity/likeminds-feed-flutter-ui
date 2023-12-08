@@ -5,6 +5,7 @@ import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:lm_feed_ui_example/convertors/comment/comment_convertor.dart';
 import 'package:lm_feed_ui_example/convertors/post/post_convertor.dart';
+import 'package:lm_feed_ui_example/convertors/user/user_convertor.dart';
 import 'package:lm_feed_ui_example/services/likeminds_service.dart';
 import 'package:lm_feed_ui_example/services/service_locator.dart';
 import 'package:lm_feed_ui_example/utils/constants/ui_constants.dart';
@@ -35,7 +36,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   ValueNotifier<bool> rebuildButton = ValueNotifier(false);
   ValueNotifier<bool> rebuildPostWidget = ValueNotifier(false);
   ValueNotifier<bool> rebuildReplyWidget = ValueNotifier(false);
-  final PagingController<int, Reply> _pagingController =
+  final PagingController<int, CommentViewData> _pagingController =
       PagingController(firstPageKey: 1);
   Post? postData;
   User currentUser = UserLocalPreference.instance.fetchUserData();
@@ -182,28 +183,32 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   }
 
   void addCommentToList(AddCommentSuccess addCommentSuccess) {
-    List<Reply>? commentItemList = _pagingController.itemList;
+    List<CommentViewData>? commentItemList = _pagingController.itemList;
     commentItemList ??= [];
     if (commentItemList.length >= 10) {
       commentItemList.removeAt(9);
     }
 
-    commentItemList.insert(0, addCommentSuccess.addCommentResponse.reply!);
+    commentItemList.insert(
+        0,
+        CommentViewDataConvertor.fromComment(
+            addCommentSuccess.addCommentResponse.reply!));
     increaseCommentCount();
     rebuildPostWidget.value = !rebuildPostWidget.value;
   }
 
   void updateCommentInList(EditCommentSuccess editCommentSuccess) {
-    List<Reply>? commentItemList = _pagingController.itemList;
+    List<CommentViewData>? commentItemList = _pagingController.itemList;
     commentItemList ??= [];
     int index = commentItemList.indexWhere((element) =>
         element.id == editCommentSuccess.editCommentResponse.reply!.id);
-    commentItemList[index] = editCommentSuccess.editCommentResponse.reply!;
+    commentItemList[index] = CommentViewDataConvertor.fromComment(
+        editCommentSuccess.editCommentResponse.reply!);
     rebuildPostWidget.value = !rebuildPostWidget.value;
   }
 
   addReplyToList(AddCommentReplySuccess addCommentReplySuccess) {
-    List<Reply>? commentItemList = _pagingController.itemList;
+    List<CommentViewData>? commentItemList = _pagingController.itemList;
     if (addCommentReplySuccess.addCommentResponse.reply!.parentComment !=
         null) {
       int index = commentItemList!.indexWhere((element) =>
@@ -218,7 +223,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   }
 
   void removeCommentFromList(String commentId) {
-    List<Reply>? commentItemList = _pagingController.itemList;
+    List<CommentViewData>? commentItemList = _pagingController.itemList;
     int index =
         commentItemList!.indexWhere((element) => element.id == commentId);
     if (index != -1) {
@@ -442,12 +447,20 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               listener: (context, state) {
                 if (state is AllCommentsLoaded) {
                   _page++;
-                  if (state.postDetails.postReplies!.replies.length < 10) {
-                    _pagingController
-                        .appendLastPage(state.postDetails.postReplies!.replies);
+                  if (state.postDetails.post!.replies == null ||
+                      state.postDetails.post!.replies!.length < 10) {
+                    _pagingController.appendLastPage(state
+                            .postDetails.post!.replies
+                            ?.map(
+                                (e) => CommentViewDataConvertor.fromComment(e))
+                            .toList() ??
+                        <CommentViewData>[]);
                   } else {
                     _pagingController.appendPage(
-                        state.postDetails.postReplies!.replies, _page);
+                        state.postDetails.post!.replies!
+                            .map((e) => CommentViewDataConvertor.fromComment(e))
+                            .toList(),
+                        _page);
                   }
                 }
               },
@@ -494,9 +507,10 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                                 .routeToProfile(userId);
                                           },
                                           isFeed: false,
-                                          user: postDetailResponse.users![
-                                              postDetailResponse
-                                                  .postReplies!.userId]!,
+                                          user: UserViewDataConvertor.fromUser(
+                                              postDetailResponse.users![
+                                                  postDetailResponse
+                                                      .post!.userId]!),
                                           onTap: () {},
                                         ),
                                 ),
@@ -521,7 +535,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                 PagedSliverList(
                                   pagingController: _pagingController,
                                   builderDelegate:
-                                      PagedChildBuilderDelegate<Reply>(
+                                      PagedChildBuilderDelegate<Comment>(
                                     noMoreItemsIndicatorBuilder: (context) =>
                                         const SizedBox(height: 75),
                                     noItemsFoundIndicatorBuilder: (context) =>
@@ -551,11 +565,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                           locator<LikeMindsService>()
                                               .routeToProfile(userId);
                                         },
-                                        comment:
-                                            CommentViewDataConvertor.fromReply(
-                                                item),
-                                        user: postDetailResponse
-                                            .users![item.userId]!,
+                                        comment: CommentViewDataConvertor
+                                            .fromComment(item),
+                                        user: UserViewDataConvertor.fromUser(
+                                            postDetailResponse
+                                                .users![item.userId]!),
                                         onMenuTap: (value) {},
                                       );
                                     },

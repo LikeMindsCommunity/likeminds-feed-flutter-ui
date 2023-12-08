@@ -1,8 +1,8 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
-import 'package:likeminds_feed_ui_fl/src/models/helper/og_tags_view_data.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 
 class OgTagsViewDataConvertor {
-  static OgTagsViewData fromAttachmentsMetaOgTags(AttachmentMetaOgTags ogTags) {
+  static OgTagsViewData fromOgTags(OgTags ogTags) {
     OgTagsViewDataBuilder ogTagsViewDataBuilder = OgTagsViewDataBuilder();
 
     if (ogTags.title != null) {
@@ -24,9 +24,8 @@ class OgTagsViewDataConvertor {
     return ogTagsViewDataBuilder.build();
   }
 
-  static AttachmentMetaOgTags toAttachmentMetaOgTags(
-      OgTagsViewData ogTagsViewData) {
-    return AttachmentMetaOgTags(
+  static OgTags toOgTags(OgTagsViewData ogTagsViewData) {
+    return OgTags(
       title: ogTagsViewData.title,
       image: ogTagsViewData.image,
       description: ogTagsViewData.description,

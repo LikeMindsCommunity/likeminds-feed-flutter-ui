@@ -31,10 +31,11 @@ class CommentRepliesBloc
       required Emitter<CommentRepliesState> emit}) async {
     // if (!hasReachedMax(state, forLoadMore)) {
     Map<String, User> users = {};
-    List<CommentReply> comments = [];
+    List<Comment> comments = [];
     if (state is CommentRepliesLoaded && forLoadMore) {
       comments =
-          (state as CommentRepliesLoaded).commentDetails.postReplies!.replies;
+          (state as CommentRepliesLoaded).commentDetails.postReplies!.replies ??
+              [];
       users = (state as CommentRepliesLoaded).commentDetails.users!;
       emit(PaginatedCommentRepliesLoading(
           prevCommentDetails: (state as CommentRepliesLoaded).commentDetails));
@@ -48,11 +49,11 @@ class CommentRepliesBloc
     if (!response.success) {
       emit(const CommentRepliesError(message: "No data found"));
     } else {
-      response.postReplies!.replies.insertAll(0, comments);
+      response.postReplies!.replies?.insertAll(0, comments);
       response.users!.addAll(users);
       emit(CommentRepliesLoaded(
           commentDetails: response,
-          hasReachedMax: response.postReplies!.replies.isEmpty));
+          hasReachedMax: response.postReplies!.replies?.isEmpty ?? true));
     }
   }
 }

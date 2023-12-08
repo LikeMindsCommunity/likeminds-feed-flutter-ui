@@ -1,5 +1,5 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
-import 'package:likeminds_feed_ui_fl/src/models/notification_feed/notification_feed_item_view_data.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:lm_feed_ui_example/convertors/notification_feed/activity_entity_convertor.dart';
 
 class NotificationFeedItemViewDataConvertor {
@@ -16,7 +16,7 @@ class NotificationFeedItemViewDataConvertor {
 
     notificationFeedItemViewDataBuilder.actionOn(notificationFeedItem.actionOn);
 
-    notificationFeedItemViewDataBuilder.activityEntityData(
+    notificationFeedItemViewDataBuilder.activityEntityViewData(
         ActivityEntityViewDataConvertor.fromActivityEntity(
             notificationFeedItem.activityEntityData));
 

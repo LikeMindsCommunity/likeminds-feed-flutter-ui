@@ -1,5 +1,5 @@
 import 'package:likeminds_feed/likeminds_feed.dart';
-import 'package:likeminds_feed_ui_fl/src/models/sdk/sdk_client_info_view_data.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 
 class SDKClientInfoViewDataConvertor {
   static SDKClientInfoViewData fromSDKClientInfo(SDKClientInfo sdkClientInfo) {

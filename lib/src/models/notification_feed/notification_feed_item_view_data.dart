@@ -63,7 +63,7 @@ class NotificationFeedItemViewDataBuilder {
     _actionOn = actionOn;
   }
 
-  void activityEntityData(ActivityEntityViewData activityEntityData) {
+  void activityEntityViewData(ActivityEntityViewData activityEntityData) {
     _activityEntityData = activityEntityData;
   }
 

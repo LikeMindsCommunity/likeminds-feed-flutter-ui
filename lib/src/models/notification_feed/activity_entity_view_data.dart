@@ -1,6 +1,5 @@
 import 'package:likeminds_feed_ui_fl/src/models/comment/comment_view_data.dart';
 import 'package:likeminds_feed_ui_fl/src/models/helper/attachment/attachment_view_data.dart';
-import 'package:likeminds_feed/likeminds_feed.dart';
 
 class ActivityEntityViewData {
   String id;

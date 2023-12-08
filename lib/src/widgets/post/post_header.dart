@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:likeminds_feed/likeminds_feed.dart';
+import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
-import 'package:likeminds_feed_ui_fl/src/utils/utils.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/profile_picture.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/common/text/text_view.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post.dart';
-import 'package:likeminds_feed_ui_fl/src/widgets/post/post_menu.dart';
 
 class LMPostHeader extends StatelessWidget {
   const LMPostHeader({
@@ -40,7 +35,7 @@ class LMPostHeader extends StatelessWidget {
 
   final bool isFeed;
 
-  final User user;
+  final UserViewData user;
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:likeminds_feed/likeminds_feed.dart';
 import 'package:likeminds_feed_ui_fl/likeminds_feed_ui_fl.dart';
 import 'package:likeminds_feed_ui_fl/packages/linkify/linkify.dart';
 import 'package:likeminds_feed_ui_fl/src/utils/theme.dart';
@@ -246,7 +245,7 @@ class ExpandableTextState extends State<ExpandableText>
           if (!_expanded) {
             var response =
                 TaggingHelper.convertRouteToTagAndUserMap(widget.text);
-            List<UserTag> userTags = response['userTags'];
+            List<UserTagViewData> userTags = response['userTags'];
             resultText = response['text'];
             // final lineCount = textPainter.computeLineMetrics().length;
             final nCount = '\n'.allMatches(resultText).length + 1;
