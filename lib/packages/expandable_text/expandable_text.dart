@@ -250,11 +250,9 @@ class ExpandableTextState extends State<ExpandableText>
             resultText = response['text'];
             // final lineCount = textPainter.computeLineMetrics().length;
             final nCount = '\n'.allMatches(resultText).length + 1;
-            if (resultText.length > 300 && nCount <= 4) {
-              resultText = resultText.substring(0, max(endOffset, 0));
-            } else {
-              resultText = resultText.substring(0, max(endOffset, 0));
-            }
+
+            resultText =
+                resultText.substring(0, min(endOffset, resultText.length));
 
             resultText = TaggingHelper.encodeString(resultText, userTags);
           } else {
