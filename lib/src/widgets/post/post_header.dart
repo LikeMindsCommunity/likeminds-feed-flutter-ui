@@ -73,7 +73,7 @@ class LMPostHeader extends StatelessWidget {
                             onTap: onProfileTap,
                             fallbackTextStyle: fallbackTextStyle,
                           ),
-                      kHorizontalPaddingLarge,
+                      kHorizontalPaddingMedium,
                       Container(
                         constraints: BoxConstraints(
                           maxWidth: screenSize.width * 0.66,
@@ -169,13 +169,14 @@ class LMPostHeader extends StatelessWidget {
                                   subText != null
                                       ? kHorizontalPaddingXSmall
                                       : const SizedBox(),
-                                  LMTextView(
-                                    text: subText != null ? '·' : '',
-                                    textStyle: const TextStyle(
-                                      fontSize: kFontSmall,
-                                      color: kGrey3Color,
+                                  if (subText != null)
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 1,left:1),
+                                      child: CircleAvatar(
+                                        radius: 2,
+                                        backgroundColor: kGrey3Color,
+                                      ),
                                     ),
-                                  ),
                                   subText != null
                                       ? kHorizontalPaddingXSmall
                                       : const SizedBox(),
