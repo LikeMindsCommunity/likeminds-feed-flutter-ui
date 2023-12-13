@@ -97,7 +97,6 @@ class _LMPostMediaState extends State<LMPostMedia> {
         initialiseVideoController: widget.initialiseVideoController,
         attachments: attachments!,
         borderRadius: widget.borderRadius,
-        backgroundColor: widget.backgroundColor,
         activeIndicatorColor: widget.carouselActiveIndicatorColor,
         inactiveIndicatorColor: widget.carouselInactiveIndicatorColor,
         errorWidget: widget.errorWidget,
