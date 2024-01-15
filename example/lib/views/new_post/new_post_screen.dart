@@ -31,7 +31,7 @@ import 'package:lm_feed_ui_example/views/new_post/new_post/new_post_bloc.dart';
 
 class NewPostScreen extends StatefulWidget {
   final String? populatePostText;
-  final List<MediaModel>? populatePostMedia;
+  final List<AttachmentPostViewData>? populatePostMedia;
 
   const NewPostScreen({
     super.key,
@@ -60,7 +60,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
   bool isDocumentPost = false; // flag for document or media post
   bool isMediaPost = false;
   String previewLink = '';
-  MediaModel? linkModel;
+  AttachmentPostViewData? linkModel;
   bool showLinkPreview =
       true; // if set to false link preview should not be displayed
   Timer? _debounce;
