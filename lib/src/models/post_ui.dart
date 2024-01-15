@@ -19,6 +19,10 @@ class PostViewData {
   final DateTime createdAt;
   DateTime updatedAt;
   bool isEdited;
+  bool isRepost;
+  bool isRepostedByUser;
+  int repostCount;
+  bool? isDeleted;
 
   PostViewData._({
     required this.id,
@@ -36,6 +40,10 @@ class PostViewData {
     required this.isLiked,
     required this.commentCount,
     required this.isEdited,
+    required this.isRepost,
+    required this.isRepostedByUser,
+    required this.repostCount,
+    this.isDeleted = false,
   });
 
   factory PostViewData.fromPost({required Post post}) {
@@ -55,6 +63,10 @@ class PostViewData {
       menuItems: post.menuItems,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
+      isRepost: post.isRepost,
+      isRepostedByUser: post.isRepostedByUser,
+      repostCount: post.repostCount,
+      isDeleted: post.isDeleted,
     );
   }
 
@@ -75,6 +87,10 @@ class PostViewData {
       menuItems: menuItems,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      isRepost: isRepost,
+      isRepostedByUser: isRepostedByUser,
+      repostCount: repostCount,
+      isDeleted: isDeleted,
     );
   }
 }
@@ -95,6 +111,10 @@ class PostViewDataBuilder {
   DateTime? _createdAt;
   DateTime? _updatedAt;
   bool? _isEdited;
+  bool? _isRepost;
+  bool? _isRepostedByUser;
+  int? _repostCount;
+  bool? _isDeleted;
 
   void id(String id) {
     _id = id;
@@ -156,6 +176,22 @@ class PostViewDataBuilder {
     _isEdited = isEdited;
   }
 
+  void isRepost(bool isRepost) {
+    _isRepost = isRepost;
+  }
+
+  void isRepostedByUser(bool isRepostedByUser) {
+    _isRepostedByUser = isRepostedByUser;
+  }
+
+  void repostCount(int repostCount) {
+    _repostCount = repostCount;
+  }
+
+  void isDeleted(bool isDeleted) {
+    _isDeleted = isDeleted;
+  }
+
   PostViewData build() {
     return PostViewData._(
       id: _id!,
@@ -173,6 +209,10 @@ class PostViewDataBuilder {
       createdAt: _createdAt!,
       updatedAt: _updatedAt!,
       isEdited: _isEdited!,
+      isRepost: _isRepost!,
+      isRepostedByUser: _isRepostedByUser!,
+      repostCount: _repostCount!,
+      isDeleted: _isDeleted!,
     );
   }
 }
