@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:likeminds_feed/likeminds_feed.dart';
 
-enum MediaType { video, image, document, link, widget }
+enum MediaType { video, image, document, link, widget, post }
 
-class MediaModel {
+class AttachmentPostViewData {
   // defines the type of media
   MediaType mediaType;
   // one of mediaFile or link must be provided
@@ -15,8 +15,10 @@ class MediaModel {
   int? size; // required for documents
   AttachmentMetaOgTags? ogTags; // required for links (attachment type 4)
   Map<String, dynamic>? widgetsMeta; //required for widgets (attachment type 5)
+  String? postId; // required for repost (attachment type 8)
+  Post? post; // required for repost (attachment type 8)
 
-  MediaModel({
+  AttachmentPostViewData({
     required this.mediaType,
     this.mediaFile,
     this.link,
@@ -25,6 +27,8 @@ class MediaModel {
     this.size,
     this.ogTags,
     this.widgetsMeta,
+    this.postId,
+    this.post,
   });
 
   // convert
@@ -39,6 +43,8 @@ class MediaModel {
       return 4;
     } else if (mediaType == MediaType.widget) {
       return 5;
+    } else if (mediaType == MediaType.post) {
+      return 8;
     } else {
       throw 'no valid media type provided';
     }
@@ -56,6 +62,8 @@ MediaType mapIntToMediaType(int attachmentType) {
     return MediaType.link;
   } else if (attachmentType == 5) {
     return MediaType.widget;
+  } else if (attachmentType == 8) {
+    return MediaType.post;
   } else {
     throw 'no valid media type provided';
   }

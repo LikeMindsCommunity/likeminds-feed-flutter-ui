@@ -31,7 +31,7 @@ class LMLinkPreview extends StatelessWidget {
   });
 
   // data class to provide link preview data
-  final MediaModel? linkModel;
+  final AttachmentPostViewData? linkModel;
   final Attachment? attachment;
 
   // defaults to width of screen

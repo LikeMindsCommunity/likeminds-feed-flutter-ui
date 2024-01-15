@@ -28,8 +28,9 @@ dependencies:
   media_kit_libs_video: ^1.0.1
   visibility_aware_state: 1.0.5
 
-  likeminds_feed: 1.6.6
-  # path: ../LikeMinds-Flutter-Feed-SDK
+  likeminds_feed:
+  #  1.6.6
+    path: ../LikeMinds-Flutter-Feed-SDK
 
 dev_dependencies:
   flutter_test:
