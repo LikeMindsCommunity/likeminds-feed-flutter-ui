@@ -50,7 +50,7 @@ class NewPostBloc extends Bloc<NewPostEvents, NewPostState> {
                     attachmentType: 4,
                     attachmentMeta: AttachmentMeta(
                         url: media.ogTags!.url,
-                        ogTags: AttachmentMetaOgTags(
+                        ogTags: OgTags(
                           description: media.ogTags!.description,
                           image: media.ogTags!.image,
                           title: media.ogTags!.title,

@@ -30,7 +30,7 @@ class LMReplyTile extends StatefulWidget {
   });
 
   final User user;
-  final CommentReply comment;
+  final Comment comment;
 
   final TextStyle? textStyle;
   final TextStyle? linkStyle;

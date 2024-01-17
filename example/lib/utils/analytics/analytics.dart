@@ -56,9 +56,9 @@ class AnalyticsKeys {
   static const String commentPosted = 'Comment posted';
   static const String commentDeleted = 'Comment deleted';
   static const String commentReported = 'Comment reported';
-  static const String replyPosted = 'Reply posted';
-  static const String replyDeleted = 'Reply deleted';
-  static const String replyReported = 'Reply reported';
+  static const String replyPosted = 'Comment posted';
+  static const String replyDeleted = 'Comment deleted';
+  static const String replyReported = 'Comment reported';
   static const String searchInitiated = 'Search initiated';
   static const String feedSearched = 'Feed searched';
   static const String searchTabClicked = 'Search tab clicked';

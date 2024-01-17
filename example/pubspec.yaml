@@ -46,8 +46,8 @@ dependencies:
     path: ../
 
   likeminds_feed:
-    1.6.7
-  #  path: ../../LikeMinds-Flutter-Feed-SDK
+    # 1.6.7
+    path: ../../LikeMinds-Flutter-Feed-SDK
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

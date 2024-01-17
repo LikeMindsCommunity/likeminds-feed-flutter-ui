@@ -32,7 +32,7 @@ class LMCommentTile extends StatefulWidget {
   });
 
   final User user;
-  final Reply comment;
+  final Comment comment;
 
   final TextStyle? textStyle;
   final TextStyle? linkStyle;
@@ -170,7 +170,7 @@ class _LMCommentTileState extends State<LMCommentTile> {
                     LMTextButton(
                       onTap: () {},
                       text: const LMTextView(
-                        text: 'Reply',
+                        text: 'Comment',
                         textStyle: TextStyle(
                           fontSize: 14,
                           color: kGrey2Color,
@@ -194,7 +194,9 @@ class _LMCommentTileState extends State<LMCommentTile> {
                         : Container(),
                     const Spacer(),
                     LMTextView(
-                      text: widget.comment.createdAt.timeAgo(),
+                      text: (DateTime.fromMillisecondsSinceEpoch(
+                              widget.comment.createdAt))
+                          .timeAgo(),
                       textStyle: const TextStyle(
                         fontSize: kFontSmallMed,
                         color: kGrey3Color,

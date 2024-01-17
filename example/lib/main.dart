@@ -25,7 +25,7 @@ Future<void> _initLikeMinds() async {
         .build(),
   );
   if (response.success) {
-    final user = response.initiateUser?.user;
+    final user = response.user;
     // LMFeed._instance!.deepLinkCallBack();
     UserLocalPreference.instance.storeUserData(user!);
   }

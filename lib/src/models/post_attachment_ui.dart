@@ -13,7 +13,7 @@ class AttachmentPostViewData {
   int? duration; // required for video url
   String? format; // required for documents
   int? size; // required for documents
-  AttachmentMetaOgTags? ogTags; // required for links (attachment type 4)
+  OgTags? ogTags; // required for links (attachment type 4)
   Map<String, dynamic>? widgetsMeta; //required for widgets (attachment type 5)
   String? postId; // required for repost (attachment type 8)
   Post? post; // required for repost (attachment type 8)
